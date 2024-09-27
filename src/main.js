@@ -22,8 +22,7 @@
 /*
 --- External products
 */
-import {app, BrowserWindow, ipcMain} from 'electron';
-import path from 'node:path';
+import {app, BrowserWindow} from 'electron';
 
 /*=============== Local functions ==============================*/
 
@@ -42,7 +41,6 @@ function locCreateWindow_f() {
     const locMainWindow_o = new BrowserWindow({
         width: 800,
         height: 600,
-        icon: "./LogoOuestadam32.png",
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             nodeIntegration: true,

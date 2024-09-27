@@ -2,7 +2,7 @@
   "name": "oetaskreport",
   "productName": "oetaskreport",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Ouestadam Tasks Reporting Tool",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -33,7 +33,7 @@
   "keywords": [],
   "author": {
     "name": "Denis Esteve",
-    "email": "denis_esteve@hotmail.com"
+    "email": "denis@ouestadam.com"
   },
   "license": "MIT",
   "dependencies": {

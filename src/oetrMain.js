@@ -24,9 +24,42 @@
 */
 import React, {useLayoutEffect, useState} from "react";
 import {
-    createTheme, CssBaseline, Paper, ThemeProvider
+    Box,
+    createTheme, CssBaseline, ThemeProvider
 } from "@mui/material";
 import {enUS, frFR} from "@mui/material/locale";
+
+/*
+--- Ouestadam products
+*/
+import {OetrLocaleSwitcher_jsx} from "./oetrLocale";
+
+/*=============== Local JSX components =========================*/
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocHeader_jsx                                  !
+! Description: JSX Header of the Main page                    !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocHeader_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    /*
+    --- Create the Main page Header
+    */
+    return (
+        <Box sx={{position: "absolute", top: "30px", right: "30px"}}>
+            <OetrLocaleSwitcher_jsx ctx={locCtx_o}/>
+        </Box>
+    )
+}
+
 
 /*=============== Exported functions ===========================*/
 
@@ -45,6 +78,10 @@ export function OetrMainEntry_jsx(paramProps_o) {
     const locCtx_o = paramProps_o.ctx;
     const locColors_o = locCtx_o.config_o.colors_o;
     const locBackGroundColor = locColors_o.backgroundMainGrey;
+    /*
+   --- Set hook for Window resizing
+   */
+    [locCtx_o.window_o.width, locCtx_o.window_o.height] = OetrMainWindowResize_f();
     /*
     --- Search the theme locale
     */
@@ -67,24 +104,47 @@ export function OetrMainEntry_jsx(paramProps_o) {
         }
     }, locLocale_o);
     /*
-    --- Set a Background image according the window width
-    */
-    const locStyle_o = {
-        background: "linear-gradient(to bottom right, " + locColors_o.backgroundStart + " 0%, " +
-            locColors_o.backgroundEnd + " 100%)",
-        width: "100%",
-        height: "100%"
-    };
-    /*
     --- Return the Main page
     */
     return (<ThemeProvider theme={locTheme_o}>
         <CssBaseline/>
-        <div style={locStyle_o}>
-            <h1>💖 Hello World!</h1>
-            <p>Welcome to your Electron application.</p>
-        </div>
+        <LocHeader_jsx ctx={locCtx_o}/>
     </ThemeProvider>);
 }
 
+/*
++-------------------------------------------------------------+
+! Routine    : oetrMainRefreshPage_f                          !
+! Description: Request the refresh of the Main page           !
+!                                                             !
+! IN:  - Context                                              !
+! OUT: - Nothing                                              !
++-------------------------------------------------------------+
+*/
+export function oetrMainRefreshPage_f(paramCtx_o) {
+    paramCtx_o.refresh_o.main_s = !paramCtx_o.refresh_o.main_s;
+    paramCtx_o.refresh_o.main_f(paramCtx_o.refresh_o.main_s);
+}
+
+/*
++-------------------------------------------------------------+
+! Routine    : OetrMainWindowResize_f                         !
+! Description: Manage hook for Window resizing                !
+!                                                             !
+! IN:  - Context                                              !
+! OUT: - Nothing                                              !
++-------------------------------------------------------------+
+*/
+export const OetrMainWindowResize_f = () => {
+    const [locWindowSize, locSetWindowSize_f] = useState([0, 0])
+    const locUpdateWindowSize_f = () => {
+        locSetWindowSize_f([window.innerWidth, window.innerHeight])
+    }
+    useLayoutEffect(() => {
+        window.addEventListener('resize', locUpdateWindowSize_f);
+        locUpdateWindowSize_f();
+        return () => window.removeEventListener('resize', locUpdateWindowSize_f);
+    }, [])
+    return [locWindowSize[0], locWindowSize[1]]
+}
 

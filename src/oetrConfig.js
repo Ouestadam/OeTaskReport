@@ -32,7 +32,7 @@ export const oetrConfig_o = {
         backgroundMainGrey: "#6F7170",
         backgroundMainBlack: "#000000",
         backgroundHeader: "#ffffff",
-        backgroundIcon: "#6F7170",
+        backgroundIcon: "#ddc5ac",
         backgroundTableHead: "#6F7170",
         backgroundTableDetail : "#e5e5e5",
         backgroundHighlight : "#f6f203",
