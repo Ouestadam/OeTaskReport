@@ -39,8 +39,8 @@ function locCreateWindow_f() {
     --- Create the browser window
     */
     const locMainWindow_o = new BrowserWindow({
-        width: 800,
-        height: 600,
+        maxWidth: 800,
+        maxHeight: 600,
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             nodeIntegration: true,

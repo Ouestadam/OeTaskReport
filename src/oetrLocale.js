@@ -28,6 +28,9 @@ import {ToggleButton, ToggleButtonGroup} from "@mui/material";
 --- Ouestadam products
 */
 import {oetrMainRefreshPage_f} from "./oetrMain";
+import flagFrench from "./assets/flagFrench.png";
+import flagUK from "./assets/flagUK.png";
+
 
 /*=============== Exported JSX components ======================*/
 
@@ -64,11 +67,11 @@ export function OetrLocaleSwitcher_jsx(paramProps_o) {
                 }
             }}
         >
-            <ToggleButton value="fr-FR" aria-label="fr-FR">
-                FR
+            <ToggleButton value="fr-FR" aria-label="fr-FR" sx={{margin: 0, padding: 0}}>
+                <img src={flagFrench} alt="French"/>
             </ToggleButton>
-            <ToggleButton value="en-GB" aria-label="en-GB">
-                EN
+            <ToggleButton value="en-GB" aria-label="en-GB" sx={{margin: 0, padding: 0}}>
+                <img src={flagUK} alt="English"/>
             </ToggleButton>
         </ToggleButtonGroup>
     );
