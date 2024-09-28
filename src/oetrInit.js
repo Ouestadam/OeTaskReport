@@ -25,6 +25,7 @@
 import {OeComTrans_c} from "./oecommon/oeComTrans";
 import {oetrConfig_o} from "./oetrConfig";
 import {oetrTrans_o} from "./oetrTrans";
+import {OeComCookies_c} from "./oecommon/oeComCookies";
 
 /*=============== Exported functions ===========================*/
 
@@ -53,14 +54,30 @@ export function oetrInit_f(paramCtx_o) {
         height: 0
     }
     /*
-    --- Update the locale if defined in the navigator
+    --- Create Cookies management object
     */
-    const locLocale = navigator.language;
-    if (locLocale !== undefined) {
-        paramCtx_o.config_o.locale = (locLocale.substring(0, 2).toLowerCase() === 'fr') ? 'fr-FR' : 'en-GB';
+    paramCtx_o.cookiesManagement_o = new OeComCookies_c();
+    /*
+    --- Get the Local in cookies
+    */
+    paramCtx_o.config_o.locale = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrLocale");
+    /*
+    --- If no cookie then use this one define for the Navigator
+    */
+    if (paramCtx_o.config_o.locale === "") {
+        const locLocale = navigator.language;
+        if (locLocale !== undefined) {
+            paramCtx_o.config_o.locale = (locLocale.substring(0, 2).toLowerCase() === 'fr') ? 'fr-FR' : 'en-GB';
+        } else {
+            /*
+            --- If not defined in the navigator set as English
+             */
+            paramCtx_o.config_o.locale = 'en-GB';
+        }
     }
     /*
     --- Create Translation object
     */
     paramCtx_o.trans_o = new OeComTrans_c(paramCtx_o.config_o.locale, oetrTrans_o);
+
 }

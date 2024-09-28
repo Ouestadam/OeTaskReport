@@ -54,7 +54,7 @@ function LocHeader_jsx(paramProps_o) {
     --- Create the Main page Header
     */
     return (
-        <Box sx={{position: "absolute", top: "30px", right: "30px"}}>
+        <Box sx={{position: "absolute", top: "10px", right: "10px"}}>
             <OetrLocaleSwitcher_jsx ctx={locCtx_o}/>
         </Box>
     )

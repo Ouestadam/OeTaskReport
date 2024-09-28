@@ -49,7 +49,6 @@ export function OetrLocaleSwitcher_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
-    const locColors_o = locCtx_o.config_o.colors_o;
 
     /*
     --- Return the Switcher
@@ -60,19 +59,20 @@ export function OetrLocaleSwitcher_jsx(paramProps_o) {
             value={locCtx_o.config_o.locale}
             exclusive
             size="small"
-            style={{backgroundColor: locColors_o.backgroundIcon, color: locColors_o.backgroundMainBlack}}
             onChange={(paramEvent, paramLocale) => {
                 if (paramLocale) {
                     locCtx_o.config_o.locale = paramLocale;
                     locCtx_o.trans_o.oeComTransChangeLocale_m(paramLocale);
+                    locCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrLocale",
+                        paramLocale, locCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
                     oetrMainRefreshPage_f(locCtx_o);
                 }
             }}
         >
-            <ToggleButton value="fr-FR" aria-label="fr-FR" sx={{margin: 0, padding: 0}}>
+            <ToggleButton value="fr-FR" aria-label="fr-FR" sx={{padding: 0,mr:"2px"}}>
                 <img src={locCtx_o.config_o.locale === "fr-FR" ? flagOnFrench : flagOffFrench} alt="French"/>
             </ToggleButton>
-            <ToggleButton value="en-GB" aria-label="en-GB" sx={{margin: 0, padding: 0}}>
+            <ToggleButton value="en-GB" aria-label="en-GB" sx={{padding: 0}}>
                 <img src={locCtx_o.config_o.locale === "en-GB" ? flagOnUK : flagOffUK} alt="English"/>
             </ToggleButton>
         </ToggleButtonGroup>
