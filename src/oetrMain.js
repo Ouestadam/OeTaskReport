@@ -76,12 +76,24 @@ export function OetrMainEntry_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
     const locColors_o = locCtx_o.config_o.colors_o;
     const locBackGroundColor = locColors_o.backgroundMainGrey;
     /*
+    --- Check if Full Screen in Cookies
+    */
+    if (locCtx_o.cookiesManagement_o.oeComCookiesGet_m('oetrFullScreen') === 'true') {
+      /*
+      --- If it's not full screen then set the full screen
+      */
+      if(window.innerWidth !== screen.width || window.innerHeight !== screen.height) {
+          window.electronAPI.setFullScreen('true');
+      }
+    }
+    /*
    --- Set hook for Window resizing
-   */
-    [locCtx_o.window_o.width, locCtx_o.window_o.height] = OetrMainWindowResize_f();
+    */
+    [locCtx_o.window_o.width, locCtx_o.window_o.height] = OetrMainWindowResize_f(locCtx_o);
     /*
     --- Search the theme locale
     */
@@ -93,6 +105,10 @@ export function OetrMainEntry_jsx(paramProps_o) {
     const [locMain_s, locMain_f] = React.useState(false);
     locCtx_o.refresh_o.main_f = locMain_f;
     locCtx_o.refresh_o.main_s = locMain_s;
+    /*
+    --- Set the application title according the locale
+    */
+    window.electronAPI.setTitle(locTrans_o.oeComTransGet_m("main", "title"));
     /*
     --- Create the Theme
     */
@@ -135,9 +151,28 @@ export function oetrMainRefreshPage_f(paramCtx_o) {
 ! OUT: - Nothing                                              !
 +-------------------------------------------------------------+
 */
-export const OetrMainWindowResize_f = () => {
+export const OetrMainWindowResize_f = (paramCtx_o) => {
     const [locWindowSize, locSetWindowSize_f] = useState([0, 0])
     const locUpdateWindowSize_f = () => {
+        /*
+        --- Save if FullScreen or Not
+        */
+        if(window.innerWidth === screen.width && window.innerHeight === screen.height) {
+            /*
+            --- Save FullScreen = true in Cookies
+            */
+            paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrFullScreen", 'true',
+                paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+        } else {
+            /*
+            --- Save FullScreen = false in Cookies
+            */
+            paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrFullScreen", 'false',
+                paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+        }
+        /*
+        --- Save the Window Size
+        */
         locSetWindowSize_f([window.innerWidth, window.innerHeight])
     }
     useLayoutEffect(() => {

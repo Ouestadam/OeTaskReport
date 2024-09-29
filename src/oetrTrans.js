@@ -32,5 +32,11 @@ export const oetrTrans_o = {
             en: "Return",
             fr: "Retour"
         }
+    },
+    "main": {
+        "title": {
+            en: "Tasks reporting tools (by Ouestadam)",
+            fr: "Outil de déclaration de tâches (par Ouestadam)"
+        }
     }
 };

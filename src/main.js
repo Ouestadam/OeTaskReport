@@ -13,7 +13,7 @@
   !  Desc. : Electron main for oetaskreport                     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 26/09/2024                                         !
+  !  Modif.: 28/09/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -22,7 +22,7 @@
 /*
 --- External products
 */
-import {app, BrowserWindow} from 'electron';
+import {app, BrowserWindow, ipcMain} from 'electron';
 
 /*=============== Local functions ==============================*/
 
@@ -41,6 +41,7 @@ function locCreateWindow_f() {
     const locMainWindow_o = new BrowserWindow({
         maxWidth: 800,
         maxHeight: 600,
+        icon: './assets/icon.png',
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             nodeIntegration: true,
@@ -59,6 +60,26 @@ function locCreateWindow_f() {
     --- For debugging: Open the DevTools
     */
     locMainWindow_o.webContents.openDevTools();
+    /*
+    --- Set Title processing
+    */
+    ipcMain.on('oetrSetTitle', (paramEvent, paramTitle) => {
+        const locWebContents = paramEvent.sender;
+        const locWin_o = BrowserWindow.fromWebContents(locWebContents);
+        locWin_o.setTitle(paramTitle);
+    });
+    /*
+    --- Set Full screen processing
+    */
+    ipcMain.on('oetrSetFullScreen', (paramEvent, paramFullOrNot) => {
+        const locWebContents = paramEvent.sender;
+        const locWin_o = BrowserWindow.fromWebContents(locWebContents);
+        if (paramFullOrNot === 'true') {
+            locWin_o.maximize();
+        } else {
+            locWin_o.minimize();
+        }
+    });
 }
 
 /*=============== Main =========================================*/
