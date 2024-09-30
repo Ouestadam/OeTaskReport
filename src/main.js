@@ -24,6 +24,12 @@
 */
 import {app, BrowserWindow, ipcMain} from 'electron';
 
+/*=============== Global variables =============================*/
+/*
+--- Current Browser Window
+*/
+let mainWindow_o = null;
+
 /*=============== Local functions ==============================*/
 
 /*+-------------------------------------------------------------+
@@ -38,9 +44,9 @@ function locCreateWindow_f() {
     /*
     --- Create the browser window
     */
-    const locMainWindow_o = new BrowserWindow({
-        maxWidth: 800,
-        maxHeight: 600,
+    mainWindow_o = new BrowserWindow({
+        width: 800,
+        height: 600,
         icon: './assets/icon.png',
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -51,34 +57,39 @@ function locCreateWindow_f() {
     /*
     --- Load the index.html of the app
     */
-    locMainWindow_o.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    mainWindow_o.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
     /*
     --- Hide the Menu bar
     */
-    locMainWindow_o.menuBarVisible = false;
+    mainWindow_o.menuBarVisible = false;
     /*
     --- For debugging: Open the DevTools
     */
-    locMainWindow_o.webContents.openDevTools();
+    mainWindow_o.webContents.openDevTools();
     /*
     --- Set Title processing
     */
     ipcMain.on('oetrSetTitle', (paramEvent, paramTitle) => {
-        const locWebContents = paramEvent.sender;
-        const locWin_o = BrowserWindow.fromWebContents(locWebContents);
-        locWin_o.setTitle(paramTitle);
+        mainWindow_o.setTitle(paramTitle);
     });
     /*
-    --- Set Full screen processing
+    --- Set Maximizing and Minimizing processing
     */
-    ipcMain.on('oetrSetFullScreen', (paramEvent, paramFullOrNot) => {
-        const locWebContents = paramEvent.sender;
-        const locWin_o = BrowserWindow.fromWebContents(locWebContents);
-        if (paramFullOrNot === 'true') {
-            locWin_o.maximize();
+    ipcMain.on('oetrSetMaximized', (paramEvent, paramMaximizeFlag) => {
+        if (paramMaximizeFlag === 'true') {
+            mainWindow_o.maximize();
         } else {
-            locWin_o.minimize();
+            mainWindow_o.unmaximize();
         }
+    });
+    /*
+    --- Process Window maximizing process
+    */
+    mainWindow_o.on('maximize', () => {
+        mainWindow_o.webContents.send('oetrOnUpdateMaximizing', 'true');
+    });
+    mainWindow_o.on('unmaximize', () => {
+        mainWindow_o.webContents.send('oetrOnUpdateMaximizing', 'false');
     });
 }
 

@@ -13,7 +13,7 @@
   !  Desc. : Electron preload for oetaskreport                  !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 28/09/2024                                         !
+  !  Modif.: 30/09/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -29,8 +29,13 @@ const {contextBridge, ipcRenderer} = require('electron')
 --- Declare each IPC verb
 */
 contextBridge.exposeInMainWorld('electronAPI', {
+    //--- From Rendering to Main ---
     //--- Declare oetrSetTitle for updating the MAin Window Title
     setTitle: (paramTitle) => ipcRenderer.send('oetrSetTitle', paramTitle),
-    //--- Declare oetrSetFullScreen for updating the Main Window full screen or not
-    setFullScreen: (paramFullOrNot) => ipcRenderer.send('oetrSetFullScreen', paramFullOrNot),
+    //--- Declare oetrSetMaximized for maximising or unmaximized the window
+    setMaximized: (paramMaximizeFlag) => ipcRenderer.send('oetrSetMaximized', paramMaximizeFlag),
+
+    //--- From Main to Rendering ---
+    onUpdateMaximizing: (paramCallback_f) => ipcRenderer.on('oetrOnUpdateMaximizing',
+        (paramEvent,paramValue) => paramCallback_f(paramValue))
 });
