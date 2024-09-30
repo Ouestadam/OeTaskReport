@@ -83,6 +83,13 @@ function locCreateWindow_f() {
         }
     });
     /*
+    --- Set Resizing processing
+    */
+    ipcMain.on('oetrSetResized', (paramEvent, paramSize) => {
+        const locSize_a = paramSize.split(',');
+        mainWindow_o.setSize(parseInt(locSize_a[0]), parseInt(locSize_a[1]));
+    });
+    /*
     --- Process Window maximizing process
     */
     mainWindow_o.on('maximize', () => {
@@ -90,6 +97,17 @@ function locCreateWindow_f() {
     });
     mainWindow_o.on('unmaximize', () => {
         mainWindow_o.webContents.send('oetrOnUpdateMaximizing', 'false');
+    });
+    /*
+    --- Process Window resizing process
+    */
+    mainWindow_o.on('resize', () => {
+        /*
+        --- Get the new window size
+        */
+        const locSize_a = mainWindow_o.getSize();
+        const locSize_s = locSize_a[0] + ',' + locSize_a[1];
+        mainWindow_o.webContents.send('oetrOnUpdateResizing', locSize_s);
     });
 }
 

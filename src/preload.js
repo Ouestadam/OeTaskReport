@@ -32,10 +32,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
     //--- From Rendering to Main ---
     //--- Declare oetrSetTitle for updating the MAin Window Title
     setTitle: (paramTitle) => ipcRenderer.send('oetrSetTitle', paramTitle),
-    //--- Declare oetrSetMaximized for maximising or unmaximized the window
+    //--- Declare oetrSetMaximized for maximising or unmaximizing the window
     setMaximized: (paramMaximizeFlag) => ipcRenderer.send('oetrSetMaximized', paramMaximizeFlag),
+    //--- Declare oetrSetResized for resizing the window
+    setResized: (paramSize) => ipcRenderer.send('oetrSetResized', paramSize),
 
     //--- From Main to Rendering ---
     onUpdateMaximizing: (paramCallback_f) => ipcRenderer.on('oetrOnUpdateMaximizing',
+        (paramEvent,paramValue) => paramCallback_f(paramValue)),
+    onUpdateResizing: (paramCallback_f) => ipcRenderer.on('oetrOnUpdateResizing',
         (paramEvent,paramValue) => paramCallback_f(paramValue))
 });

@@ -77,7 +77,6 @@ export function OetrMainEntry_jsx(paramProps_o) {
     const locCtx_o = paramProps_o.ctx;
     const locTrans_o = locCtx_o.trans_o;
     const locColors_o = locCtx_o.config_o.colors_o;
-    const locBackGroundColor = locColors_o.backgroundMainGrey;
     /*
     --- Check if Window is maximized in Cookies
     */
@@ -91,6 +90,16 @@ export function OetrMainEntry_jsx(paramProps_o) {
         --- Request the window unmaximizing
         */
         window.electronAPI.setMaximized('false');
+    }
+    /*
+    --- Check if Window size is in Cookies
+    */
+    const locWindowSize_s = locCtx_o.cookiesManagement_o.oeComCookiesGet_m('oetrWindowSize');
+    if (locWindowSize_s.length > 0) {
+        /*
+        --- Request the window resizing
+        */
+        window.electronAPI.setResized(locWindowSize_s);
     }
     /*
     --- Search the theme locale
@@ -113,20 +122,18 @@ export function OetrMainEntry_jsx(paramProps_o) {
     window.electronAPI.onUpdateMaximizing((paramValue) => {
         locCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrMaximized", paramValue,
             locCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
-    })
+    });
+    /*
+    --- Update the cookie Window size if the main process detects the change
+    */
+    window.electronAPI.onUpdateResizing((paramValue) => {
+        locCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrWindowSize", paramValue,
+            locCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    });
     /*
     --- Create the Theme
     */
     const locTheme_o = createTheme({
-        overrides: {
-            MuiCssBaseline: {
-                body: {
-                    background: 'linear-gradient(to bottom right, #6e815f 0%, #bddca0 100%)',
-                    backgroundRepeat: "no-repeat",
-                    backgroundAttachment: "fixed",
-                },
-            },
-        },
         palette: {
             type: "dark",
         }
@@ -134,10 +141,11 @@ export function OetrMainEntry_jsx(paramProps_o) {
     /*
     --- Return the Main page
     */
-    return (<ThemeProvider theme={locTheme_o}>
-        <CssBaseline/>
-        <LocHeader_jsx ctx={locCtx_o}/>
-    </ThemeProvider>);
+    return (
+        <ThemeProvider theme={locTheme_o}>
+            <CssBaseline/>
+            <LocHeader_jsx ctx={locCtx_o}/>
+        </ThemeProvider>)
 }
 
 /*
