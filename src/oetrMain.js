@@ -76,7 +76,6 @@ export function OetrMainEntry_jsx(paramProps_o) {
     */
     const locCtx_o = paramProps_o.ctx;
     const locTrans_o = locCtx_o.trans_o;
-    const locColors_o = locCtx_o.config_o.colors_o;
     /*
     --- Check if Window is maximized in Cookies
     */
