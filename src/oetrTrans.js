@@ -49,9 +49,9 @@ export const oetrTrans_o = {
             en: "Parameters",
             fr: "Paramètres"
         },
-        "getFolderPath": {
-            en: "Data folder",
-            fr: "Emplacement des données"
+        "labelGetWorkingDir": {
+            en: "Select the data folder :",
+            fr: "Sélectionner l'emplacement des données :"
         }
     }
 };

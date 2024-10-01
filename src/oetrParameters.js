@@ -26,7 +26,7 @@ import React, {useState} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import {oetrMainModal_e, oetrMainRefreshPage_f} from "./oetrMain";
 import {OetrError_jsx} from "./oetrError";
-
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 /*
 --- Ouestadam products
 */
@@ -113,7 +113,10 @@ async function locGetFolderPath_f(paramCtx_o, paramEvent) {
     --- Request Path selection
     */
     const locWorkingDir = await window.electronAPI.dialogFolderPath();
-    console.log("Dir="+locWorkingDir);
+    /*
+    --- Update the Working dir in the context if present
+    */
+    if (locWorkingDir.length > 0) paramCtx_o.workingDir = locWorkingDir;
     /*
     --- Refresh the Parameters dialog
     */
@@ -137,17 +140,32 @@ function LocContent_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
+    const locColors_o = locCtx_o.config_o.colors_o;
     const locTrans_o = locCtx_o.trans_o;
     /*
     --- Return the Dialog Content to display
     */
     return (
-        <div>
-            <Button
-                variant="contained"
-                onClick={(paramEvent) => locGetFolderPath_f(locCtx_o, paramEvent)}>
-                {locTrans_o.oeComTransGet_m("parameters", "getFolderPath")}
-            </Button>
+        <div style={{
+            minHeight: "300px",
+            backgroundColor: locColors_o.backgroundDialogContent
+        }}>
+            <div>
+                {locTrans_o.oeComTransGet_m("parameters", "labelGetWorkingDir")}
+            </div>
+            <div>
+                <Button
+                    variant="contained"
+                    onClick={(paramEvent) => locGetFolderPath_f(locCtx_o, paramEvent)}
+                    sx={{mr: "10px"}}>
+                    <CreateNewFolderIcon/>
+                </Button>
+                <span>
+                    <i>
+                        {locCtx_o.workingDir}
+                    </i>
+                </span>
+            </div>
         </div>
     )
 
@@ -184,6 +202,7 @@ export function OetrDialogParameters_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
+    const locColors_o = locCtx_o.config_o.colors_o;
     const locTrans_o = locCtx_o.trans_o;
     /*
     --- Get React state for refreshing the page
