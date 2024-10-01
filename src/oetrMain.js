@@ -13,7 +13,7 @@
   !  Desc. : Main Entry for rendering of oetaskreport           !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 26/09/2024                                         !
+  !  Modif.: 30/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -33,8 +33,102 @@ import {enUS, frFR} from "@mui/material/locale";
 --- Ouestadam products
 */
 import {OetrLocaleSwitcher_jsx} from "./oetrLocale";
+import {OetrDialogParameters_jsx} from "./oetrParameters";
+
+/*=============== Exported objects =============================*/
+export const oetrMainModal_e = {
+    noModal: 0,
+    parametersModal: 1
+};
+
+/*=============== Local functions ==============================*/
+
+/*+-------------------------------------------------------------+
+  ! Routine    : locIpcExchanges_f                              !
+  ! Description: Process all requires IPC Exchanges             !
+  !                                                             !
+  ! IN:  - Context                                              !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+function locIpcExchanges_f(paramCtx_o) {
+    /*
+    --- Initialisation
+    */
+    const locTrans_o = paramCtx_o.trans_o;
+    /*
+    --- Check if Window is maximized in Cookies
+    */
+    if (paramCtx_o.cookiesManagement_o.oeComCookiesGet_m('oetrMaximized') === 'true') {
+        /*
+        --- Request the window maximizing
+        */
+        window.electronAPI.setMaximized('true');
+    } else {
+        /*
+        --- Request the window unmaximizing
+        */
+        window.electronAPI.setMaximized('false');
+    }
+    /*
+    --- Check if Window size is in Cookies
+    */
+    const locWindowSize_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m('oetrWindowSize');
+    if (locWindowSize_s.length > 0) {
+        /*
+        --- Request the window resizing
+        */
+        window.electronAPI.setResized(locWindowSize_s);
+    }
+    /*
+    --- Set the application title according the locale
+    */
+    window.electronAPI.setTitle(locTrans_o.oeComTransGet_m("main", "title"));
+    /*
+    --- Update the cookie Maximize/Unmaximize if the main process detects the change
+    */
+    window.electronAPI.onUpdateMaximizing((paramValue) => {
+        paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrMaximized", paramValue,
+            paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    });
+    /*
+    --- Update the cookie Window size if the main process detects the change
+    */
+    window.electronAPI.onUpdateResizing((paramValue) => {
+        paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrWindowSize", paramValue,
+            paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    });
+}
+
 
 /*=============== Local JSX components =========================*/
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocStartModal_jsx                              !
+! Description: JSX Start Modal if required                    !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocStartModal_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    /*
+    --- Check if a Modal should be started
+    */
+    switch (locCtx_o.currentModal) {
+        case oetrMainModal_e.noModal:
+            return (<></>);
+        case oetrMainModal_e.parametersModal:
+            return (<OetrDialogParameters_jsx ctx={locCtx_o}/>);
+        default:
+            return (<></>);
+    }
+}
 
 /*
 +-------------------------------------------------------------+
@@ -75,36 +169,6 @@ export function OetrMainEntry_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
-    const locTrans_o = locCtx_o.trans_o;
-    /*
-    --- Check if Window is maximized in Cookies
-    */
-    if (locCtx_o.cookiesManagement_o.oeComCookiesGet_m('oetrMaximized') === 'true') {
-        /*
-        --- Request the window maximizing
-        */
-        window.electronAPI.setMaximized('true');
-    } else {
-        /*
-        --- Request the window unmaximizing
-        */
-        window.electronAPI.setMaximized('false');
-    }
-    /*
-    --- Check if Window size is in Cookies
-    */
-    const locWindowSize_s = locCtx_o.cookiesManagement_o.oeComCookiesGet_m('oetrWindowSize');
-    if (locWindowSize_s.length > 0) {
-        /*
-        --- Request the window resizing
-        */
-        window.electronAPI.setResized(locWindowSize_s);
-    }
-    /*
-    --- Search the theme locale
-    */
-    let locLocale_o = frFR;
-    if (locCtx_o.config_o.locale === "en-GB") locLocale_o = enUS;
     /*
     --- Get React state for refreshing the page
     */
@@ -112,23 +176,20 @@ export function OetrMainEntry_jsx(paramProps_o) {
     locCtx_o.refresh_o.main_f = locMain_f;
     locCtx_o.refresh_o.main_s = locMain_s;
     /*
-    --- Set the application title according the locale
+    --- Process all IPC exchanges
     */
-    window.electronAPI.setTitle(locTrans_o.oeComTransGet_m("main", "title"));
+    locIpcExchanges_f(locCtx_o);
     /*
-    --- Update the cookie Maximize/Unmaximize if the main process detects the change
+    --- If Parameters are not completed then force the Parameters Modal
     */
-    window.electronAPI.onUpdateMaximizing((paramValue) => {
-        locCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrMaximized", paramValue,
-            locCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
-    });
+    if (!locCtx_o.parammetersCompleted) {
+        locCtx_o.currentModal = oetrMainModal_e.parametersModal;
+    }
     /*
-    --- Update the cookie Window size if the main process detects the change
+    --- Search the theme locale
     */
-    window.electronAPI.onUpdateResizing((paramValue) => {
-        locCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrWindowSize", paramValue,
-            locCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
-    });
+    let locLocale_o = frFR;
+    if (locCtx_o.config_o.locale === "en-GB") locLocale_o = enUS;
     /*
     --- Create the Theme
     */
@@ -144,6 +205,7 @@ export function OetrMainEntry_jsx(paramProps_o) {
         <ThemeProvider theme={locTheme_o}>
             <CssBaseline/>
             <LocHeader_jsx ctx={locCtx_o}/>
+            <LocStartModal_jsx ctx={locCtx_o}/>
         </ThemeProvider>)
 }
 

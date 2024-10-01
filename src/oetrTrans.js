@@ -13,7 +13,7 @@
   !  Desc. : Translation table for rendering of oetaskreport    !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 27/09/2024                                         !
+  !  Modif.: 01/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -28,15 +28,30 @@ export const oetrTrans_o = {
         "cancel": {
             en: "Cancel",
             fr: "Annuler"
-        }, "return": {
+        },
+        "return": {
             en: "Return",
             fr: "Retour"
+        },
+        "validate": {
+            en: "Validate",
+            fr: "Validation"
         }
     },
     "main": {
         "title": {
-            en: "Tasks reporting tools (by Ouestadam)",
-            fr: "Outil de déclaration de tâches (par Ouestadam)"
+            en: "Tasks reporting tools",
+            fr: "Outil de déclaration de tâches"
+        }
+    },
+    "parameters": {
+        "title": {
+            en: "Parameters",
+            fr: "Paramètres"
+        },
+        "getFolderPath": {
+            en: "Data folder",
+            fr: "Emplacement des données"
         }
     }
 };

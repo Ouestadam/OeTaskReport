@@ -13,7 +13,7 @@
   !  Desc. : Electron main for oetaskreport                     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 28/09/2024                                         !
+  !  Modif.: 01/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -22,7 +22,7 @@
 /*
 --- External products
 */
-import {app, BrowserWindow, ipcMain} from 'electron';
+import {app, BrowserWindow, ipcMain, dialog} from 'electron';
 
 /*=============== Global variables =============================*/
 /*
@@ -33,39 +33,14 @@ let mainWindow_o = null;
 /*=============== Local functions ==============================*/
 
 /*+-------------------------------------------------------------+
-  ! Routine    : locCreateWindow_f                              !
-  ! Description: Creation of the main window                    !
+  ! Routine    : locIpcReceiving_f                              !
+  ! Description: Process all IPC receiving process              !
   !                                                             !
   ! IN:  - Nothing                                              !
-  ! OUT: - Created window                                       !
+  ! OUT: - Nothing                                              !
   +-------------------------------------------------------------+
 */
-function locCreateWindow_f() {
-    /*
-    --- Create the browser window
-    */
-    mainWindow_o = new BrowserWindow({
-        width: 800,
-        height: 600,
-        icon: './assets/icon.png',
-        webPreferences: {
-            preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-            nodeIntegration: true,
-        }
-    });
-
-    /*
-    --- Load the index.html of the app
-    */
-    mainWindow_o.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-    /*
-    --- Hide the Menu bar
-    */
-    mainWindow_o.menuBarVisible = false;
-    /*
-    --- For debugging: Open the DevTools
-    */
-    mainWindow_o.webContents.openDevTools();
+function locIpcReceiving_f() {
     /*
     --- Set Title processing
     */
@@ -90,6 +65,29 @@ function locCreateWindow_f() {
         mainWindow_o.setSize(parseInt(locSize_a[0]), parseInt(locSize_a[1]));
     });
     /*
+    --- Process Folder path dialog
+    */
+    ipcMain.handle('oetrDialogFolderPath', async () =>{
+        const locDialogResult =
+            await dialog.showOpenDialog(mainWindow_o,{ properties: ['openDirectory'] });
+        if (locDialogResult.canceled) {
+            return ("");
+        } else {
+            return (locDialogResult.filePaths[0]);
+        }
+    })
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : locIpcSending_f                                !
+  ! Description: Process all IPC sending process                !
+  !                                                             !
+  ! IN:  - Nothing                                              !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+function locIpcSending_f() {
+    /*
     --- Process Window maximizing process
     */
     mainWindow_o.on('maximize', () => {
@@ -109,6 +107,49 @@ function locCreateWindow_f() {
         const locSize_s = locSize_a[0] + ',' + locSize_a[1];
         mainWindow_o.webContents.send('oetrOnUpdateResizing', locSize_s);
     });
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : locCreateWindow_f                              !
+  ! Description: Creation of the main window                    !
+  !                                                             !
+  ! IN:  - Nothing                                              !
+  ! OUT: - Created window                                       !
+  +-------------------------------------------------------------+
+*/
+function locCreateWindow_f() {
+    /*
+    --- Create the browser window
+    */
+    mainWindow_o = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+            nodeIntegration: true,
+        }
+    });
+
+    /*
+    --- Load the index.html of the app
+    */
+    mainWindow_o.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    /*
+    --- Hide the Menu bar
+    */
+    mainWindow_o.menuBarVisible = false;
+    /*
+    --- For debugging: Open the DevTools
+    */
+    mainWindow_o.webContents.openDevTools();
+    /*
+    --- Process receiving IPC messages
+    */
+    locIpcReceiving_f();
+    /*
+    --- Process sending IPC messages
+    */
+    locIpcSending_f();
 }
 
 /*=============== Main =========================================*/

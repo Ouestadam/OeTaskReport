@@ -26,6 +26,7 @@ import {OeComTrans_c} from "./oecommon/oeComTrans";
 import {oetrConfig_o} from "./oetrConfig";
 import {oetrTrans_o} from "./oetrTrans";
 import {OeComCookies_c} from "./oecommon/oeComCookies";
+import {oetrMainModal_e} from "./oetrMain";
 
 /*=============== Exported functions ===========================*/
 
@@ -79,5 +80,23 @@ export function oetrInit_f(paramCtx_o) {
     --- Create Translation object
     */
     paramCtx_o.trans_o = new OeComTrans_c(paramCtx_o.config_o.locale, oetrTrans_o);
-
+    /*
+    --- In case of error: current Error information
+    */
+    paramCtx_o.error_o = {
+        inError: false,
+        message: ""
+    }
+    /*
+    --- Current Modal
+    */
+    paramCtx_o.currentModal = oetrMainModal_e.noModal;
+    /*
+    --- Parameters are completed
+    */
+    paramCtx_o.parammetersCompleted = false;
+    /*
+    --- Working directory
+    */
+    paramCtx_o.workingDir = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrWorkingDir");
 }

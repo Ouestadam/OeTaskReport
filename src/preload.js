@@ -13,7 +13,7 @@
   !  Desc. : Electron preload for oetaskreport                  !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 30/09/2024                                         !
+  !  Modif.: 01/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -36,10 +36,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
     setMaximized: (paramMaximizeFlag) => ipcRenderer.send('oetrSetMaximized', paramMaximizeFlag),
     //--- Declare oetrSetResized for resizing the window
     setResized: (paramSize) => ipcRenderer.send('oetrSetResized', paramSize),
-
+    //--- Declare oetrDialogFolderPath for getting Folder path
+    dialogFolderPath: () => ipcRenderer.invoke('oetrDialogFolderPath'),
     //--- From Main to Rendering ---
     onUpdateMaximizing: (paramCallback_f) => ipcRenderer.on('oetrOnUpdateMaximizing',
-        (paramEvent,paramValue) => paramCallback_f(paramValue)),
+        (paramEvent, paramValue) => paramCallback_f(paramValue)),
     onUpdateResizing: (paramCallback_f) => ipcRenderer.on('oetrOnUpdateResizing',
-        (paramEvent,paramValue) => paramCallback_f(paramValue))
+        (paramEvent, paramValue) => paramCallback_f(paramValue)),
 });
