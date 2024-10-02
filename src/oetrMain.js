@@ -169,6 +169,7 @@ export function OetrMainEntry_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
+    const locColors_o = locCtx_o.config_o.colors_o;
     /*
     --- Get React state for refreshing the page
     */
@@ -182,6 +183,7 @@ export function OetrMainEntry_jsx(paramProps_o) {
     /*
     --- If Parameters are not completed then force the Parameters Modal
     */
+    if (locCtx_o.workingDir.length > 0) locCtx_o.parammetersCompleted = true;
     if (!locCtx_o.parammetersCompleted) {
         locCtx_o.currentModal = oetrMainModal_e.parametersModal;
     }
@@ -199,10 +201,18 @@ export function OetrMainEntry_jsx(paramProps_o) {
         }
     }, locLocale_o);
     /*
+    --- Define Body color
+    */
+    const locBodyColor_s = "body {\nbackground: linear-gradient(to bottom right, " + locColors_o.backgroundStart +
+        " 0%, " + locColors_o.backgroundEnd + " 100%);\n}";
+    /*
     --- Return the Main page
     */
     return (
         <ThemeProvider theme={locTheme_o}>
+            <style>
+                {locBodyColor_s}
+            </style>
             <CssBaseline/>
             <LocHeader_jsx ctx={locCtx_o}/>
             <LocStartModal_jsx ctx={locCtx_o}/>

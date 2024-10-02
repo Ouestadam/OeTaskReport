@@ -30,7 +30,7 @@ export const oetrConfig_o = {
     locale: "fr-FR",
     colors_o: {
         backgroundDialogTitle: "#d6d4d4",
-        backgroundStart : "#6e815f",
+        backgroundStart : "#59674d",
         backgroundEnd : "#bddca0",
     },
     definitionsFileName: "oetrDefinitions.json"
