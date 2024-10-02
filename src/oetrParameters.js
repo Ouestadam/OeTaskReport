@@ -27,6 +27,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/ma
 import {oetrMainModal_e, oetrMainRefreshPage_f} from "./oetrMain";
 import {OetrError_jsx} from "./oetrError";
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+
 /*
 --- Ouestadam products
 */
@@ -76,7 +77,7 @@ function locClose_f(paramCtx_o, paramEvent) {
   ! OUT: - Nothing                                              !
   +-------------------------------------------------------------+
 */
-function locValid_f(paramCtx_o, paramEvent) {
+async function locValid_f(paramCtx_o, paramEvent) {
     /*
     --- Stop Event
     */
@@ -89,6 +90,30 @@ function locValid_f(paramCtx_o, paramEvent) {
     --- Reset the error state
     */
     paramCtx_o.error_o.inError = false;
+    /*
+    --- If Working directory is not defined then return without only main page refresh
+    */
+    if (paramCtx_o.workingDir.length < 1) {
+        oetrMainRefreshPage_f(paramCtx_o);
+        return;
+    }
+    /*
+    --- Save the Working Dir in the Cookies
+    */
+    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrWorkingDir",
+        paramCtx_o.workingDir, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    /*
+    --- Build filename
+    */
+    const locFileName = paramCtx_o.workingDir + "/" + paramCtx_o.config_o.definitionsFileName;
+    /*
+    --- Convert to String the Definition object
+    */
+    const locData_s = JSON.stringify(paramCtx_o.definitions_o);
+    /*
+    --- Write the definition file
+    */
+    await window.electronAPI.fileWrite(locFileName, locData_s);
     /*
     --- Refresh the main page
     */
@@ -118,8 +143,62 @@ async function locGetFolderPath_f(paramCtx_o, paramEvent) {
     */
     if (locWorkingDir.length > 0) paramCtx_o.workingDir = locWorkingDir;
     /*
-    --- Refresh the Parameters dialog
+    --- Request the Definitions file read and refresh the Parameters dialog
     */
+    paramCtx_o.definitionToBeRead = true;
+    oetrParametersRefreshModal_f(paramCtx_o);
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : locReadJsonDefinitionFile_f                    !
+  ! Description: Read the JSON Definition File                  !
+  !                                                             !
+  ! IN:  - Context                                              !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+async function locReadJsonDefinitionFile_f(paramCtx_o) {
+    /*
+    --- If Working directory is not defined then return without any action
+    */
+    if (paramCtx_o.workingDir.length < 1) return;
+    /*
+    --- Check if the Definition file should be read
+    */
+    if (!paramCtx_o.definitionToBeRead) return;
+    /*
+    --- Build filename
+    */
+    const locFileName = paramCtx_o.workingDir + "/" + paramCtx_o.config_o.definitionsFileName;
+    /*
+    --- Check if the Definitions file exists
+    */
+    const locFileExists = await window.electronAPI.fileExists(locFileName);
+    if (!locFileExists) {
+        /*
+        --- File is not present then reset the Definition Object and return
+        */
+        paramCtx_o.definitions_o = {};
+        paramCtx_o.definitionToBeRead = false;
+        oetrParametersRefreshModal_f(paramCtx_o);
+        return;
+    }
+    /*
+    --- Read the JSON File
+    */
+    const locData_s = await window.electronAPI.fileRead(locFileName);
+    if (locData_s.length > 4) {
+        /*
+        --- Parse only minimum Json
+         */
+        paramCtx_o.definitions_o = JSON.parse(locData_s);
+    } else {
+        paramCtx_o.definitions_o = {};
+    }
+    /*
+    --- Return by requesting refresh of the parameters dialog
+    */
+    paramCtx_o.definitionToBeRead = false;
     oetrParametersRefreshModal_f(paramCtx_o);
 }
 
@@ -140,16 +219,16 @@ function LocContent_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
-    const locColors_o = locCtx_o.config_o.colors_o;
     const locTrans_o = locCtx_o.trans_o;
+    /*
+    --- Read the Definitions JSON file if present
+    */
+    locReadJsonDefinitionFile_f(locCtx_o);
     /*
     --- Return the Dialog Content to display
     */
     return (
-        <div style={{
-            minHeight: "300px",
-            backgroundColor: locColors_o.backgroundDialogContent
-        }}>
+        <div style={{minHeight: "300px"}}>
             <div>
                 {locTrans_o.oeComTransGet_m("parameters", "labelGetWorkingDir")}
             </div>
@@ -157,7 +236,7 @@ function LocContent_jsx(paramProps_o) {
                 <Button
                     variant="contained"
                     onClick={(paramEvent) => locGetFolderPath_f(locCtx_o, paramEvent)}
-                    sx={{mr: "10px"}}>
+                    sx={{mr: "14px"}}>
                     <CreateNewFolderIcon/>
                 </Button>
                 <span>
@@ -168,7 +247,6 @@ function LocContent_jsx(paramProps_o) {
             </div>
         </div>
     )
-
 }
 
 /*=============== Exported functions ===========================*/
@@ -202,8 +280,9 @@ export function OetrDialogParameters_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
-    const locColors_o = locCtx_o.config_o.colors_o;
     const locTrans_o = locCtx_o.trans_o;
+    const locColors_o = locCtx_o.config_o.colors_o;
+
     /*
     --- Get React state for refreshing the page
     */
@@ -217,7 +296,13 @@ export function OetrDialogParameters_jsx(paramProps_o) {
     return (
         <Dialog open={true} fullWidth maxWidth="xl">
             <OetrError_jsx ctx={locCtx_o}/>
-            <DialogTitle sx={{textAlign: "center"}}>
+            <DialogTitle sx={{
+                height: "40px",
+                pt: "6px",
+                pb: "10px",
+                mb: "14px",
+                textAlign: "center",
+                backgroundColor: locColors_o.backgroundDialogTitle }}>
                 {locTrans_o.oeComTransGet_m("parameters", "title")}
             </DialogTitle>
             <DialogContent sx={{pb: 0, mb: 0}}>

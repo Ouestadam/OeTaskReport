@@ -29,9 +29,9 @@ export const oetrConfig_o = {
     modification: "26/09/2024",
     locale: "fr-FR",
     colors_o: {
-        backgroundDialog: "#6F7170",
-        backgroundDialogContent: "#d6d4d4",
+        backgroundDialogTitle: "#d6d4d4",
         backgroundStart : "#6e815f",
         backgroundEnd : "#bddca0",
     },
+    definitionsFileName: "oetrDefinitions.json"
 }

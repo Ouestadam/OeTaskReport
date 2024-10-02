@@ -13,7 +13,7 @@
   !  Desc. : Electron preload for oetaskreport                  !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 01/10/2024                                         !
+  !  Modif.: 02/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -38,6 +38,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
     setResized: (paramSize) => ipcRenderer.send('oetrSetResized', paramSize),
     //--- Declare oetrDialogFolderPath for getting Folder path
     dialogFolderPath: () => ipcRenderer.invoke('oetrDialogFolderPath'),
+    //--- Declare oetrFileExists for checking if a File exists
+    fileExists: (paramFileName) => ipcRenderer.invoke('oetrFileExists',paramFileName),
+    //--- Declare oetrFileRead for reading a File
+    fileRead: (paramFileName) => ipcRenderer.invoke('oetrFileRead',paramFileName),
+    //--- Declare oetrFileWrite for writing in a File
+    fileWrite: (paramFileName,paramData) => ipcRenderer.invoke('oetrFileWrite',paramFileName, paramData),
     //--- From Main to Rendering ---
     onUpdateMaximizing: (paramCallback_f) => ipcRenderer.on('oetrOnUpdateMaximizing',
         (paramEvent, paramValue) => paramCallback_f(paramValue)),

@@ -99,4 +99,12 @@ export function oetrInit_f(paramCtx_o) {
     --- Working directory
     */
     paramCtx_o.workingDir = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrWorkingDir");
+    /*
+    --- Definitions object
+    */
+    paramCtx_o.definitions_o = {};
+    /*
+    --- Flag for not request twice reading Definitions file
+    */
+    paramCtx_o.definitionToBeRead = true;
 }

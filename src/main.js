@@ -13,7 +13,7 @@
   !  Desc. : Electron main for oetaskreport                     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 01/10/2024                                         !
+  !  Modif.: 02/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -23,6 +23,7 @@
 --- External products
 */
 import {app, BrowserWindow, ipcMain, dialog} from 'electron';
+import fs from "node:fs";
 
 /*=============== Global variables =============================*/
 /*
@@ -69,13 +70,31 @@ function locIpcReceiving_f() {
     */
     ipcMain.handle('oetrDialogFolderPath', async () =>{
         const locDialogResult =
-            await dialog.showOpenDialog(mainWindow_o,{ properties: ['openDirectory'] });
+            await dialog.showOpenDialog(mainWindow_o,{ properties: ['openDirectory','createDirectory'] });
         if (locDialogResult.canceled) {
             return ("");
         } else {
             return (locDialogResult.filePaths[0]);
         }
-    })
+    });
+    /*
+    --- Process Check if a File is present
+    */
+    ipcMain.handle('oetrFileExists',  async (paramEvent, paramFileName) =>{
+        return fs.existsSync(paramFileName);
+    });
+    /*
+    --- Process Read of a File
+    */
+    ipcMain.handle('oetrFileRead',  async (paramEvent, paramFileName) =>{
+        return fs.readFileSync(paramFileName);
+    });
+    /*
+    --- Process Write of a File
+    */
+    ipcMain.handle('oetrFileWrite',  async (paramEvent, paramFileName, paramData) =>{
+        return fs.writeFileSync(paramFileName,paramData);
+    });
 }
 
 /*+-------------------------------------------------------------+
