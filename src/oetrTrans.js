@@ -42,6 +42,10 @@ export const oetrTrans_o = {
         "title": {
             en: "Tasks reporting tools",
             fr: "Outil de déclaration de tâches"
+        },
+        "urlOuestadam": {
+            en: "Developed by Denis Esteve",
+            fr: "Développé par Denis Esteve"
         }
     },
     "parameters": {

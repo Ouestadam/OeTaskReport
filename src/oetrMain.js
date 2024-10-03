@@ -24,11 +24,10 @@
 */
 import React, {useState} from "react";
 import {
-    Box,
-    createTheme, CssBaseline, ThemeProvider
+    Box, createTheme, CssBaseline, IconButton, Link, ThemeProvider
 } from "@mui/material";
 import {enUS, frFR} from "@mui/material/locale";
-
+import SettingsIcon from '@mui/icons-material/Settings';
 /*
 --- Ouestadam products
 */
@@ -149,9 +148,55 @@ function LocHeader_jsx(paramProps_o) {
     --- Create the Main page Header
     */
     return (
-        <Box sx={{position: "absolute", top: "10px", right: "10px"}}>
-            <OetrLocaleSwitcher_jsx ctx={locCtx_o}/>
-        </Box>
+        <div>
+            <Box sx={{position: "absolute", top: "10px", right: "10px"}}>
+                <OetrLocaleSwitcher_jsx ctx={locCtx_o}/>
+            </Box>
+            <Box sx={{position: "absolute", top: "4px", left: "30px"}}>
+                <IconButton
+                    aria-label="Configuration"
+                    size="large"
+                    onClick={() => {
+                        locCtx_o.currentModal = oetrMainModal_e.parametersModal;
+                        oetrMainRefreshPage_f(locCtx_o);
+                    }}>
+                    <SettingsIcon fontSize="large"/>
+                </IconButton>
+            </Box>
+        </div>
+    )
+}
+
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocFooter_jsx                                  !
+! Description: JSX Footer of the Main page                    !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocFooter_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
+    /*
+    --- Create the Main page Header
+    */
+    return (
+        <div>
+            <Box sx={{position: "absolute", bottom: "10px", textAlign: "center", width: "100%"}}>
+                <Link href={locCtx_o.config_o.urlOuestadam}
+                      target="_blank"
+                      underline="hover"
+                      color="inherit">
+                    {locTrans_o.oeComTransGet_m("main", "urlOuestadam")}
+                </Link>
+            </Box>
+        </div>
     )
 }
 
@@ -184,7 +229,7 @@ export function OetrMainEntry_jsx(paramProps_o) {
     /*
     --- Read the definition file
     */
-    oetrFileMgtReadJsonDefinitionFile_f(locCtx_o,oetrMainRefreshPage_f);
+    oetrFileMgtReadJsonDefinitionFile_f(locCtx_o, oetrMainRefreshPage_f);
     /*
     --- Search the theme locale
     */
@@ -213,6 +258,7 @@ export function OetrMainEntry_jsx(paramProps_o) {
             </style>
             <CssBaseline/>
             <LocHeader_jsx ctx={locCtx_o}/>
+            <LocFooter_jsx ctx={locCtx_o}/>
             <LocStartModal_jsx ctx={locCtx_o}/>
         </ThemeProvider>)
 }

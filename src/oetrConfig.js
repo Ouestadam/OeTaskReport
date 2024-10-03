@@ -30,8 +30,9 @@ export const oetrConfig_o = {
     locale: "fr-FR",
     colors_o: {
         backgroundDialogTitle: "#d6d4d4",
-        backgroundStart : "#59674d",
-        backgroundEnd : "#bddca0",
+        backgroundStart : "#bddca0",
+        backgroundEnd : "#59674d",
     },
-    definitionsFileName: "oetrTaskReport.json"
+    definitionsFileName: "oetrTaskReport.json",
+    urlOuestadam: "https://ouestadam.com"
 }
