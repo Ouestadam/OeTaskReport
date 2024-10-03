@@ -152,7 +152,7 @@ function LocHeader_jsx(paramProps_o) {
             <Box sx={{position: "absolute", top: "10px", right: "10px"}}>
                 <OetrLocaleSwitcher_jsx ctx={locCtx_o}/>
             </Box>
-            <Box sx={{position: "absolute", top: "4px", left: "30px"}}>
+            <Box sx={{position: "absolute", top: "4px", left: "24px"}}>
                 <IconButton
                     aria-label="Configuration"
                     size="large"
@@ -189,7 +189,7 @@ function LocFooter_jsx(paramProps_o) {
     */
     return (
         <div>
-            <Box sx={{position: "absolute", bottom: "10px", left: "16px"}}>
+            <Box sx={{position: "absolute", bottom: "10px", left: "24px"}}>
                 <div style={{color: locColors_o.foregroundFooter}}>
                     {"V" + locCtx_o.config_o.version}
                 </div>
