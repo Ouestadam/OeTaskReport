@@ -44,7 +44,10 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
     /*
     --- If Working directory is not defined then return without any action
     */
-    if (paramCtx_o.workingDir.length < 1) return;
+    if (paramCtx_o.workingDir.length < 1) {
+        paramCtx_o.currentModal = oetrMainModal_e.parametersModal;
+        return;
+    }
     /*
     --- Check if the Definition file should be read
     */

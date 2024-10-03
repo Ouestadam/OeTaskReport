@@ -32,6 +32,7 @@ export const oetrConfig_o = {
         backgroundDialogTitle: "#d6d4d4",
         backgroundStart : "#bddca0",
         backgroundEnd : "#59674d",
+        foregroundFooter : "#d0d0d0"
     },
     definitionsFileName: "oetrTaskReport.json",
     urlOuestadam: "https://ouestadam.com"

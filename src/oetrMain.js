@@ -183,16 +183,23 @@ function LocFooter_jsx(paramProps_o) {
     */
     const locCtx_o = paramProps_o.ctx;
     const locTrans_o = locCtx_o.trans_o;
+    const locColors_o = locCtx_o.config_o.colors_o;
     /*
     --- Create the Main page Header
     */
     return (
         <div>
-            <Box sx={{position: "absolute", bottom: "10px", textAlign: "center", width: "100%"}}>
+            <Box sx={{position: "absolute", bottom: "10px", left: "16px"}}>
+                <div style={{color: locColors_o.foregroundFooter}}>
+                    {"V" + locCtx_o.config_o.version}
+                </div>
+            </Box>
+            <Box sx={{position: "absolute", bottom: "10px", right: "16px"}}>
                 <Link href={locCtx_o.config_o.urlOuestadam}
                       target="_blank"
                       underline="hover"
-                      color="inherit">
+                      color={locColors_o.foregroundFooter}
+                >
                     {locTrans_o.oeComTransGet_m("main", "urlOuestadam")}
                 </Link>
             </Box>
