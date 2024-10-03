@@ -68,9 +68,9 @@ function locIpcReceiving_f() {
     /*
     --- Process Folder path dialog
     */
-    ipcMain.handle('oetrDialogFolderPath', async () =>{
+    ipcMain.handle('oetrDialogFolderPath', async () => {
         const locDialogResult =
-            await dialog.showOpenDialog(mainWindow_o,{ properties: ['openDirectory','createDirectory'] });
+            await dialog.showOpenDialog(mainWindow_o, {properties: ['openDirectory', 'createDirectory']});
         if (locDialogResult.canceled) {
             return ("");
         } else {
@@ -80,20 +80,20 @@ function locIpcReceiving_f() {
     /*
     --- Process Check if a File is present
     */
-    ipcMain.handle('oetrFileExists',  async (paramEvent, paramFileName) =>{
+    ipcMain.handle('oetrFileExists', async (paramEvent, paramFileName) => {
         return fs.existsSync(paramFileName);
     });
     /*
     --- Process Read of a File
     */
-    ipcMain.handle('oetrFileRead',  async (paramEvent, paramFileName) =>{
-        return fs.readFileSync(paramFileName);
+    ipcMain.handle('oetrFileRead', async (paramEvent, paramFileName) => {
+        return (fs.readFileSync(paramFileName, {encoding: 'utf8'}));
     });
     /*
     --- Process Write of a File
     */
-    ipcMain.handle('oetrFileWrite',  async (paramEvent, paramFileName, paramData) =>{
-        return fs.writeFileSync(paramFileName,paramData);
+    ipcMain.handle('oetrFileWrite', async (paramEvent, paramFileName, paramData) => {
+        return fs.writeFileSync(paramFileName, paramData, {encoding: 'utf8'});
     });
 }
 

@@ -31,6 +31,28 @@ import {oetrMainModal_e} from "./oetrMain";
 /*=============== Exported functions ===========================*/
 
 /*+-------------------------------------------------------------+
+  ! Routine    : oetrInitDefinitions_f                          !
+  ! Description: Initialize the definitions object in context   !
+  !                                                             !
+  ! IN:  - Context                                              !
+  ! OUT: - Updated context                                      !
+  +-------------------------------------------------------------+
+*/
+export function oetrInitDefinitions_f(paramCtx_o) {
+    /*
+    --- Initialise Definitions object in the context
+    */
+    paramCtx_o.definitions_o = {
+        clients_o: {}
+    };
+    /*
+    --- Reset the current client and task
+    */
+    paramCtx_o.currentClient_s = "";
+    paramCtx_o.currentTask_s = "";
+}
+
+/*+-------------------------------------------------------------+
   ! Routine    : oetrInit_f                                     !
   ! Description: Initialize the rendering context               !
   !                                                             !
@@ -100,11 +122,19 @@ export function oetrInit_f(paramCtx_o) {
     */
     paramCtx_o.workingDir = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrWorkingDir");
     /*
-    --- Definitions object
+    --- Initialise the Definitions object
     */
-    paramCtx_o.definitions_o = {};
+    oetrInitDefinitions_f(paramCtx_o);
     /*
     --- Flag for not request twice reading Definitions file
     */
     paramCtx_o.definitionToBeRead = true;
+    /*
+    --- Current Client
+    */
+    paramCtx_o.currentClient_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrCurrentClient");
+    /*
+    --- Current Task Name
+    */
+    paramCtx_o.currentTask_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrCurrentTask");
 }

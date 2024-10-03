@@ -34,6 +34,7 @@ import {enUS, frFR} from "@mui/material/locale";
 */
 import {OetrLocaleSwitcher_jsx} from "./oetrLocale";
 import {OetrDialogParameters_jsx} from "./oetrParameters";
+import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
 
 /*=============== Exported objects =============================*/
 export const oetrMainModal_e = {
@@ -181,12 +182,9 @@ export function OetrMainEntry_jsx(paramProps_o) {
     */
     locIpcExchanges_f(locCtx_o);
     /*
-    --- If Parameters are not completed then force the Parameters Modal
+    --- Read the definition file
     */
-    if (locCtx_o.workingDir.length > 0) locCtx_o.parammetersCompleted = true;
-    if (!locCtx_o.parammetersCompleted) {
-        locCtx_o.currentModal = oetrMainModal_e.parametersModal;
-    }
+    oetrFileMgtReadJsonDefinitionFile_f(locCtx_o,oetrMainRefreshPage_f);
     /*
     --- Search the theme locale
     */
