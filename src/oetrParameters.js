@@ -32,19 +32,20 @@ import {
     DialogTitle, FormControl,
     IconButton,
     InputAdornment, InputLabel, MenuItem,
-    OutlinedInput, Select
+    OutlinedInput, Select, Tooltip
 } from "@mui/material";
 import Grid from '@mui/material/Grid2';
-import {oetrMainModal_e, oetrMainRefreshPage_f} from "./oetrMain";
-import {OetrError_jsx} from "./oetrError";
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
-import {oetrInitDefinitions_f} from "./oetrInit";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 /*
 --- Ouestadam products
 */
+import {oetrMainModal_e, oetrMainRefreshPage_f} from "./oetrMain";
+import {OetrError_jsx} from "./oetrError";
+import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
+import {oetrInitDefinitions_f} from "./oetrInit";
 
 /*=============== Local functions ==============================*/
 
@@ -351,7 +352,7 @@ function LocContent_jsx(paramProps_o) {
                     <div>
                         {locTrans_o.oeComTransGet_m("parameters", "labelCreateClient")}
                     </div>
-                    <Box sx={{minWidth: 100}}>
+                    <Box sx={{minWidth: "100px"}}>
                         <FormControl variant="outlined" size="small">
                             <InputLabel htmlFor="oetrParamEntryClient">{locLabelNewClient}</InputLabel>
                             <OutlinedInput
@@ -381,7 +382,7 @@ function LocContent_jsx(paramProps_o) {
                 </Grid>
                 <Grid size={6} sx={{display: locDisplaySelectClient}}>
                     {locTrans_o.oeComTransGet_m("parameters", "labelSelectClient")}
-                    <Box sx={{minWidth: 100}}>
+                    <Box sx={{minWidth: "100px", display: "flex"}}>
                         <FormControl variant="standard" fullWidth size="small">
                             <Select
                                 id="oetrParamSelectClient"
@@ -399,6 +400,16 @@ function LocContent_jsx(paramProps_o) {
                                 ))}
                             </Select>
                         </FormControl>
+                        <Tooltip title={locTrans_o.oeComTransGet_m("parameters", "toolTipDeleteClient")}>
+                            <IconButton
+                                size="small"
+                                color="primary"
+                                onClick={(paramEvent) => {
+                                }}
+                                sx={{ml: "4px"}}>
+                                <DeleteIcon fontSize="small"/>
+                            </IconButton>
+                        </Tooltip>
                     </Box>
                 </Grid>
             </Grid>
@@ -407,7 +418,7 @@ function LocContent_jsx(paramProps_o) {
                     <div>
                         {locTrans_o.oeComTransGet_m("parameters", "labelCreateTask")}
                     </div>
-                    <Box sx={{minWidth: 100}}>
+                    <Box sx={{minWidth: "100px"}}>
                         <FormControl variant="outlined" size="small">
                             <InputLabel htmlFor="oetrParamEntryTask">{locLabelNewTask}</InputLabel>
                             <OutlinedInput
@@ -437,7 +448,7 @@ function LocContent_jsx(paramProps_o) {
                 </Grid>
                 <Grid size={6} sx={{display: locDisplaySelectTask}}>
                     {locTrans_o.oeComTransGet_m("parameters", "labelSelectTask")}
-                    <Box sx={{minWidth: 100}}>
+                    <Box sx={{minWidth: "100px", display: "flex"}}>
                         <FormControl variant="standard" fullWidth size="small">
                             <Select
                                 id="oetrParamSelectTask"
@@ -456,6 +467,16 @@ function LocContent_jsx(paramProps_o) {
                                 ))}
                             </Select>
                         </FormControl>
+                        <Tooltip title={locTrans_o.oeComTransGet_m("parameters", "toolTipDeleteTask")}>
+                            <IconButton
+                                size="small"
+                                color="primary"
+                                onClick={(paramEvent) => {
+                                }}
+                                sx={{ml: "4px"}}>
+                                <DeleteIcon fontSize="small"/>
+                            </IconButton>
+                        </Tooltip>
                     </Box>
                 </Grid>
             </Grid>

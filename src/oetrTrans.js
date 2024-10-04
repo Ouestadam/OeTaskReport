@@ -73,6 +73,10 @@ export const oetrTrans_o = {
             en: "Select a client:",
             fr: "Sélectionner un client :"
         },
+        "toolTipDeleteClient": {
+            en: "Remove the selected client",
+            fr: "Enlève le client sélectionné"
+        },
         "labelCreateTask": {
           en: "Add a new task in the list:",
           fr: "Ajouter une nouvelle tâche dans la liste :"
@@ -84,6 +88,10 @@ export const oetrTrans_o = {
         "labelSelectTask": {
             en: "List of tasks:",
             fr: "Liste des tâches"
+        },
+        "toolTipDeleteTask": {
+            en: "Suppress the selected task",
+            fr: "Enlève la tâche sélectionnée"
         }
     }
 };
