@@ -13,7 +13,7 @@
   !  Desc. : Files management for rendering of oetaskreport     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 03/10/2024                                         !
+  !  Modif.: 04/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -108,3 +108,35 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
     */
     if (paramRefresh_f !== undefined) paramRefresh_f(paramCtx_o);
 }
+
+/*+-------------------------------------------------------------+
+  ! Routine    : oetrFileMgtWriteJsonDefinitionFile_f           !
+  ! Description: Write the JSON Definition File                 !
+  !                                                             !
+  ! IN:  - Context                                              !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+export async function oetrFileMgtWriteJsonDefinitionFile_f(paramCtx_o) {
+    /*
+    --- If Working directory is not defined then return without any action
+    */
+    if (paramCtx_o.workingDir.length < 1) return;
+    /*
+    --- Check if the Working directory exists
+    */
+    const locWorkingDirExists = await window.electronAPI.fileExists(paramCtx_o.workingDir);
+    if (!locWorkingDirExists) return;
+    /*
+    --- Build filename
+    */
+    const locFileName = paramCtx_o.workingDir + "/" + paramCtx_o.config_o.definitionsFileName;
+    /*
+    --- Convert to String the Definition object
+    */
+    const locData_s = JSON.stringify(paramCtx_o.definitions_o);
+    /*
+    --- Write the definition file
+    */
+    await window.electronAPI.fileWrite(locFileName, locData_s);
+    }

@@ -36,6 +36,10 @@ export const oetrTrans_o = {
         "validate": {
             en: "Validate",
             fr: "Validation"
+        },
+        "date": {
+            en: "$$1$$ at $$2$$",
+            fr: "$$1$$ à $$2$$"
         }
     },
     "main": {
@@ -87,11 +91,43 @@ export const oetrTrans_o = {
         },
         "labelSelectTask": {
             en: "List of tasks:",
-            fr: "Liste des tâches"
+            fr: "Liste des tâches :"
         },
         "toolTipDeleteTask": {
             en: "Suppress the selected task",
             fr: "Enlève la tâche sélectionnée"
+        }
+    },
+    "startReport": {
+        "buttonStart": {
+            en: "Start the task",
+            fr: "Démarrage de la tâche"
+        },
+        "labelSelectClient": {
+            en: "Select a client:",
+            fr: "Sélectionner un client :"
+        },
+        "labelSelectTask": {
+            en: "Select a task:",
+            fr: "Sélectionner une tâche :"
+        }
+    },
+    "endReport": {
+        "buttonEnd": {
+            en: "End the task",
+            fr: "Arrêt de la tâche"
+        },
+        "labelSelectedClient": {
+            en: "Working for the client:",
+            fr: "Client en cours :"
+        },
+        "labelSelectedTask": {
+            en: "Working on the task:",
+            fr: "Tâche en cours :"
+        },
+        "labelStartDate": {
+            en: "Task start date:",
+            fr: "Date de démarrage de la Tâche :"
         }
     }
 };

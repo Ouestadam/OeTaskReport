@@ -33,6 +33,7 @@ export const oetrConfig_o = {
         backgroundStart : "#bddca0",
         backgroundEnd : "#59674d",
         backgroundIcon : "#efefef",
+        backgroundSelect : "#efefef",
         foregroundFooter : "#efefef",
     },
     definitionsFileName: "oetrTaskReport.json",

@@ -43,7 +43,14 @@ export function oetrInitDefinitions_f(paramCtx_o) {
     --- Initialise Definitions object in the context
     */
     paramCtx_o.definitions_o = {
-        clients_o: {}
+        clients_o: {},
+        startedTask_o: {
+            started : false,
+            client_s : "",
+            task_s : "",
+            dateStart : 0,
+            dateEnd: 0
+        }
     };
     /*
     --- Reset the current client and task
@@ -137,4 +144,8 @@ export function oetrInit_f(paramCtx_o) {
     --- Current Task Name
     */
     paramCtx_o.currentTask_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrCurrentTask");
+    /*
+    --- Task started flag
+    */
+    paramCtx_o.taskStarted = false;
 }

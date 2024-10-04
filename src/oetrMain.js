@@ -34,6 +34,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import {OetrLocaleSwitcher_jsx} from "./oetrLocale";
 import {OetrDialogParameters_jsx} from "./oetrParameters";
 import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
+import {OetrStartReport_jsx} from "./oetrStartReport";
+import {OetrEndReport_jsx} from "./oetrEndReport";
 
 /*=============== Exported objects =============================*/
 export const oetrMainModal_e = {
@@ -174,6 +176,39 @@ function LocHeader_jsx(paramProps_o) {
     )
 }
 
+/*
++-------------------------------------------------------------+
+! Routine    : LocContent_jsx                                 !
+! Description: JSX Content of the Main page                   !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocContent_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locStartedTask_o = locCtx_o.definitions_o.startedTask_o;
+    /*
+    --- If parameters are not completed then return empty box
+    */
+    if ((locCtx_o.workingDir.length < 1) || (!locCtx_o.parametersCompleted)) return (<div></div>);
+    /*
+    --- Check if Reporting is started
+    */
+    const LocBlock_j = (locStartedTask_o.started) ?
+        (<OetrEndReport_jsx ctx={locCtx_o}/>) : (<OetrStartReport_jsx ctx={locCtx_o}/>);
+    /*
+    --- Create the Main page Content
+    */
+    return (
+        <div>
+            {LocBlock_j}
+        </div>
+    )
+}
 
 /*
 +-------------------------------------------------------------+
@@ -272,6 +307,7 @@ export function OetrMainEntry_jsx(paramProps_o) {
             </style>
             <CssBaseline/>
             <LocHeader_jsx ctx={locCtx_o}/>
+            <LocContent_jsx ctx={locCtx_o}/>
             <LocFooter_jsx ctx={locCtx_o}/>
             <LocStartModal_jsx ctx={locCtx_o}/>
         </ThemeProvider>)

@@ -44,7 +44,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 */
 import {oetrMainModal_e, oetrMainRefreshPage_f} from "./oetrMain";
 import {OetrError_jsx} from "./oetrError";
-import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
+import {oetrFileMgtReadJsonDefinitionFile_f, oetrFileMgtWriteJsonDefinitionFile_f} from "./oetrFileMgt";
 import {oetrInitDefinitions_f} from "./oetrInit";
 
 /*=============== Local functions ==============================*/
@@ -127,17 +127,9 @@ async function locValid_f(paramCtx_o, paramEvent) {
     paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentTask",
         paramCtx_o.currentTask_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
     /*
-    --- Build filename
+    --- Save the definitions in file
     */
-    const locFileName = paramCtx_o.workingDir + "/" + paramCtx_o.config_o.definitionsFileName;
-    /*
-    --- Convert to String the Definition object
-    */
-    const locData_s = JSON.stringify(paramCtx_o.definitions_o);
-    /*
-    --- Write the definition file
-    */
-    await window.electronAPI.fileWrite(locFileName, locData_s);
+    await oetrFileMgtWriteJsonDefinitionFile_f(paramCtx_o);
     /*
     --- Refresh the main page
     */
@@ -485,6 +477,7 @@ function LocContent_jsx(paramProps_o) {
                                 variant="standard"
                                 onChange={(paramEvent) => {
                                     locCtx_o.currentClient_s = paramEvent.target.value;
+                                    locCtx_o.currentTask_s = "";
                                     oetrParametersRefreshModal_f(locCtx_o);
                                 }}
                             >
