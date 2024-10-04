@@ -54,6 +54,20 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
     if (!paramCtx_o.definitionToBeRead) return;
     paramCtx_o.definitionToBeRead = false;
     /*
+    --- Check if the Working directory exists
+    */
+    const locWorkingDirExists = await window.electronAPI.fileExists(paramCtx_o.workingDir);
+    if (!locWorkingDirExists) {
+        /*
+        --- Working directory is not present then reset the Definition Object set the Parameters Modal and return
+        */
+        paramCtx_o.workingDir = "";
+        oetrInitDefinitions_f(paramCtx_o);
+        paramCtx_o.currentModal = oetrMainModal_e.parametersModal
+        paramRefresh_f(paramCtx_o);
+        return;
+    }
+    /*
     --- Build filename
     */
     const locFileName = paramCtx_o.workingDir + "/" + paramCtx_o.config_o.definitionsFileName;

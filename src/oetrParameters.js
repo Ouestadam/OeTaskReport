@@ -65,7 +65,7 @@ function locClose_f(paramCtx_o, paramEvent) {
     /*
     --- If parameters are not completed then close the application
     */
-    if (!paramCtx_o.parammetersCompleted) {
+    if (!paramCtx_o.parametersCompleted) {
         window.close();
     }
     /*
@@ -271,7 +271,7 @@ function locAddNewTask_f(paramCtx_o, paramEvent) {
         /*
         --- Authorise parameters validation
         */
-        paramCtx_o.parammetersCompleted = true;
+        paramCtx_o.parametersCompleted = true;
     }
     /*
     --- Refresh the parameters modal
@@ -312,6 +312,10 @@ function LocContent_jsx(paramProps_o) {
     const locTasks_a = ((locClients_a.length > 0) && (locCtx_o.currentClient_s.length > 0) &&
         (locCtx_o.definitions_o.clients_o[locCtx_o.currentClient_s] !== undefined)) ?
         Object.keys(locCtx_o.definitions_o.clients_o[locCtx_o.currentClient_s]) : [];
+    /*
+    --- If one task exists then set parameters as completed
+    */
+    locCtx_o.parametersCompleted = (locTasks_a.length > 0);
     /*
     --- Build visibility flags
     */
@@ -522,7 +526,7 @@ export function OetrDialogParameters_jsx(paramProps_o) {
                     {locTrans_o.oeComTransGet_m("common", "cancel")}
                 </Button>
                 <Button
-                    disabled={!locCtx_o.parammetersCompleted}
+                    disabled={!locCtx_o.parametersCompleted}
                     variant="contained"
                     onClick={(paramEvent) => locValid_f(locCtx_o, paramEvent)}>
                     {locTrans_o.oeComTransGet_m("common", "validate")}

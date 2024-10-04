@@ -116,7 +116,7 @@ export function oetrInit_f(paramCtx_o) {
     /*
     --- Parameters are completed
     */
-    paramCtx_o.parammetersCompleted = false;
+    paramCtx_o.parametersCompleted = false;
     /*
     --- Working directory
     */
