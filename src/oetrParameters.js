@@ -227,6 +227,87 @@ function locAddNewClient_f(paramCtx_o, paramEvent) {
 }
 
 /*+-------------------------------------------------------------+
+  ! Routine    : locDeleteClient_f                              !
+  ! Description: Delete a client from the definitions           !
+  !                                                             !
+  ! IN:  - Context                                              !
+  !      - Event                                                !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+function locDeleteClient_f(paramCtx_o, paramEvent) {
+    /*
+    --- Stop Event
+    */
+    paramEvent.preventDefault();
+    /*
+    --- If current client is not defined then return without change
+    */
+    const locClient_s = paramCtx_o.currentClient_s;
+    if (locClient_s.length < 1) return;
+    /*
+    --- Delete the client in the definition object
+    */
+    delete paramCtx_o.definitions_o.clients_o[locClient_s];
+    /*
+    --- Set the last Client as current client
+    */
+    const locClients_a = Object.keys(paramCtx_o.definitions_o.clients_o);
+    const locClientNbElt = locClients_a.length;
+    if (locClientNbElt > 0) {
+        paramCtx_o.currentClient_s = locClients_a[locClientNbElt-1];
+    } else {
+        paramCtx_o.currentClient_s = "";
+    }
+    /*
+    --- Refresh the parameters modal
+    */
+    oetrParametersRefreshModal_f(paramCtx_o);
+}
+
+
+/*+-------------------------------------------------------------+
+  ! Routine    : locDeleteTask_f                                !
+  ! Description: Delete a task from the definitions             !
+  !                                                             !
+  ! IN:  - Context                                              !
+  !      - Event                                                !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+function locDeleteTask_f(paramCtx_o, paramEvent) {
+    /*
+    --- Stop Event
+    */
+    paramEvent.preventDefault();
+    /*
+    --- If current client or task is not defined then return without change
+    */
+    const locClient_s = paramCtx_o.currentClient_s;
+    if (locClient_s.length < 1) return;
+    const locTask_s = paramCtx_o.currentTask_s;
+    if (locTask_s.length < 1) return;
+    /*
+    --- Delete the task in the definition object
+    */
+    delete paramCtx_o.definitions_o.clients_o[locClient_s][locTask_s];
+    /*
+    --- Set the last task as current task
+    */
+    const locTasks_a = Object.keys(paramCtx_o.definitions_o.clients_o[locClient_s]);
+    const locTaskNbElt = locTasks_a.length;
+    if (locTaskNbElt > 0) {
+        paramCtx_o.currentTask_s = locTasks_a[locTaskNbElt-1];
+    } else {
+        paramCtx_o.currentTask_s = "";
+    }
+    /*
+    --- Refresh the parameters modal
+    */
+    oetrParametersRefreshModal_f(paramCtx_o);
+}
+
+/*+-------------------------------------------------------------+
   ! Routine    : locAddNewTask_f                                !
   ! Description: Add a new task in the definitions              !
   !                                                             !
@@ -404,8 +485,7 @@ function LocContent_jsx(paramProps_o) {
                             <IconButton
                                 size="small"
                                 color="primary"
-                                onClick={(paramEvent) => {
-                                }}
+                                onClick={(paramEvent) => locDeleteClient_f(locCtx_o,paramEvent)}
                                 sx={{ml: "4px"}}>
                                 <DeleteIcon fontSize="small"/>
                             </IconButton>
@@ -471,8 +551,7 @@ function LocContent_jsx(paramProps_o) {
                             <IconButton
                                 size="small"
                                 color="primary"
-                                onClick={(paramEvent) => {
-                                }}
+                                onClick={(paramEvent) => locDeleteTask_f(locCtx_o,paramEvent)}
                                 sx={{ml: "4px"}}>
                                 <DeleteIcon fontSize="small"/>
                             </IconButton>
