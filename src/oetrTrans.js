@@ -46,6 +46,10 @@ export const oetrTrans_o = {
         "urlOuestadam": {
             en: "Developed by Denis Esteve",
             fr: "Développé par Denis Esteve"
+        },
+        "toolTipParameters": {
+            en: "Configuration",
+            fr: "Configuration"
         }
     },
     "parameters": {

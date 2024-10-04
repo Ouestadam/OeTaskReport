@@ -13,7 +13,7 @@
   !  Desc. : Locale switcher for rendering of oetaskreport       !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 27/09/2024                                         !
+  !  Modif.: 04/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -23,7 +23,7 @@
 --- External products
 */
 import React from 'react';
-import {ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {ToggleButton, ToggleButtonGroup, Tooltip} from "@mui/material";
 /*
 --- Ouestadam products
 */
@@ -69,12 +69,16 @@ export function OetrLocaleSwitcher_jsx(paramProps_o) {
                 }
             }}
         >
-            <ToggleButton value="fr-FR" aria-label="fr-FR" sx={{padding: 0,mr:"2px"}}>
-                <img src={locCtx_o.config_o.locale === "fr-FR" ? flagOnFrench : flagOffFrench} alt="French"/>
-            </ToggleButton>
-            <ToggleButton value="en-GB" aria-label="en-GB" sx={{padding: 0}}>
-                <img src={locCtx_o.config_o.locale === "en-GB" ? flagOnUK : flagOffUK} alt="English"/>
-            </ToggleButton>
+            <Tooltip title="Français">
+                <ToggleButton value="fr-FR" aria-label="fr-FR" sx={{padding: 0, mr: "2px"}}>
+                    <img src={locCtx_o.config_o.locale === "fr-FR" ? flagOnFrench : flagOffFrench} alt="French"/>
+                </ToggleButton>
+            </Tooltip>
+            <Tooltip title="English">
+                <ToggleButton value="en-GB" aria-label="en-GB" sx={{padding: 0}}>
+                    <img src={locCtx_o.config_o.locale === "en-GB" ? flagOnUK : flagOffUK} alt="English"/>
+                </ToggleButton>
+            </Tooltip>
         </ToggleButtonGroup>
     );
 }

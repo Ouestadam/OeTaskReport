@@ -24,7 +24,7 @@
 */
 import React, {useState} from "react";
 import {
-    Box, createTheme, CssBaseline, IconButton, Link, ThemeProvider
+    Box, createTheme, CssBaseline, IconButton, Link, ThemeProvider, Tooltip
 } from "@mui/material";
 import {enUS, frFR} from "@mui/material/locale";
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -144,24 +144,31 @@ function LocHeader_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
+    const locColors_o = locCtx_o.config_o.colors_o;
+    const locTrans_o = locCtx_o.trans_o;
+
     /*
     --- Create the Main page Header
     */
     return (
         <div>
-            <Box sx={{position: "absolute", top: "10px", right: "10px"}}>
-                <OetrLocaleSwitcher_jsx ctx={locCtx_o}/>
+            <Box sx={{position: "absolute", top: "14px", left: "20px"}}>
+                <Tooltip title={locTrans_o.oeComTransGet_m("main", "toolTipParameters")}>
+                    <IconButton
+                        aria-label="Configuration"
+                        size="large"
+                        color="primary"
+                        sx={{backgroundColor: locColors_o.backgroundIcon}}
+                        onClick={() => {
+                            locCtx_o.currentModal = oetrMainModal_e.parametersModal;
+                            oetrMainRefreshPage_f(locCtx_o);
+                        }}>
+                        <SettingsIcon fontSize="large"/>
+                    </IconButton>
+                </Tooltip>
             </Box>
-            <Box sx={{position: "absolute", top: "4px", left: "24px"}}>
-                <IconButton
-                    aria-label="Configuration"
-                    size="large"
-                    onClick={() => {
-                        locCtx_o.currentModal = oetrMainModal_e.parametersModal;
-                        oetrMainRefreshPage_f(locCtx_o);
-                    }}>
-                    <SettingsIcon fontSize="large"/>
-                </IconButton>
+            <Box sx={{position: "absolute", top: "14px", right: "20px"}}>
+                <OetrLocaleSwitcher_jsx ctx={locCtx_o}/>
             </Box>
         </div>
     )
@@ -189,12 +196,12 @@ function LocFooter_jsx(paramProps_o) {
     */
     return (
         <div>
-            <Box sx={{position: "absolute", bottom: "10px", left: "24px"}}>
+            <Box sx={{position: "absolute", bottom: "14px", left: "20px"}}>
                 <div style={{color: locColors_o.foregroundFooter}}>
                     {"V" + locCtx_o.config_o.version}
                 </div>
             </Box>
-            <Box sx={{position: "absolute", bottom: "10px", right: "16px"}}>
+            <Box sx={{position: "absolute", bottom: "14px", right: "20px"}}>
                 <Link href={locCtx_o.config_o.urlOuestadam}
                       target="_blank"
                       underline="hover"

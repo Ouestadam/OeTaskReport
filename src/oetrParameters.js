@@ -296,6 +296,7 @@ function LocContent_jsx(paramProps_o) {
     */
     const locCtx_o = paramProps_o.ctx;
     const locTrans_o = locCtx_o.trans_o;
+
     const locLabelNewClient = locTrans_o.oeComTransGet_m("parameters", "entryNewClient");
     const locLabelNewTask = locTrans_o.oeComTransGet_m("parameters", "entryNewTask");
     /*
@@ -332,12 +333,13 @@ function LocContent_jsx(paramProps_o) {
                 {locTrans_o.oeComTransGet_m("parameters", "labelGetWorkingDir")}
             </div>
             <div>
-                <Button
-                    variant="contained"
+                <IconButton
+                    size="large"
+                    color="primary"
                     onClick={(paramEvent) => locGetFolderPath_f(locCtx_o, paramEvent)}
-                    sx={{mr: "14px"}}>
-                    <CreateNewFolderIcon/>
-                </Button>
+                    sx={{mr: "10px"}}>
+                    <CreateNewFolderIcon fontSize="large"/>
+                </IconButton>
                 <span>
                     <i>
                         {locCtx_o.workingDir}

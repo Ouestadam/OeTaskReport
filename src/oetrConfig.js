@@ -26,13 +26,14 @@
 */
 export const oetrConfig_o = {
     version: "1.0",
-    modification: "03/10/2024",
+    modification: "04/10/2024",
     locale: "fr-FR",
     colors_o: {
         backgroundDialogTitle: "#d6d4d4",
         backgroundStart : "#bddca0",
         backgroundEnd : "#59674d",
-        foregroundFooter : "#efefef"
+        backgroundIcon : "#efefef",
+        foregroundFooter : "#efefef",
     },
     definitionsFileName: "oetrTaskReport.json",
     urlOuestadam: "https://ouestadam.com"
