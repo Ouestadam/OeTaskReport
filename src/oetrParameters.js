@@ -58,11 +58,16 @@ import {oetrInitDefinitions_f} from "./oetrInit";
   ! OUT: - Nothing                                              !
   +-------------------------------------------------------------+
 */
-function locClose_f(paramCtx_o, paramEvent) {
+async function locClose_f(paramCtx_o, paramEvent) {
     /*
     --- Stop Event
     */
     paramEvent.preventDefault();
+    /*
+    --- Read again the definition file
+    */
+    paramCtx_o.definitionToBeRead=true;
+    await oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o);
     /*
     --- If parameters are not completed then close the application
     */
@@ -255,7 +260,7 @@ function locDeleteClient_f(paramCtx_o, paramEvent) {
     const locClients_a = Object.keys(paramCtx_o.definitions_o.clients_o);
     const locClientNbElt = locClients_a.length;
     if (locClientNbElt > 0) {
-        paramCtx_o.currentClient_s = locClients_a[locClientNbElt-1];
+        paramCtx_o.currentClient_s = locClients_a[locClientNbElt - 1];
     } else {
         paramCtx_o.currentClient_s = "";
     }
@@ -297,7 +302,7 @@ function locDeleteTask_f(paramCtx_o, paramEvent) {
     const locTasks_a = Object.keys(paramCtx_o.definitions_o.clients_o[locClient_s]);
     const locTaskNbElt = locTasks_a.length;
     if (locTaskNbElt > 0) {
-        paramCtx_o.currentTask_s = locTasks_a[locTaskNbElt-1];
+        paramCtx_o.currentTask_s = locTasks_a[locTaskNbElt - 1];
     } else {
         paramCtx_o.currentTask_s = "";
     }
@@ -400,6 +405,14 @@ function LocContent_jsx(paramProps_o) {
     */
     locCtx_o.parametersCompleted = (locTasks_a.length > 0);
     /*
+    --- If current client is empty and list of clients is not empty, then the current client is the first of list
+    */
+    if ((locCtx_o.currentClient_s.length < 1) && (locClients_a.length > 0)) locCtx_o.currentClient_s = locClients_a[0];
+    /*
+    --- If current task is empty and list of tasks is not empty, then the current task is the first of list
+    */
+    if ((locCtx_o.currentTask_s.length < 1) && (locTasks_a.length > 0)) locCtx_o.currentTask_s = locTasks_a[0];
+    /*
     --- Build visibility flags
     */
     const locDisplayAddClient = (locCtx_o.workingDir.length < 1) ? "none" : "box";
@@ -485,7 +498,7 @@ function LocContent_jsx(paramProps_o) {
                             <IconButton
                                 size="small"
                                 color="primary"
-                                onClick={(paramEvent) => locDeleteClient_f(locCtx_o,paramEvent)}
+                                onClick={(paramEvent) => locDeleteClient_f(locCtx_o, paramEvent)}
                                 sx={{ml: "4px"}}>
                                 <DeleteIcon fontSize="small"/>
                             </IconButton>
@@ -551,7 +564,7 @@ function LocContent_jsx(paramProps_o) {
                             <IconButton
                                 size="small"
                                 color="primary"
-                                onClick={(paramEvent) => locDeleteTask_f(locCtx_o,paramEvent)}
+                                onClick={(paramEvent) => locDeleteTask_f(locCtx_o, paramEvent)}
                                 sx={{ml: "4px"}}>
                                 <DeleteIcon fontSize="small"/>
                             </IconButton>
@@ -623,7 +636,7 @@ export function OetrDialogParameters_jsx(paramProps_o) {
             </DialogContent>
             <DialogActions sx={{mt: 0, mb: 0}}>
                 <Button
-                    onClick={(paramEvent) => locClose_f(locCtx_o, paramEvent)}
+                    onClick={async (paramEvent) => locClose_f(locCtx_o, paramEvent)}
                     sx={{mr: "6px"}}>
                     {locTrans_o.oeComTransGet_m("common", "cancel")}
                 </Button>

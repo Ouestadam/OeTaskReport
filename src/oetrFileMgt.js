@@ -32,6 +32,7 @@ import {oetrMainModal_e} from "./oetrMain";
 /*=============== Local functions ==============================*/
 
 /*=============== Exported functions ===========================*/
+
 /*+-------------------------------------------------------------+
   ! Routine    : oetrFileMgtReadJsonDefinitionFile_f            !
   ! Description: Read the JSON Definition File                  !
@@ -45,6 +46,7 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
     --- If Working directory is not defined then return without any action
     */
     if (paramCtx_o.workingDir.length < 1) {
+        paramCtx_o.parametersCompleted = false;
         paramCtx_o.currentModal = oetrMainModal_e.parametersModal;
         return;
     }
@@ -96,13 +98,13 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
         /*
         --- Set parameters as completed
         */
-        paramCtx_o.parammetersCompleted = true;
+        paramCtx_o.parametersCompleted = true;
     } else {
         paramCtx_o.currentModal = oetrMainModal_e.parametersModal
         oetrInitDefinitions_f(paramCtx_o);
     }
     /*
-    --- Return by requesting refresh of the parameters dialog
+    --- Return by requesting refresh of the parameters dialog if present
     */
-    paramRefresh_f(paramCtx_o);
+    if (paramRefresh_f !== undefined) paramRefresh_f(paramCtx_o);
 }
