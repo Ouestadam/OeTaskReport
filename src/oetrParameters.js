@@ -458,7 +458,7 @@ function LocContent_jsx(paramProps_o) {
                     </i>
                 </span>
             </div>
-            <Grid container spacing={1} sx={{mt: "20px", display: locDisplayAddClient}}>
+            <Grid container spacing={1} sx={{mt: "8px", display: locDisplayAddClient}}>
                 <Grid size={6}>
                     <div>
                         {locTrans_o.oeComTransGet_m("parameters", "labelCreateClient")}

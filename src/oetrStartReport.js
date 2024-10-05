@@ -128,7 +128,7 @@ export function OetrStartReport_jsx(paramProps_o) {
                 <Grid size={8} sx={{textAlign: "left"}}>
                     <FormControl variant="filled" fullWidth size="small"
                                  sx={{
-                                     maxWidth: "300px",
+                                     width: "350px",
                                      backgroundColor: locColors_o.backgroundSelect
                                  }}>
                         <Select
@@ -160,7 +160,7 @@ export function OetrStartReport_jsx(paramProps_o) {
                 <Grid size={8} sx={{textAlign: "left"}}>
                     <FormControl variant="filled" fullWidth size="small"
                                  sx={{
-                                     maxWidth: "300px",
+                                     width: "350px",
                                      backgroundColor: locColors_o.backgroundSelect
                                  }}>
                         <Select
