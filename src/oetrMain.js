@@ -9,11 +9,11 @@
   +-------------------------------------------------------------+
   +-------------------------------------------------------------+
   !                                                             !
-  !  File  : main.js                                            !
+  !  File  : oetrMain.js                                        !
   !  Desc. : Main Entry for rendering of oetaskreport           !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 30/10/2024                                         !
+  !  Modif.: 05/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -36,12 +36,7 @@ import {OetrDialogParameters_jsx} from "./oetrParameters";
 import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
 import {OetrStartReport_jsx} from "./oetrStartReport";
 import {OetrEndReport_jsx} from "./oetrEndReport";
-
-/*=============== Exported objects =============================*/
-export const oetrMainModal_e = {
-    noModal: 0,
-    parametersModal: 1
-};
+import {oetrDefModal_e} from "./oetrDef";
 
 /*=============== Local functions ==============================*/
 
@@ -123,9 +118,9 @@ function LocStartModal_jsx(paramProps_o) {
     --- Check if a Modal should be started
     */
     switch (locCtx_o.currentModal) {
-        case oetrMainModal_e.noModal:
+        case oetrDefModal_e.noModal:
             return (<></>);
-        case oetrMainModal_e.parametersModal:
+        case oetrDefModal_e.parametersModal:
             return (<OetrDialogParameters_jsx ctx={locCtx_o}/>);
         default:
             return (<></>);
@@ -162,7 +157,7 @@ function LocHeader_jsx(paramProps_o) {
                         color="primary"
                         sx={{backgroundColor: locColors_o.backgroundIcon}}
                         onClick={() => {
-                            locCtx_o.currentModal = oetrMainModal_e.parametersModal;
+                            locCtx_o.currentModal = oetrDefModal_e.parametersModal;
                             oetrMainRefreshPage_f(locCtx_o);
                         }}>
                         <SettingsIcon fontSize="large"/>

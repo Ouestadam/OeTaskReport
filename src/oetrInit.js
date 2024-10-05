@@ -26,7 +26,7 @@ import {OeComTrans_c} from "./oecommon/oeComTrans";
 import {oetrConfig_o} from "./oetrConfig";
 import {oetrTrans_o} from "./oetrTrans";
 import {OeComCookies_c} from "./oecommon/oeComCookies";
-import {oetrMainModal_e} from "./oetrMain";
+import {oetrDefFocus_e, oetrDefModal_e} from "./oetrDef";
 
 /*=============== Exported functions ===========================*/
 
@@ -119,7 +119,7 @@ export function oetrInit_f(paramCtx_o) {
     /*
     --- Current Modal
     */
-    paramCtx_o.currentModal = oetrMainModal_e.noModal;
+    paramCtx_o.currentModal = oetrDefModal_e.noModal;
     /*
     --- Parameters are completed
     */
@@ -148,4 +148,8 @@ export function oetrInit_f(paramCtx_o) {
     --- Task started flag
     */
     paramCtx_o.taskStarted = false;
+    /*
+    --- Reset Focus
+    */
+    paramCtx_o.focus = oetrDefFocus_e.noFocus;
 }

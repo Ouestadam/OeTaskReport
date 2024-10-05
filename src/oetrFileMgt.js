@@ -27,9 +27,7 @@
 --- Ouestadam products
 */
 import {oetrInitDefinitions_f} from "./oetrInit";
-import {oetrMainModal_e} from "./oetrMain";
-
-/*=============== Local functions ==============================*/
+import {oetrDefModal_e} from "./oetrDef";
 
 /*=============== Exported functions ===========================*/
 
@@ -47,7 +45,7 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
     */
     if (paramCtx_o.workingDir.length < 1) {
         paramCtx_o.parametersCompleted = false;
-        paramCtx_o.currentModal = oetrMainModal_e.parametersModal;
+        paramCtx_o.currentModal = oetrDefModal_e.parametersModal;
         return;
     }
     /*
@@ -65,8 +63,8 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
         */
         paramCtx_o.workingDir = "";
         oetrInitDefinitions_f(paramCtx_o);
-        paramCtx_o.currentModal = oetrMainModal_e.parametersModal
-        paramRefresh_f(paramCtx_o);
+        paramCtx_o.currentModal = oetrDefModal_e.parametersModal
+        if (paramRefresh_f !== undefined) paramRefresh_f(paramCtx_o);
         return;
     }
     /*
@@ -82,8 +80,8 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
         --- File is not present then reset the Definition Object set the Parameters Modal and return
         */
         oetrInitDefinitions_f(paramCtx_o);
-        paramCtx_o.currentModal = oetrMainModal_e.parametersModal
-        paramRefresh_f(paramCtx_o);
+        paramCtx_o.currentModal = oetrDefModal_e.parametersModal
+        if (paramRefresh_f !== undefined) paramRefresh_f(paramCtx_o);
         return;
     }
     /*
@@ -100,7 +98,7 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
         */
         paramCtx_o.parametersCompleted = true;
     } else {
-        paramCtx_o.currentModal = oetrMainModal_e.parametersModal
+        paramCtx_o.currentModal = oetrDefModal_e.parametersModal
         oetrInitDefinitions_f(paramCtx_o);
     }
     /*

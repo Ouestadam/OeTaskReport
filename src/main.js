@@ -160,7 +160,7 @@ function locCreateWindow_f() {
     /*
     --- For debugging: Open the DevTools
     */
-    // mainWindow_o.webContents.openDevTools();
+    mainWindow_o.webContents.openDevTools();
     /*
     --- Process receiving IPC messages
     */

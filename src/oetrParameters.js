@@ -42,7 +42,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 /*
 --- Ouestadam products
 */
-import {oetrMainModal_e, oetrMainRefreshPage_f} from "./oetrMain";
+import {oetrDefFocus_e, oetrDefModal_e} from "./oetrDef";
+import {oetrMainRefreshPage_f} from "./oetrMain";
 import {OetrError_jsx} from "./oetrError";
 import {oetrFileMgtReadJsonDefinitionFile_f, oetrFileMgtWriteJsonDefinitionFile_f} from "./oetrFileMgt";
 import {oetrInitDefinitions_f} from "./oetrInit";
@@ -66,7 +67,7 @@ async function locClose_f(paramCtx_o, paramEvent) {
     /*
     --- Read again the definition file
     */
-    paramCtx_o.definitionToBeRead=true;
+    paramCtx_o.definitionToBeRead = true;
     await oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o);
     /*
     --- If parameters are not completed then close the application
@@ -77,7 +78,7 @@ async function locClose_f(paramCtx_o, paramEvent) {
     /*
     --- Close the Modal
     */
-    paramCtx_o.currentModal = oetrMainModal_e.noModal;
+    paramCtx_o.currentModal = oetrDefModal_e.noModal;
     /*
     --- Reset the error state
     */
@@ -105,7 +106,7 @@ async function locValid_f(paramCtx_o, paramEvent) {
     /*
     --- Close the Modal
     */
-    paramCtx_o.currentModal = oetrMainModal_e.noModal;
+    paramCtx_o.currentModal = oetrDefModal_e.noModal;
     /*
     --- Reset the error state
     */
@@ -217,6 +218,10 @@ function locAddNewClient_f(paramCtx_o, paramEvent) {
         */
         paramCtx_o.definitions_o.clients_o[locClient_s] = {};
     }
+    /*
+    --- Set Focus on Entry client
+    */
+    paramCtx_o.focus = oetrDefFocus_e.parametersEntryClient;
     /*
     --- Refresh the parameters modal
     */
@@ -353,6 +358,10 @@ function locAddNewTask_f(paramCtx_o, paramEvent) {
         paramCtx_o.parametersCompleted = true;
     }
     /*
+    --- Set Focus on Entry task
+    */
+    paramCtx_o.focus = oetrDefFocus_e.parametersEntryTask;
+    /*
     --- Refresh the parameters modal
     */
     oetrParametersRefreshModal_f(paramCtx_o);
@@ -412,6 +421,20 @@ function LocContent_jsx(paramProps_o) {
     const locDisplayAddTask = ((locClients_a.length < 1) || (locCtx_o.currentClient_s.length < 1)) ? "none" : "box";
     const locDisplaySelectTask = (locTasks_a.length < 1) ? "none" : "block";
     /*
+    --- Set the Focus
+    */
+    if (locCtx_o.workingDir.length < 1) {
+        /*
+        --- Set focus on select Working Directory
+        */
+        locCtx_o.focus = oetrDefFocus_e.parametersWorkingDir;
+    } else if (locCtx_o.focus !== oetrDefFocus_e.parametersEntryTask) {
+        /*
+        --- Set focus on Entry Client
+        */
+        locCtx_o.focus = oetrDefFocus_e.parametersEntryClient;
+    }
+    /*
     --- Return the Dialog Content to display
     */
     return (
@@ -424,7 +447,9 @@ function LocContent_jsx(paramProps_o) {
                     size="large"
                     color="primary"
                     onClick={(paramEvent) => locGetFolderPath_f(locCtx_o, paramEvent)}
-                    sx={{mr: "10px"}}>
+                    sx={{mr: "10px"}}
+                    autoFocus={locCtx_o.focus === oetrDefFocus_e.parametersWorkingDir}
+                >
                     <CreateNewFolderIcon fontSize="large"/>
                 </IconButton>
                 <span>
@@ -438,8 +463,8 @@ function LocContent_jsx(paramProps_o) {
                     <div>
                         {locTrans_o.oeComTransGet_m("parameters", "labelCreateClient")}
                     </div>
-                    <Box sx={{minWidth: "100px"}}>
-                        <FormControl variant="outlined" size="small">
+                    <Box sx={{width: "320px", mt: "8px"}}>
+                        <FormControl variant="outlined" fullWidth size="small">
                             <InputLabel htmlFor="oetrParamEntryClient">{locLabelNewClient}</InputLabel>
                             <OutlinedInput
                                 id="oetrParamEntryClient"
@@ -448,6 +473,7 @@ function LocContent_jsx(paramProps_o) {
                                 type="text"
                                 label={locLabelNewClient}
                                 size="small"
+                                autoFocus={locCtx_o.focus === oetrDefFocus_e.parametersEntryClient}
                                 onKeyDown={(paramEvent) => {
                                     if (paramEvent.key === 'Enter') locAddNewClient_f(locCtx_o, paramEvent)
                                 }}
@@ -504,8 +530,8 @@ function LocContent_jsx(paramProps_o) {
                     <div>
                         {locTrans_o.oeComTransGet_m("parameters", "labelCreateTask")}
                     </div>
-                    <Box sx={{minWidth: "100px"}}>
-                        <FormControl variant="outlined" size="small">
+                    <Box sx={{width: "320px", mt: "8px"}}>
+                        <FormControl variant="outlined" fullWidth size="small">
                             <InputLabel htmlFor="oetrParamEntryTask">{locLabelNewTask}</InputLabel>
                             <OutlinedInput
                                 id="oetrParamEntryTask"
@@ -514,6 +540,7 @@ function LocContent_jsx(paramProps_o) {
                                 type="text"
                                 label={locLabelNewTask}
                                 size="small"
+                                autoFocus={locCtx_o.focus === oetrDefFocus_e.parametersEntryTask}
                                 onKeyDown={(paramEvent) => {
                                     if (paramEvent.key === 'Enter') locAddNewTask_f(locCtx_o, paramEvent)
                                 }}
