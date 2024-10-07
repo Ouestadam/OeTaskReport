@@ -27,6 +27,7 @@ import {oetrConfig_o} from "./oetrConfig";
 import {oetrTrans_o} from "./oetrTrans";
 import {OeComCookies_c} from "./oecommon/oeComCookies";
 import {oetrDefFocus_e, oetrDefModal_e} from "./oetrDef";
+import {OeComDate_c} from "./oecommon/oeComDate";
 
 /*=============== Exported functions ===========================*/
 
@@ -109,6 +110,10 @@ export function oetrInit_f(paramCtx_o) {
     --- Create Translation object
     */
     paramCtx_o.trans_o = new OeComTrans_c(paramCtx_o.config_o.locale, oetrTrans_o);
+    /*
+    --- Create Date Object
+    */
+    paramCtx_o.date_o = new OeComDate_c(paramCtx_o.config_o.locale);
     /*
     --- In case of error: current Error information
     */

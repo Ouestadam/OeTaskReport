@@ -69,8 +69,7 @@ function locStart_f(paramCtx_o, paramEvent) {
     /*
     --- Save the current date in milliseconds
     */
-    const locDate = new Date();
-    locStartedTask_o.dateStart = locDate.getTime();
+    locStartedTask_o.dateStart = paramCtx_o.date_o.oeComDateStringMilliseconds_m();
     /*
     --- Save the Definition file
     */

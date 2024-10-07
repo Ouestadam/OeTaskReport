@@ -63,6 +63,7 @@ export function OetrLocaleSwitcher_jsx(paramProps_o) {
                 if (paramLocale) {
                     locCtx_o.config_o.locale = paramLocale;
                     locCtx_o.trans_o.oeComTransChangeLocale_m(paramLocale);
+                    locCtx_o.date_o.oeComDateChangeLocale_m(paramLocale);
                     locCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrLocale",
                         paramLocale, locCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
                     oetrMainRefreshPage_f(locCtx_o);

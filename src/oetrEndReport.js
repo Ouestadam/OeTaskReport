@@ -94,11 +94,8 @@ export function OetrEndReport_jsx(paramProps_o) {
     /*
     --- Get the start date in string
     */
-    const locDateStart_o = new Date(locStartedTask_o.dateStart);
-    const locDateStart_s = locDateStart_o.getDate() + '/' + (locDateStart_o.getMonth() + 1) + '/' + locDateStart_o.getFullYear();
-    const locTimeStart_s = locDateStart_o.getHours() + ':' + locDateStart_o.getMinutes();
-    const locDate_s = locTrans_o.oeComTransGet_m("common", "date",
-        locDateStart_s, locTimeStart_s)
+    const locDate_o = new Date(locStartedTask_o.dateStart);
+    const locDate_s = locCtx_o.date_o.oeComDateStringDateTime_m(locDate_o);
     /*
     --- Return the Block
     */
