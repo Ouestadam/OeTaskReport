@@ -25,7 +25,8 @@
 */
 export const oetrDefModal_e = {
     noModal: 0,
-    parametersModal: 1
+    parametersModal: 1,
+    endTaskModal: 2,
 };
 /*
 --- Focus list

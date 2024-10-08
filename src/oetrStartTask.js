@@ -9,11 +9,11 @@
   +-------------------------------------------------------------+
   +-------------------------------------------------------------+
   !                                                             !
-  !  File  : oetrStartReport.js                                 !
-  !  Desc. : Start reporting for rendering of oetaskreport      !
+  !  File  : oetrStartTask.js                                   !
+  !  Desc. : Start Task for rendering of oetaskreport           !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 04/10/2024                                         !
+  !  Modif.: 08/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -83,14 +83,14 @@ function locStart_f(paramCtx_o, paramEvent) {
 /*=============== Exported JSX components ======================*/
 
 /*+-------------------------------------------------------------+
-  ! Routine    : OetrStartReport_jsx                            !
-  ! Description: JSX Start report block                         !
+  ! Routine    : OetrStartTask_jsx                              !
+  ! Description: JSX Start task block                           !
   !                                                             !
   ! IN:  - Properties including Context                         !
   ! OUT: - Page rendering                                       !
   +-------------------------------------------------------------+
 */
-export function OetrStartReport_jsx(paramProps_o) {
+export function OetrStartTask_jsx(paramProps_o) {
     /*
     --- Initialisation
     */

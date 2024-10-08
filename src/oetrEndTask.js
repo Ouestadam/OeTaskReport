@@ -9,11 +9,11 @@
   +-------------------------------------------------------------+
   +-------------------------------------------------------------+
   !                                                             !
-  !  File  : oetrEndReport.js                                   !
-  !  Desc. : End reporting for rendering of oetaskreport        !
+  !  File  : oetrEndTask.js                                     !
+  !  Desc. : End task for rendering of oetaskreport             !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 04/10/2024                                         !
+  !  Modif.: 08/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -77,14 +77,14 @@ function locEnd_f(paramCtx_o, paramEvent) {
 /*=============== Exported JSX components ======================*/
 
 /*+-------------------------------------------------------------+
-  ! Routine    : OetrEndReport_jsx                              !
-  ! Description: JSX End report block                           !
+  ! Routine    : OetrEndTask_jsx                                !
+  ! Description: JSX End task block                             !
   !                                                             !
   ! IN:  - Properties including Context                         !
   ! OUT: - Page rendering                                       !
   +-------------------------------------------------------------+
 */
-export function OetrEndReport_jsx(paramProps_o) {
+export function OetrEndTask_jsx(paramProps_o) {
     /*
     --- Initialisation
     */

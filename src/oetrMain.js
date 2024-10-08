@@ -34,8 +34,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import {OetrLocaleSwitcher_jsx} from "./oetrLocale";
 import {OetrDialogParameters_jsx} from "./oetrParameters";
 import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
-import {OetrStartReport_jsx} from "./oetrStartReport";
-import {OetrEndReport_jsx} from "./oetrEndReport";
+import {OetrStartTask_jsx} from "./oetrStartTask";
+import {OetrEndTask_jsx} from "./oetrEndTask";
 import {oetrDefModal_e} from "./oetrDef";
 
 /*=============== Local functions ==============================*/
@@ -194,7 +194,7 @@ function LocContent_jsx(paramProps_o) {
     --- Check if Reporting is started
     */
     const LocBlock_j = (locStartedTask_o.started) ?
-        (<OetrEndReport_jsx ctx={locCtx_o}/>) : (<OetrStartReport_jsx ctx={locCtx_o}/>);
+        (<OetrEndTask_jsx ctx={locCtx_o}/>) : (<OetrStartTask_jsx ctx={locCtx_o}/>);
     /*
     --- Create the Main page Content
     */
