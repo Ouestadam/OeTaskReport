@@ -35,7 +35,7 @@ import {OetrLocaleSwitcher_jsx} from "./oetrLocale";
 import {OetrDialogParameters_jsx} from "./oetrParameters";
 import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
 import {OetrStartTask_jsx} from "./oetrStartTask";
-import {OetrEndTask_jsx} from "./oetrEndTask";
+import {OetrDialogEndTask_jsx, OetrEndTask_jsx} from "./oetrEndTask";
 import {oetrDefModal_e} from "./oetrDef";
 
 /*=============== Local functions ==============================*/
@@ -122,6 +122,8 @@ function LocStartModal_jsx(paramProps_o) {
             return (<></>);
         case oetrDefModal_e.parametersModal:
             return (<OetrDialogParameters_jsx ctx={locCtx_o}/>);
+        case oetrDefModal_e.endTaskModal:
+            return (<OetrDialogEndTask_jsx ctx={locCtx_o}/>);
         default:
             return (<></>);
     }

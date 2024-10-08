@@ -36,10 +36,6 @@ export const oetrTrans_o = {
         "validate": {
             en: "Validate",
             fr: "Validation"
-        },
-        "date": {
-            en: "$$1$$ at $$2$$",
-            fr: "$$1$$ à $$2$$"
         }
     },
     "main": {
@@ -98,7 +94,7 @@ export const oetrTrans_o = {
             fr: "Enlève la tâche sélectionnée"
         }
     },
-    "startReport": {
+    "startTask": {
         "buttonStart": {
             en: "Start the task",
             fr: "Démarrage de la tâche"
@@ -112,10 +108,22 @@ export const oetrTrans_o = {
             fr: "Sélectionner une tâche :"
         }
     },
-    "endReport": {
+    "endTask": {
+        "title": {
+            en: "End of the current task",
+            fr: "Fin de la tâche courante"
+        },
         "buttonEnd": {
             en: "End the task",
             fr: "Arrêt de la tâche"
+        },
+        "buttonSave": {
+            en: "Record the task",
+            fr: "Enregistrer la tâche"
+        },
+        "buttonCancel": {
+            en: "Don't record the task",
+            fr: "Ne pas enregistrer la tâche"
         },
         "labelSelectedClient": {
             en: "Working for the client:",

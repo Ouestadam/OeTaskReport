@@ -122,7 +122,7 @@ export function OetrStartTask_jsx(paramProps_o) {
         <Box style={{minHeight: "300px", position: "absolute", top: "120px", width: "100%", padding: "20px"}}>
             <Grid container spacing={2}>
                 <Grid size={4} sx={{pt: "6px", textAlign: "right"}}>
-                    {locTrans_o.oeComTransGet_m("startReport", "labelSelectClient")}
+                    {locTrans_o.oeComTransGet_m("startTask", "labelSelectClient")}
                 </Grid>
                 <Grid size={8} sx={{textAlign: "left"}}>
                     <FormControl variant="filled" fullWidth size="small"
@@ -154,7 +154,7 @@ export function OetrStartTask_jsx(paramProps_o) {
             </Grid>
             <Grid container spacing={2} sx={{mt: "20px"}}>
                 <Grid size={4} sx={{pt: "6px", textAlign: "right"}}>
-                    {locTrans_o.oeComTransGet_m("startReport", "labelSelectTask")}
+                    {locTrans_o.oeComTransGet_m("startTask", "labelSelectTask")}
                 </Grid>
                 <Grid size={8} sx={{textAlign: "left"}}>
                     <FormControl variant="filled" fullWidth size="small"
@@ -192,7 +192,7 @@ export function OetrStartTask_jsx(paramProps_o) {
                         color="primary"
                         onClick={(paramEvent) => locStart_f(locCtx_o, paramEvent)}
                     >
-                        {locTrans_o.oeComTransGet_m("startReport", "buttonStart")}
+                        {locTrans_o.oeComTransGet_m("startTask", "buttonStart")}
                     </Button>
                 </Grid>
             </Grid>
