@@ -13,7 +13,7 @@
   !  Desc. : Electron main for oetaskreport                     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 02/10/2024                                         !
+  !  Modif.: 09/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -82,6 +82,13 @@ function locIpcReceiving_f() {
     */
     ipcMain.handle('oetrFileExists', async (paramEvent, paramFileName) => {
         return fs.existsSync(paramFileName);
+    });
+    /*
+    --- Process create a directory if not present
+    */
+    ipcMain.handle('oetrCreateDir', async (paramEvent, paramDirName) => {
+        if (fs.existsSync(paramDirName)) return true;
+        return fs.mkdirSync(paramDirName,{recursive: true});
     });
     /*
     --- Process Read of a File

@@ -135,7 +135,23 @@ export const oetrTrans_o = {
         },
         "labelStartDate": {
             en: "Task start date:",
-            fr: "Date de démarrage de la Tâche :"
-        }
+            fr: "Date de démarrage de la tâche :"
+        },
+        "labelEndDate": {
+            en: "Task end date:",
+            fr: "Date d'arrêt de la tâche :"
+        },
+        "labelDuration": {
+            en: "Task duration:",
+            fr: "Durée de la tâche :"
+        },
+        "durationMinutes": {
+            en: "$$1$$ minutes",
+            fr: "$$1$$ minutes"
+        },
+        "durationHours": {
+            en: " ($$1$$h $$2$$m)",
+            fr: " ($$1$$h $$2$$m)"
+        },
     }
 };

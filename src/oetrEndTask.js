@@ -22,7 +22,7 @@
 /*
 --- External products
 */
-import React, {useState} from 'react';
+import React from 'react';
 import {
     Box,
     Button, Dialog, DialogActions, DialogContent, DialogTitle
@@ -33,10 +33,9 @@ import Grid from '@mui/material/Grid2';
 --- Ouestadam products
 */
 import {oetrMainRefreshPage_f} from "./oetrMain";
-import {oetrFileMgtReadJsonDefinitionFile_f, oetrFileMgtWriteJsonDefinitionFile_f} from "./oetrFileMgt";
-import {oetrDefFocus_e, oetrDefModal_e} from "./oetrDef";
+import {oetrFileMgtReadJsonReportFile_f, oetrFileMgtWriteJsonDefinitionFile_f} from "./oetrFileMgt";
+import {oetrDefModal_e} from "./oetrDef";
 import {OetrError_jsx} from "./oetrError";
-import {oetrParametersRefreshModal_f} from "./oetrParameters";
 
 /*=============== Local functions ==============================*/
 
@@ -66,6 +65,11 @@ function locEnd_f(paramCtx_o, paramEvent) {
     --- Save the current end date in milliseconds
     */
     locStartedTask_o.dateEnd = paramCtx_o.date_o.oeComDateStringMilliseconds_m();
+    /*
+    --- Save the duration in minutes
+    */
+    locStartedTask_o.duration = (locStartedTask_o.dateEnd > locStartedTask_o.dateStart) ?
+        Math.round((locStartedTask_o.dateEnd - locStartedTask_o.dateStart) / 60000) : 0;
     /*
     --- Save the Definition file
     */
@@ -128,6 +132,19 @@ async function locValid_f(paramCtx_o, paramEvent) {
     */
     paramCtx_o.currentModal = oetrDefModal_e.noModal;
     /*
+    --- Get current year and current month
+    */
+    const locCurrentYear_s = paramCtx_o.date_o.oeComDateStringYear_m();
+    const locCurrentMonth_s = paramCtx_o.date_o.oeComDateStringMonthNumber_m();
+    /*
+    --- Build current report directory
+    */
+    const locCurrentDir_s = paramCtx_o.workingDir_s + '/' + locCurrentYear_s + '/' + locCurrentMonth_s
+    /*
+    --- Read the current Report file if exists
+    */
+    await oetrFileMgtReadJsonReportFile_f(paramCtx_o, locCurrentDir_s);
+    /*
     --- Reset the error state
     */
     paramCtx_o.error_o.inError = false;
@@ -138,6 +155,93 @@ async function locValid_f(paramCtx_o, paramEvent) {
 }
 
 /*=============== Local JSX components =========================*/
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocTaskInfo_jsx                                !
+! Description: JSX Display task information                   !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocTaskInfo_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
+    const locStartedTask_o = locCtx_o.definitions_o.startedTask_o;
+    /*
+    --- Get the start date in string
+    */
+    const locDateStart_o = new Date(locStartedTask_o.dateStart);
+    const locDateStart_s = locCtx_o.date_o.oeComDateStringDateTime_m(locDateStart_o);
+    /*
+    --- Get the end date, if exists, in string
+    */
+    let locDateEnd_s = "";
+    let locDuration_s = "";
+    if (locStartedTask_o.dateEnd > locStartedTask_o.dateStart) {
+        const locDateEnd_o = new Date(locStartedTask_o.dateEnd);
+        locDateEnd_s = locCtx_o.date_o.oeComDateStringDateTime_m(locDateEnd_o);
+        const locDurationHours = Math.floor(locStartedTask_o.duration / 60);
+        const locDurationMinutes = locStartedTask_o.duration - (locDurationHours * 60);
+        locDuration_s = locTrans_o.oeComTransGet_m("endTask", "durationMinutes",
+            locStartedTask_o.duration);
+        if (locDurationHours > 0) locDuration_s += locTrans_o.oeComTransGet_m("endTask", "durationHours",
+            locDurationHours, locDurationMinutes);
+    }
+    /*
+    --- Return the task information
+    */
+    return (
+        <div>
+            <Grid container spacing={2}>
+                <Grid size={6} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("endTask", "labelSelectedClient")}
+                </Grid>
+                <Grid size={6} sx={{textAlign: "left"}}>
+                    {locStartedTask_o.client_s}
+                </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{mt: "8px"}}>
+                <Grid size={6} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("endTask", "labelSelectedTask")}
+                </Grid>
+                <Grid size={6} sx={{textAlign: "left"}}>
+                    {locStartedTask_o.task_s}
+                </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{mt: "8px"}}>
+                <Grid size={6} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("endTask", "labelStartDate")}
+                </Grid>
+                <Grid size={6} sx={{textAlign: "left"}}>
+                    {locDateStart_s}
+                </Grid>
+            </Grid>
+            <div style={{display: (locStartedTask_o.dateEnd > locStartedTask_o.dateStart) ? 'block' : 'none'}}>
+                <Grid container spacing={2} sx={{mt: "8px"}}>
+                    <Grid size={6} sx={{textAlign: "right"}}>
+                        {locTrans_o.oeComTransGet_m("endTask", "labelEndDate")}
+                    </Grid>
+                    <Grid size={6} sx={{textAlign: "left"}}>
+                        {locDateEnd_s}
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} sx={{mt: "8px"}}>
+                    <Grid size={6} sx={{textAlign: "right"}}>
+                        {locTrans_o.oeComTransGet_m("endTask", "labelDuration")}
+                    </Grid>
+                    <Grid size={6} sx={{textAlign: "left"}}>
+                        {locDuration_s}
+                    </Grid>
+                </Grid>
+            </div>
+        </div>
+    )
+}
 
 /*
 +-------------------------------------------------------------+
@@ -153,70 +257,13 @@ function LocContent_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
-
-    /*
-    --- Read the Definitions JSON file if present
-    */
-    oetrFileMgtReadJsonDefinitionFile_f(locCtx_o, oetrParametersRefreshModal_f);
-    /*
-    --- Build list of clients
-    */
-    const locClients_a = Object.keys(locCtx_o.definitions_o.clients_o);
-    /*
-    --- Build list of task if current client exists
-    */
-    const locTasks_a = ((locClients_a.length > 0) && (locCtx_o.currentClient_s.length > 0) &&
-        (locCtx_o.definitions_o.clients_o[locCtx_o.currentClient_s] !== undefined)) ?
-        Object.keys(locCtx_o.definitions_o.clients_o[locCtx_o.currentClient_s]) : [];
-    /*
-    --- If one task exists then set parameters as completed
-    */
-    locCtx_o.parametersCompleted = (locTasks_a.length > 0);
-    /*
-    --- If current client is empty and list of clients is not empty, then the current client is the first of list
-    */
-    if ((locCtx_o.currentClient_s.length < 1) && (locClients_a.length > 0)) locCtx_o.currentClient_s = locClients_a[0];
-    /*
-    --- If current task is empty and list of tasks is not empty, then the current task is the first of list
-    */
-    if ((locCtx_o.currentTask_s.length < 1) && (locTasks_a.length > 0)) locCtx_o.currentTask_s = locTasks_a[0];
-    /*
-    --- Set the Focus
-    */
-    if (locCtx_o.workingDir.length < 1) {
-        /*
-        --- Set focus on select Working Directory
-        */
-        locCtx_o.focus = oetrDefFocus_e.parametersWorkingDir;
-    } else if (locCtx_o.focus !== oetrDefFocus_e.parametersEntryTask) {
-        /*
-        --- Set focus on Entry Client
-        */
-        locCtx_o.focus = oetrDefFocus_e.parametersEntryClient;
-    }
     /*
     --- Return the Dialog Content to display
     */
     return (
-        <div style={{minHeight: "300px"}}>
-
+        <div style={{height: "220px"}}>
+            <LocTaskInfo_jsx ctx={locCtx_o}/>
         </div>);
-}
-
-/*=============== Exported functions ===========================*/
-
-/*
-+-------------------------------------------------------------+
-! Routine : oetrEndTaskRefreshModal_f                         !
-! Description: Request the refresh of the Modal               !
-!                                                             !
-! IN: - Context                                               !
-! OUT: - Nothing                                              !
-+-------------------------------------------------------------+
-*/
-export function oetrEndTaskRefreshModal_f(paramCtx_o) {
-    paramCtx_o.refresh_o.endTask_s = !paramCtx_o.refresh_o.endTask_s;
-    paramCtx_o.refresh_o.endTask_f(paramCtx_o.refresh_o.endTask_s);
 }
 
 /*=============== Exported JSX components ======================*/
@@ -235,54 +282,21 @@ export function OetrEndTask_jsx(paramProps_o) {
     */
     const locCtx_o = paramProps_o.ctx;
     const locTrans_o = locCtx_o.trans_o;
-    const locStartedTask_o = locCtx_o.definitions_o.startedTask_o;
-    /*
-    --- Get the start date in string
-    */
-    const locDate_o = new Date(locStartedTask_o.dateStart);
-    const locDate_s = locCtx_o.date_o.oeComDateStringDateTime_m(locDate_o);
     /*
     --- Return the Block
     */
     return (
         <Box style={{minHeight: "300px", position: "absolute", top: "120px", width: "100%", padding: "20px"}}>
-            <Grid container spacing={2}>
-                <Grid size={5} sx={{textAlign: "right"}}>
-                    {locTrans_o.oeComTransGet_m("endTask", "labelSelectedClient")}
-                </Grid>
-                <Grid size={7} sx={{textAlign: "left"}}>
-                    {locStartedTask_o.client_s}
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{mt: "8px"}}>
-                <Grid size={5} sx={{textAlign: "right"}}>
-                    {locTrans_o.oeComTransGet_m("endTask", "labelSelectedTask")}
-                </Grid>
-                <Grid size={7} sx={{textAlign: "left"}}>
-                    {locStartedTask_o.task_s}
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{mt: "8px"}}>
-                <Grid size={5} sx={{textAlign: "right"}}>
-                    {locTrans_o.oeComTransGet_m("endTask", "labelStartDate")}
-                </Grid>
-                <Grid size={7} sx={{textAlign: "left"}}>
-                    {locDate_s}
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{mt: "50px"}}>
-                <Grid size={5}>
-                </Grid>
-                <Grid size={7} sx={{textAlign: "left"}}>
-                    <Button
-                        variant="contained"
-                        color="error"
-                        onClick={(paramEvent) => locEnd_f(locCtx_o, paramEvent)}
-                    >
-                        {locTrans_o.oeComTransGet_m("endTask", "buttonEnd")}
-                    </Button>
-                </Grid>
-            </Grid>
+            <LocTaskInfo_jsx ctx={locCtx_o}/>
+            <Box sx={{mt: '50px', width: '100%', textAlign: 'center'}}>
+                <Button
+                    variant="contained"
+                    color="error"
+                    onClick={(paramEvent) => locEnd_f(locCtx_o, paramEvent)}
+                >
+                    {locTrans_o.oeComTransGet_m("endTask", "buttonEnd")}
+                </Button>
+            </Box>
         </Box>
     );
 }
@@ -303,12 +317,6 @@ export function OetrDialogEndTask_jsx(paramProps_o) {
     const locTrans_o = locCtx_o.trans_o;
     const locColors_o = locCtx_o.config_o.colors_o;
     /*
-    --- Get React state for refreshing the page
-    */
-    const [locEndTask_s, locEndTask_f] = useState(false);
-    locCtx_o.refresh_o.endTask_f = locEndTask_f;
-    locCtx_o.refresh_o.endTask_s = locEndTask_s;
-    /*
     --- Return the Dialog
     */
     return (
@@ -324,7 +332,7 @@ export function OetrDialogEndTask_jsx(paramProps_o) {
             }}>
                 {locTrans_o.oeComTransGet_m("endTask", "title")}
             </DialogTitle>
-            <DialogContent sx={{pb: 0, mb: 0}}>
+            <DialogContent sx={{pb: 0, mb: 0, mt: '30px'}}>
                 <LocContent_jsx ctx={locCtx_o}/>
             </DialogContent>
             <DialogActions sx={{mt: 0, mb: 0}}>
@@ -338,6 +346,7 @@ export function OetrDialogEndTask_jsx(paramProps_o) {
                 <Button
                     variant="contained"
                     color="primary"
+                    disabled={(locCtx_o.definitions_o.startedTask_o.duration < 1)}
                     onClick={(paramEvent) => locValid_f(locCtx_o, paramEvent)}>
                     {locTrans_o.oeComTransGet_m("endTask", "buttonSave")}
                 </Button>

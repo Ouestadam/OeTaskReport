@@ -65,11 +65,17 @@ function locStart_f(paramCtx_o, paramEvent) {
     --- Save the current client and task
     */
     locStartedTask_o.client_s = paramCtx_o.currentClient_s;
+    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentClient",
+        paramCtx_o.currentClient_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
     locStartedTask_o.task_s = paramCtx_o.currentTask_s;
+    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentTask",
+        paramCtx_o.currentTask_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
     /*
     --- Save the current date in milliseconds
     */
     locStartedTask_o.dateStart = paramCtx_o.date_o.oeComDateStringMilliseconds_m();
+    locStartedTask_o.dateEnd = 0;
+    locStartedTask_o.duration = 0;
     /*
     --- Save the Definition file
     */
@@ -183,19 +189,15 @@ export function OetrStartTask_jsx(paramProps_o) {
                     </FormControl>
                 </Grid>
             </Grid>
-            <Grid container spacing={2} sx={{mt: "50px"}}>
-                <Grid size={4}>
-                </Grid>
-                <Grid size={8} sx={{textAlign: "left"}}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={(paramEvent) => locStart_f(locCtx_o, paramEvent)}
-                    >
-                        {locTrans_o.oeComTransGet_m("startTask", "buttonStart")}
-                    </Button>
-                </Grid>
-            </Grid>
+            <Box sx={{mt: '50px', width: '100%', textAlign: 'center'}}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={(paramEvent) => locStart_f(locCtx_o, paramEvent)}
+                >
+                    {locTrans_o.oeComTransGet_m("startTask", "buttonStart")}
+                </Button>
+            </Box>
         </Box>
     );
 }

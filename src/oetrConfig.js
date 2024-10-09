@@ -26,7 +26,7 @@
 */
 export const oetrConfig_o = {
     version: "1.0",
-    modification: "04/10/2024",
+    modification: "09/10/2024",
     locale: "fr-FR",
     colors_o: {
         backgroundDialogTitle: "#d6d4d4",
@@ -36,6 +36,6 @@ export const oetrConfig_o = {
         backgroundSelect : "#efefef",
         foregroundFooter : "#efefef",
     },
-    definitionsFileName: "oetrTaskReport.json",
+    definitionsFileName: "oeTaskReport.json",
     urlOuestadam: "https://ouestadam.com"
 }

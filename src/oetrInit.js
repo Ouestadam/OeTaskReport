@@ -13,7 +13,7 @@
   !  Desc. : Initialisation for rendering of oetaskreport       !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 26/09/2024                                         !
+  !  Modif.: 09/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -50,7 +50,8 @@ export function oetrInitDefinitions_f(paramCtx_o) {
             client_s : "",
             task_s : "",
             dateStart : 0,
-            dateEnd: 0
+            dateEnd: 0,
+            duration: 0
         }
     };
     /*
@@ -132,7 +133,7 @@ export function oetrInit_f(paramCtx_o) {
     /*
     --- Working directory
     */
-    paramCtx_o.workingDir = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrWorkingDir");
+    paramCtx_o.workingDir_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrWorkingDir");
     /*
     --- Initialise the Definitions object
     */
@@ -157,4 +158,8 @@ export function oetrInit_f(paramCtx_o) {
     --- Reset Focus
     */
     paramCtx_o.focus = oetrDefFocus_e.noFocus;
+    /*
+    --- Current Month report
+    */
+    paramCtx_o.monthReport_o = {};
 }

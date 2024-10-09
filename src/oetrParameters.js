@@ -114,15 +114,15 @@ async function locValid_f(paramCtx_o, paramEvent) {
     /*
     --- If Working directory is not defined then return without only main page refresh
     */
-    if (paramCtx_o.workingDir.length < 1) {
+    if (paramCtx_o.workingDir_s.length < 1) {
         oetrMainRefreshPage_f(paramCtx_o);
         return;
     }
     /*
     --- Save the Working Dir and current Client and Task in the Cookies
     */
-    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrWorkingDir",
-        paramCtx_o.workingDir, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrworkingDir",
+        paramCtx_o.workingDir_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
     paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentClient",
         paramCtx_o.currentClient_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
     paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentTask",
@@ -154,18 +154,18 @@ async function locGetFolderPath_f(paramCtx_o, paramEvent) {
     /*
     --- Request Path selection
     */
-    const locWorkingDir = await window.electronAPI.dialogFolderPath();
+    const locworkingDir_s = await window.electronAPI.dialogFolderPath();
     /*
     --- If cancel the return with refresh
     */
-    if (locWorkingDir.length < 1) {
+    if (locworkingDir_s.length < 1) {
         oetrParametersRefreshModal_f(paramCtx_o);
         return;
     }
     /*
     --- Update the Working dir in the context
     */
-    paramCtx_o.workingDir = locWorkingDir;
+    paramCtx_o.workingDir_s = locworkingDir_s;
     /*
     --- Reset default Client and task
     */
@@ -416,18 +416,18 @@ function LocContent_jsx(paramProps_o) {
     /*
     --- Build visibility flags
     */
-    const locDisplayAddClient = (locCtx_o.workingDir.length < 1) ? "none" : "box";
+    const locDisplayAddClient = (locCtx_o.workingDir_s.length < 1) ? "none" : "box";
     const locDisplaySelectClient = (locClients_a.length < 1) ? "none" : "block";
     const locDisplayAddTask = ((locClients_a.length < 1) || (locCtx_o.currentClient_s.length < 1)) ? "none" : "box";
     const locDisplaySelectTask = (locTasks_a.length < 1) ? "none" : "block";
     /*
     --- Set the Focus
     */
-    if (locCtx_o.workingDir.length < 1) {
+    if (locCtx_o.workingDir_s.length < 1) {
         /*
         --- Set focus on select Working Directory
         */
-        locCtx_o.focus = oetrDefFocus_e.parametersWorkingDir;
+        locCtx_o.focus = oetrDefFocus_e.parametersworkingDir_s;
     } else if (locCtx_o.focus !== oetrDefFocus_e.parametersEntryTask) {
         /*
         --- Set focus on Entry Client
@@ -440,7 +440,7 @@ function LocContent_jsx(paramProps_o) {
     return (
         <div style={{minHeight: "300px"}}>
             <div style={{marginTop: "20px"}}>
-                {locTrans_o.oeComTransGet_m("parameters", "labelGetWorkingDir")}
+                {locTrans_o.oeComTransGet_m("parameters", "labelGetworkingDir")}
             </div>
             <div>
                 <IconButton
@@ -454,7 +454,7 @@ function LocContent_jsx(paramProps_o) {
                 </IconButton>
                 <span>
                     <i>
-                        {locCtx_o.workingDir}
+                        {locCtx_o.workingDir_s}
                     </i>
                 </span>
             </div>

@@ -13,7 +13,7 @@
   !  Desc. : Electron preload for oetaskreport                  !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 02/10/2024                                         !
+  !  Modif.: 09/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -40,6 +40,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     dialogFolderPath: () => ipcRenderer.invoke('oetrDialogFolderPath'),
     //--- Declare oetrFileExists for checking if a File exists
     fileExists: (paramFileName) => ipcRenderer.invoke('oetrFileExists',paramFileName),
+    //--- Declare oetrCreateDir for creating a directory if not exists
+    createDir: (paramDirName) => ipcRenderer.invoke('oetrCreateDir',paramDirName),
     //--- Declare oetrFileRead for reading a File
     fileRead: (paramFileName) => ipcRenderer.invoke('oetrFileRead',paramFileName),
     //--- Declare oetrFileWrite for writing in a File

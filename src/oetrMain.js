@@ -191,7 +191,7 @@ function LocContent_jsx(paramProps_o) {
     /*
     --- If parameters are not completed then return empty box
     */
-    if ((locCtx_o.workingDir.length < 1) || (!locCtx_o.parametersCompleted)) return (<div></div>);
+    if ((locCtx_o.workingDir_s.length < 1) || (!locCtx_o.parametersCompleted)) return (<div></div>);
     /*
     --- Check if Reporting is started
     */
