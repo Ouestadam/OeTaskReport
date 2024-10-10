@@ -13,7 +13,7 @@
   !  Desc. : Main Entry for rendering of oetaskreport           !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 05/10/2024                                         !
+  !  Modif.: 10/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -24,7 +24,7 @@
 */
 import React, {useState} from "react";
 import {
-    Box, createTheme, CssBaseline, IconButton, Link, ThemeProvider, Tooltip
+    Box, Button, createTheme, CssBaseline, IconButton, Link, ThemeProvider, Tooltip
 } from "@mui/material";
 import {enUS, frFR} from "@mui/material/locale";
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -37,6 +37,7 @@ import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
 import {OetrStartTask_jsx} from "./oetrStartTask";
 import {OetrDialogEndTask_jsx, OetrEndTask_jsx} from "./oetrEndTask";
 import {oetrDefModal_e} from "./oetrDef";
+import {OetrDialogReport_jsx} from "./oetrReportMgt";
 
 /*=============== Local functions ==============================*/
 
@@ -124,6 +125,8 @@ function LocStartModal_jsx(paramProps_o) {
             return (<OetrDialogParameters_jsx ctx={locCtx_o}/>);
         case oetrDefModal_e.endTaskModal:
             return (<OetrDialogEndTask_jsx ctx={locCtx_o}/>);
+        case oetrDefModal_e.reportModal:
+            return (<OetrDialogReport_jsx ctx={locCtx_o}/>);
         default:
             return (<></>);
     }
@@ -232,6 +235,18 @@ function LocFooter_jsx(paramProps_o) {
                 <div style={{color: locColors_o.foregroundFooter}}>
                     {"V" + locCtx_o.config_o.version}
                 </div>
+            </Box>
+            <Box sx={{position: "absolute", bottom: "80px", width: "100%", textAlign: "center"}}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                        locCtx_o.currentModal = oetrDefModal_e.reportModal;
+                        oetrMainRefreshPage_f(locCtx_o);
+                    }}
+                >
+                    {locTrans_o.oeComTransGet_m("main", "buttonReport")}
+                </Button>
             </Box>
             <Box sx={{position: "absolute", bottom: "14px", right: "20px"}}>
                 <Link href={locCtx_o.config_o.urlOuestadam}

@@ -50,6 +50,10 @@ export const oetrTrans_o = {
         "toolTipParameters": {
             en: "Configuration",
             fr: "Configuration"
+        },
+        "buttonReport": {
+            en: "Generate reports",
+            fr: "Création de rapports"
         }
     },
     "parameters": {
@@ -78,8 +82,8 @@ export const oetrTrans_o = {
             fr: "Enlève le client sélectionné"
         },
         "labelCreateTask": {
-          en: "Add a new task in the list:",
-          fr: "Ajouter une nouvelle tâche dans la liste :"
+            en: "Add a new task in the list:",
+            fr: "Ajouter une nouvelle tâche dans la liste :"
         },
         "entryNewTask": {
             en: "New task",
@@ -153,5 +157,11 @@ export const oetrTrans_o = {
             en: " ($$1$$h $$2$$m)",
             fr: " ($$1$$h $$2$$m)"
         },
+    },
+    "report": {
+        "title": {
+            en: "Generate reports",
+            fr: "Création de rapports"
+        }
     }
 };

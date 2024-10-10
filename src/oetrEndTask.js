@@ -100,7 +100,6 @@ function locEnd_f(paramCtx_o, paramEvent) {
     oetrMainRefreshPage_f(paramCtx_o);
 }
 
-
 /*+-------------------------------------------------------------+
   ! Routine    : locClose_f                                     !
   ! Description: Handle the Cancel Button                       !
@@ -301,7 +300,7 @@ export function OetrEndTask_jsx(paramProps_o) {
     --- Return the Block
     */
     return (
-        <Box style={{minHeight: "300px", position: "absolute", top: "120px", width: "100%", padding: "20px"}}>
+        <Box style={{minHeight: "300px", position: "absolute", top: "150px", width: "100%", padding: "20px"}}>
             <LocTaskInfo_jsx ctx={locCtx_o}/>
             <Box sx={{mt: '50px', width: '100%', textAlign: 'center'}}>
                 <Button

@@ -13,7 +13,7 @@
   !  Desc. : Definition Enums for rendering of oetaskreport     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 05/10/2024                                         !
+  !  Modif.: 10/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -27,6 +27,7 @@ export const oetrDefModal_e = {
     noModal: 0,
     parametersModal: 1,
     endTaskModal: 2,
+    reportModal: 3
 };
 /*
 --- Focus list

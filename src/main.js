@@ -148,8 +148,9 @@ function locCreateWindow_f() {
     --- Create the browser window
     */
     mainWindow_o = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: "800px",
+        height: "600px",
+        minHeight: "600px",
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             nodeIntegration: true,

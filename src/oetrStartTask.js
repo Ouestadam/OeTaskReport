@@ -125,7 +125,7 @@ export function OetrStartTask_jsx(paramProps_o) {
     --- Return the Block
     */
     return (
-        <Box style={{minHeight: "300px", position: "absolute", top: "120px", width: "100%", padding: "20px"}}>
+        <Box style={{minHeight: "300px", position: "absolute", top: "150px", width: "100%", padding: "20px"}}>
             <Grid container spacing={2}>
                 <Grid size={4} sx={{pt: "6px", textAlign: "right"}}>
                     {locTrans_o.oeComTransGet_m("startTask", "labelSelectClient")}
@@ -192,7 +192,7 @@ export function OetrStartTask_jsx(paramProps_o) {
             <Box sx={{mt: '50px', width: '100%', textAlign: 'center'}}>
                 <Button
                     variant="contained"
-                    color="primary"
+                    color="success"
                     onClick={(paramEvent) => locStart_f(locCtx_o, paramEvent)}
                 >
                     {locTrans_o.oeComTransGet_m("startTask", "buttonStart")}
