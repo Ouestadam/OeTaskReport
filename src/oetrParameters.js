@@ -440,7 +440,7 @@ function LocContent_jsx(paramProps_o) {
     return (
         <div style={{minHeight: "300px"}}>
             <div style={{marginTop: "20px"}}>
-                {locTrans_o.oeComTransGet_m("parameters", "labelGetworkingDir")}
+                {locTrans_o.oeComTransGet_m("parameters", "labelGetWorkingDir")}
             </div>
             <div>
                 <IconButton
