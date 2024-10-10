@@ -44,7 +44,7 @@ export function oetrReportMgtAddDuration_f(paramCtx_o) {
     const locReport_o = paramCtx_o.monthReport_o;
     const locStartedTask_o = paramCtx_o.definitions_o.startedTask_o;
     const locClient_s = locStartedTask_o.client_s;
-    const locTask_s = locStartedTask_o.client_s;
+    const locTask_s = locStartedTask_o.task_s;
     const locDay_s = locStartedTask_o.day_s;
     let locDuration = locStartedTask_o.duration;
     /*
