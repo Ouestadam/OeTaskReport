@@ -13,7 +13,7 @@
   !  Desc. : Initialisation for rendering of oetaskreport       !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 09/10/2024                                         !
+  !  Modif.: 10/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -46,11 +46,15 @@ export function oetrInitDefinitions_f(paramCtx_o) {
     paramCtx_o.definitions_o = {
         clients_o: {},
         startedTask_o: {
-            started : false,
-            client_s : "",
-            task_s : "",
-            dateStart : 0,
+            started: false,
+            client_s: "",
+            task_s: "",
+            dateStart: 0,
             dateEnd: 0,
+            year_s: "",
+            month_s: "",
+            day_s: "",
+            reportDir_s: "",
             duration: 0
         }
     };

@@ -37,5 +37,6 @@ export const oetrConfig_o = {
         foregroundFooter : "#efefef",
     },
     definitionsFileName: "oeTaskReport.json",
+    reportFileName: "oetrMonth.json",
     urlOuestadam: "https://ouestadam.com"
 }

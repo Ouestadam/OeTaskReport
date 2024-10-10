@@ -33,9 +33,14 @@ import Grid from '@mui/material/Grid2';
 --- Ouestadam products
 */
 import {oetrMainRefreshPage_f} from "./oetrMain";
-import {oetrFileMgtReadJsonReportFile_f, oetrFileMgtWriteJsonDefinitionFile_f} from "./oetrFileMgt";
+import {
+    oetrFileMgtReadJsonReportFile_f,
+    oetrFileMgtWriteJsonDefinitionFile_f,
+    oetrFileMgtWriteJsonReportFile_f
+} from "./oetrFileMgt";
 import {oetrDefModal_e} from "./oetrDef";
 import {OetrError_jsx} from "./oetrError";
+import {oetrReportMgtAddDuration_f} from "./oetrReportMgt";
 
 /*=============== Local functions ==============================*/
 
@@ -53,6 +58,7 @@ function locEnd_f(paramCtx_o, paramEvent) {
     --- Initialisation
     */
     const locStartedTask_o = paramCtx_o.definitions_o.startedTask_o;
+    const locNow_o = new Date();
     /*
     --- Stop Event
     */
@@ -64,7 +70,17 @@ function locEnd_f(paramCtx_o, paramEvent) {
     /*
     --- Save the current end date in milliseconds
     */
-    locStartedTask_o.dateEnd = paramCtx_o.date_o.oeComDateStringMilliseconds_m();
+    locStartedTask_o.dateEnd = paramCtx_o.date_o.oeComDateStringMilliseconds_m(locNow_o);
+    /*
+    --- Save current year and month in string
+    */
+    locStartedTask_o.year_s = paramCtx_o.date_o.oeComDateStringYear_m(locNow_o);
+    locStartedTask_o.month_s = paramCtx_o.date_o.oeComDateStringMonthNumber_m(locNow_o);
+    locStartedTask_o.day_s = paramCtx_o.date_o.oeComDateStringDay_m(locNow_o);
+    /*
+    --- Save current report directory
+    */
+    locStartedTask_o.reportDir_s = paramCtx_o.workingDir_s + '/' + locStartedTask_o.year_s + '/' + locStartedTask_o.month_s;
     /*
     --- Save the duration in minutes
     */
@@ -132,18 +148,17 @@ async function locValid_f(paramCtx_o, paramEvent) {
     */
     paramCtx_o.currentModal = oetrDefModal_e.noModal;
     /*
-    --- Get current year and current month
-    */
-    const locCurrentYear_s = paramCtx_o.date_o.oeComDateStringYear_m();
-    const locCurrentMonth_s = paramCtx_o.date_o.oeComDateStringMonthNumber_m();
-    /*
-    --- Build current report directory
-    */
-    const locCurrentDir_s = paramCtx_o.workingDir_s + '/' + locCurrentYear_s + '/' + locCurrentMonth_s
-    /*
     --- Read the current Report file if exists
     */
-    await oetrFileMgtReadJsonReportFile_f(paramCtx_o, locCurrentDir_s);
+    await oetrFileMgtReadJsonReportFile_f(paramCtx_o);
+    /*
+    --- Add the task duration in the monthly report
+    */
+    oetrReportMgtAddDuration_f(paramCtx_o);
+    /*
+    --- Save the updated report
+    */
+    await oetrFileMgtWriteJsonReportFile_f(paramCtx_o);
     /*
     --- Reset the error state
     */

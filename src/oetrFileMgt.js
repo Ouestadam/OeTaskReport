@@ -40,16 +40,73 @@ import {oetrDefModal_e} from "./oetrDef";
   ! OUT: - Nothing                                              !
   +-------------------------------------------------------------+
 */
-export async function oetrFileMgtReadJsonReportFile_f(paramCtx_o, paramDirName_s) {
-
+export async function oetrFileMgtReadJsonReportFile_f(paramCtx_o) {
+    /*
+    --- Initialisation
+    */
+    const locStartedTask_o = paramCtx_o.definitions_o.startedTask_o;
+    const locReportDir_s = locStartedTask_o.reportDir_s;
+    const locFileName_s = locReportDir_s + '/' + paramCtx_o.config_o.reportFileName;
     /*
     --- Create the directory if it doesn't exist
     */
-    await window.electronAPI.createDir(paramDirName_s);
+    await window.electronAPI.createDir(locReportDir_s);
     /*
-    --- Read the current report file if present else create a new record
+    --- Check if the monthly report file exists
     */
+    const locFileExists = await window.electronAPI.fileExists(locFileName_s);
+    if (!locFileExists) {
+        /*
+        --- File is not present then reset the Report Object and return
+        */
+        paramCtx_o.monthReport_o = {};
+        return;
+    }
+    /*
+    --- Read the JSON File
+    */
+    const locData_s = await window.electronAPI.fileRead(locFileName_s);
+    if (locData_s.length > 4) {
+        /*
+        --- Parse only if Json is present
+        */
+        paramCtx_o.monthReport_o = JSON.parse(locData_s);
+    } else {
+        /*
+        --- Not present then reset the report
+        */
+        paramCtx_o.monthReport_o = {};
+    }
+}
 
+/*+-------------------------------------------------------------+
+  ! Routine    : oetrFileMgtWriteJsonReportFile_f               !
+  ! Description: Write the JSON Report File                     !
+  !                                                             !
+  ! IN:  - Context                                              !
+  !      - Report Directory Name                                !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+export async function oetrFileMgtWriteJsonReportFile_f(paramCtx_o) {
+    /*
+    --- Initialisation
+    */
+    const locStartedTask_o = paramCtx_o.definitions_o.startedTask_o;
+    const locReportDir_s = locStartedTask_o.reportDir_s;
+    const locFileName_s = locReportDir_s + '/' + paramCtx_o.config_o.reportFileName;
+    /*
+    --- Create the directory if it doesn't exist
+    */
+    await window.electronAPI.createDir(locReportDir_s);
+    /*
+    --- Convert to String the report object
+    */
+    const locData_s = JSON.stringify(paramCtx_o.monthReport_o);
+    /*
+    --- Write the definition file
+    */
+    await window.electronAPI.fileWrite(locFileName_s, locData_s);
 }
 
 /*+-------------------------------------------------------------+
@@ -91,11 +148,11 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
     /*
     --- Build filename
     */
-    const locFileName = paramCtx_o.workingDir_s + "/" + paramCtx_o.config_o.definitionsFileName;
+    const locFileName_s = paramCtx_o.workingDir_s + "/" + paramCtx_o.config_o.definitionsFileName;
     /*
     --- Check if the Definitions file exists
     */
-    const locFileExists = await window.electronAPI.fileExists(locFileName);
+    const locFileExists = await window.electronAPI.fileExists(locFileName_s);
     if (!locFileExists) {
         /*
         --- File is not present then reset the Definition Object set the Parameters Modal and return
@@ -108,7 +165,7 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
     /*
     --- Read the JSON File
     */
-    const locData_s = await window.electronAPI.fileRead(locFileName);
+    const locData_s = await window.electronAPI.fileRead(locFileName_s);
     if (locData_s.length > 4) {
         /*
         --- Parse only if Json is present
@@ -149,7 +206,7 @@ export async function oetrFileMgtWriteJsonDefinitionFile_f(paramCtx_o) {
     /*
     --- Build filename
     */
-    const locFileName = paramCtx_o.workingDir_s + "/" + paramCtx_o.config_o.definitionsFileName;
+    const locFileName_s = paramCtx_o.workingDir_s + "/" + paramCtx_o.config_o.definitionsFileName;
     /*
     --- Convert to String the Definition object
     */
@@ -157,5 +214,5 @@ export async function oetrFileMgtWriteJsonDefinitionFile_f(paramCtx_o) {
     /*
     --- Write the definition file
     */
-    await window.electronAPI.fileWrite(locFileName, locData_s);
-    }
+    await window.electronAPI.fileWrite(locFileName_s, locData_s);
+}
