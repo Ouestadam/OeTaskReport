@@ -23,7 +23,8 @@
 --- External products
 */
 import React from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 /*
 --- Ouestadam products
@@ -157,6 +158,14 @@ export function OetrDialogReport_jsx(paramProps_o) {
                 backgroundColor: locColors_o.backgroundDialogTitle
             }}>
                 {locTrans_o.oeComTransGet_m("report", "title")}
+                <IconButton
+                    aria-label="Close"
+                    size="small"
+                    sx={{position: "absolute", right: "8px"}}
+                    onClick={(paramEvent) => locClose_f(locCtx_o, paramEvent)}
+                >
+                    <CloseIcon fontSize="small"/>
+                </IconButton>
             </DialogTitle>
             <DialogContent sx={{pb: 0, mb: 0, mt: '30px'}}>
                 <LocContent_jsx ctx={locCtx_o}/>

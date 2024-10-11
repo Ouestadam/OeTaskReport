@@ -13,7 +13,7 @@
   !  Desc. : Main Entry for rendering of oetaskreport           !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 10/10/2024                                         !
+  !  Modif.: 11/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -24,10 +24,12 @@
 */
 import React, {useState} from "react";
 import {
-    Box, Button, createTheme, CssBaseline, IconButton, Link, ThemeProvider, Tooltip
+    Box, createTheme, CssBaseline, IconButton, Link, ThemeProvider, Tooltip
 } from "@mui/material";
 import {enUS, frFR} from "@mui/material/locale";
 import SettingsIcon from '@mui/icons-material/Settings';
+import CalculateIcon from '@mui/icons-material/Calculate';
+
 /*
 --- Ouestadam products
 */
@@ -168,6 +170,19 @@ function LocHeader_jsx(paramProps_o) {
                         <SettingsIcon fontSize="large"/>
                     </IconButton>
                 </Tooltip>
+                <Tooltip title={locTrans_o.oeComTransGet_m("main", "toolTipReport")}>
+                    <IconButton
+                        aria-label="Configuration"
+                        size="large"
+                        color="primary"
+                        sx={{backgroundColor: locColors_o.backgroundIcon, ml: "10px"}}
+                        onClick={() => {
+                            locCtx_o.currentModal = oetrDefModal_e.reportModal;
+                            oetrMainRefreshPage_f(locCtx_o);
+                        }}>
+                        <CalculateIcon fontSize="large"/>
+                    </IconButton>
+                </Tooltip>
             </Box>
             <Box sx={{position: "absolute", top: "14px", right: "20px"}}>
                 <OetrLocaleSwitcher_jsx ctx={locCtx_o}/>
@@ -235,18 +250,6 @@ function LocFooter_jsx(paramProps_o) {
                 <div style={{color: locColors_o.foregroundFooter}}>
                     {"V" + locCtx_o.config_o.version}
                 </div>
-            </Box>
-            <Box sx={{position: "absolute", bottom: "80px", width: "100%", textAlign: "center"}}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        locCtx_o.currentModal = oetrDefModal_e.reportModal;
-                        oetrMainRefreshPage_f(locCtx_o);
-                    }}
-                >
-                    {locTrans_o.oeComTransGet_m("main", "buttonReport")}
-                </Button>
             </Box>
             <Box sx={{position: "absolute", bottom: "14px", right: "20px"}}>
                 <Link href={locCtx_o.config_o.urlOuestadam}

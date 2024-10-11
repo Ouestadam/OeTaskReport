@@ -51,7 +51,7 @@ export const oetrTrans_o = {
             en: "Configuration",
             fr: "Configuration"
         },
-        "buttonReport": {
+        "toolTipReport": {
             en: "Generate reports",
             fr: "Création de rapports"
         }

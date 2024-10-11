@@ -71,7 +71,7 @@ export function OetrLocaleSwitcher_jsx(paramProps_o) {
             }}
         >
             <Tooltip title="Français">
-                <ToggleButton value="fr-FR" aria-label="fr-FR" sx={{padding: 0, mr: "2px"}}>
+                <ToggleButton value="fr-FR" aria-label="fr-FR" sx={{padding: 0, mr: "4px"}}>
                     <img src={locCtx_o.config_o.locale === "fr-FR" ? flagOnFrench : flagOffFrench} alt="French"/>
                 </ToggleButton>
             </Tooltip>

@@ -192,7 +192,7 @@ export function OetrStartTask_jsx(paramProps_o) {
             <Box sx={{mt: '50px', width: '100%', textAlign: 'center'}}>
                 <Button
                     variant="contained"
-                    color="success"
+                    color="primary"
                     onClick={(paramEvent) => locStart_f(locCtx_o, paramEvent)}
                 >
                     {locTrans_o.oeComTransGet_m("startTask", "buttonStart")}

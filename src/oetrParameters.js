@@ -13,7 +13,7 @@
   !  Desc. : Parameters dialog for rendering of oetaskreport    !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 01/10/2024                                         !
+  !  Modif.: 11/10/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -38,6 +38,7 @@ import Grid from '@mui/material/Grid2';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
 
 /*
 --- Ouestadam products
@@ -650,6 +651,14 @@ export function OetrDialogParameters_jsx(paramProps_o) {
                 backgroundColor: locColors_o.backgroundDialogTitle
             }}>
                 {locTrans_o.oeComTransGet_m("parameters", "title")}
+                <IconButton
+                    aria-label="Close"
+                    size="small"
+                    sx={{position: "absolute", right: "8px"}}
+                    onClick={async (paramEvent) => locClose_f(locCtx_o, paramEvent)}
+                >
+                    <CloseIcon fontSize="small"/>
+                </IconButton>
             </DialogTitle>
             <DialogContent sx={{pb: 0, mb: 0}}>
                 <LocContent_jsx ctx={locCtx_o}/>
