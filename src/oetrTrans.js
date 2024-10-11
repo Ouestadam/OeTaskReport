@@ -162,6 +162,10 @@ export const oetrTrans_o = {
         "title": {
             en: "Generate reports",
             fr: "Création de rapports"
+        },
+        "noReport": {
+            en: "No monthly report found in the data folder",
+            fr: "Aucun rapport mensuel trouvé dans le répertoire de données"
         }
     }
 };

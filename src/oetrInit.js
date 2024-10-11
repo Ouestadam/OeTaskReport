@@ -66,6 +66,26 @@ export function oetrInitDefinitions_f(paramCtx_o) {
 }
 
 /*+-------------------------------------------------------------+
+  ! Routine    : oetrInitReportBuild_f                          !
+  ! Description: Initialize the Report build object in context  !
+  !                                                             !
+  ! IN:  - Context                                              !
+  ! OUT: - Updated context                                      !
+  +-------------------------------------------------------------+
+*/
+export function oetrInitReportBuild_f(paramCtx_o) {
+    /*
+    --- Initialise Definitions object in the context
+    */
+    paramCtx_o.reportBuild_o = {
+        selectedYear_s: "",
+        selectedMonth_s: "",
+        listDirYears_a: [],
+        listDirMonths_a: []
+    };
+}
+
+/*+-------------------------------------------------------------+
   ! Routine    : oetrInit_f                                     !
   ! Description: Initialize the rendering context               !
   !                                                             !
@@ -166,4 +186,12 @@ export function oetrInit_f(paramCtx_o) {
     --- Current Month report
     */
     paramCtx_o.monthReport_o = {};
+    /*
+    --- Initialise report consolidation object
+    */
+    oetrInitReportBuild_f(paramCtx_o);
+    /*
+    --- Set if report consolidation should be reset
+    */
+    paramCtx_o.reportBuildReset = true;
 }

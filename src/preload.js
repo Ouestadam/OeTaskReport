@@ -42,6 +42,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     fileExists: (paramFileName) => ipcRenderer.invoke('oetrFileExists',paramFileName),
     //--- Declare oetrCreateDir for creating a directory if not exists
     createDir: (paramDirName) => ipcRenderer.invoke('oetrCreateDir',paramDirName),
+    //--- Declare oetrDirRead for listing a directory
+    dirRead: (paramDirName) => ipcRenderer.invoke('oetrDirRead',paramDirName),
     //--- Declare oetrFileRead for reading a File
     fileRead: (paramFileName) => ipcRenderer.invoke('oetrFileRead',paramFileName),
     //--- Declare oetrFileWrite for writing in a File

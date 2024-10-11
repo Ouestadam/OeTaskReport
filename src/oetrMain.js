@@ -39,7 +39,7 @@ import {oetrFileMgtReadJsonDefinitionFile_f} from "./oetrFileMgt";
 import {OetrStartTask_jsx} from "./oetrStartTask";
 import {OetrDialogEndTask_jsx, OetrEndTask_jsx} from "./oetrEndTask";
 import {oetrDefModal_e} from "./oetrDef";
-import {OetrDialogReport_jsx} from "./oetrReportMgt";
+import {OetrDialogReportMgt_jsx} from "./oetrReportMgt";
 
 /*=============== Local functions ==============================*/
 
@@ -128,7 +128,7 @@ function LocStartModal_jsx(paramProps_o) {
         case oetrDefModal_e.endTaskModal:
             return (<OetrDialogEndTask_jsx ctx={locCtx_o}/>);
         case oetrDefModal_e.reportModal:
-            return (<OetrDialogReport_jsx ctx={locCtx_o}/>);
+            return (<OetrDialogReportMgt_jsx ctx={locCtx_o}/>);
         default:
             return (<></>);
     }

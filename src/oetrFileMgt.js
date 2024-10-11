@@ -36,7 +36,6 @@ import {oetrDefModal_e} from "./oetrDef";
   ! Description: Read a JSON Report File                        !
   !                                                             !
   ! IN:  - Context                                              !
-  !      - Report Directory Name                                !
   ! OUT: - Nothing                                              !
   +-------------------------------------------------------------+
 */
@@ -84,7 +83,6 @@ export async function oetrFileMgtReadJsonReportFile_f(paramCtx_o) {
   ! Description: Write the JSON Report File                     !
   !                                                             !
   ! IN:  - Context                                              !
-  !      - Report Directory Name                                !
   ! OUT: - Nothing                                              !
   +-------------------------------------------------------------+
 */
@@ -215,4 +213,85 @@ export async function oetrFileMgtWriteJsonDefinitionFile_f(paramCtx_o) {
     --- Write the definition file
     */
     await window.electronAPI.fileWrite(locFileName_s, locData_s);
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : oetrFileMgtListYears_f                         !
+  ! Description: List all years in the working directory        !
+  !                                                             !
+  ! IN:  - Context                                              !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+export async function oetrFileMgtListYears_f(paramCtx_o) {
+    /*
+    --- Initialisation
+    */
+    const locReportBuild_o = paramCtx_o.reportBuild_o;
+    locReportBuild_o.listDirYears_a = [];
+    locReportBuild_o.selectedYear_s = "";
+    /*
+    --- If Working directory is not defined then return without any action
+    */
+    if (paramCtx_o.workingDir_s.length < 1) return;
+    /*
+    --- Read the working directory
+    */
+    const locListUnsorted_a = await window.electronAPI.dirRead(paramCtx_o.workingDir_s);
+    const locListSorted_a = locListUnsorted_a.sort();
+    /*
+    --- For each element of the directory, keep only years
+    */
+    locListSorted_a.forEach((paramName_s) => {
+        if (paramName_s.length === 4) {
+            const locValue = parseInt(paramName_s);
+            if ((locValue > 2000) && (locValue < 2100)) locReportBuild_o.listDirYears_a.push(paramName_s);
+        }
+    });
+    /*
+    --- Selected the most recent year
+    */
+    const locNbYears = locReportBuild_o.listDirYears_a.length;
+    locReportBuild_o.selectedYear_s = (locNbYears > 0) ? locReportBuild_o.listDirYears_a[locNbYears - 1] : "";
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : oetrFileMgtListMonths_f                        !
+  ! Description: List all years in the working directory        !
+  !                                                             !
+  ! IN:  - Context                                              !
+  !      - Report Directory Name                                !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+export async function oetrFileMgtListMonths_f(paramCtx_o) {
+    /*
+    --- Initialisation
+    */
+    const locReportBuild_o = paramCtx_o.reportBuild_o;
+    locReportBuild_o.listDirMonths_a = [];
+    locReportBuild_o.selectedMonth_s = "";
+    /*
+    --- If Working directory not defined or no selected year then return without any action
+    */
+    if ((paramCtx_o.workingDir_s.length < 1) || (locReportBuild_o.selectedYear_s === ""))return;
+    /*
+    --- Read the selected year directory
+    */
+    const locListUnsorted_a = await window.electronAPI.dirRead(paramCtx_o.workingDir_s+"/"+locReportBuild_o.selectedYear_s);
+    const locListSorted_a = locListUnsorted_a.sort();
+    /*
+    --- For each element of the directory, keep only years
+    */
+    locListSorted_a.forEach((paramName_s) => {
+        if (paramName_s.length === 2) {
+            const locValue = parseInt(paramName_s);
+            if ((locValue > 0) && (locValue < 13)) locReportBuild_o.listDirMonths_a.push(paramName_s);
+        }
+    });
+    /*
+    --- Selected the most recent month
+    */
+    const locNbMonths = locReportBuild_o.listDirMonths_a.length;
+    locReportBuild_o.selectedMonth_s = (locNbMonths > 0) ? locReportBuild_o.listDirMonths_a[locNbMonths - 1] : "";
 }

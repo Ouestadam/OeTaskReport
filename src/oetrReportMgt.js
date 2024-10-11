@@ -22,7 +22,7 @@
 /*
 --- External products
 */
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -32,6 +32,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import {OetrError_jsx} from "./oetrError";
 import {oetrDefModal_e} from "./oetrDef";
 import {oetrMainRefreshPage_f} from "./oetrMain";
+import {oetrInitReportBuild_f} from "./oetrInit";
+import {oetrFileMgtListMonths_f, oetrFileMgtListYears_f} from "./oetrFileMgt";
 
 /*=============== Local functions ==============================*/
 
@@ -54,6 +56,10 @@ function locClose_f(paramCtx_o, paramEvent) {
     */
     paramCtx_o.currentModal = oetrDefModal_e.noModal;
     /*
+    --- Reset the Build
+    */
+    paramCtx_o.reportBuildReset = true;
+    /*
     --- Reset the error state
     */
     paramCtx_o.error_o.inError = false;
@@ -68,7 +74,7 @@ function locClose_f(paramCtx_o, paramEvent) {
 /*
 +-------------------------------------------------------------+
 ! Routine    : LocContent_jsx                                 !
-! Description: JSX Parameters Modal content                   !
+! Description: JSX Report build Modal content                 !
 !                                                             !
 ! IN:  - Properties including Context                         !
 ! OUT: - Page rendering                                       !
@@ -79,6 +85,19 @@ function LocContent_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
+    const locReportBuild_o = locCtx_o.reportBuild_o;
+    /*
+    --- If no selected year, display a message only
+    */
+    if (locReportBuild_o.selectedYear_s === "") {
+        return (
+            <div style={{height: "70px", marginTop: "30px", width: "100%", textAlign: "center"}}>
+                {locTrans_o.oeComTransGet_m("report", "noReport")}
+            </div>
+        );
+    }
+
     /*
     --- Return the Dialog Content to display
     */
@@ -126,23 +145,65 @@ export function oetrReportMgtAddDuration_f(paramCtx_o) {
     locReport_o[locClient_s][locTask_s][locDay_s] = locDuration;
 }
 
+/*
++-------------------------------------------------------------+
+! Routine : oetrReportMgtRefreshModal_f                       !
+! Description: Request the refresh of the Modal               !
+!                                                             !
+! IN: - Context                                               !
+! OUT: - Nothing                                              !
++-------------------------------------------------------------+
+*/
+export function oetrReportMgtRefreshModal_f(paramCtx_o) {
+    paramCtx_o.refresh_o.reportMgt_s = !paramCtx_o.refresh_o.reportMgt_s;
+    paramCtx_o.refresh_o.reportMgt_f(paramCtx_o.refresh_o.reportMgt_s);
+}
 /*=============== Exported JSX components ======================*/
 
 /*+-------------------------------------------------------------+
-  ! Routine    : OetrDialogReport_jsx                           !
-  ! Description: JSX Report Dialog                              !
+  ! Routine    : OetrDialogReportMgt_jsx                        !
+  ! Description: JSX Report Management Dialog                   !
   !                                                             !
   ! IN:  - Properties including Context                         !
   ! OUT: - Page rendering                                       !
   +-------------------------------------------------------------+
 */
-export function OetrDialogReport_jsx(paramProps_o) {
+export function OetrDialogReportMgt_jsx(paramProps_o) {
     /*
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
     const locTrans_o = locCtx_o.trans_o;
     const locColors_o = locCtx_o.config_o.colors_o;
+    /*
+    --- Get React state for refreshing the page
+    */
+    const [locReportMgt_s, locReportMgt_f] = useState(false);
+    locCtx_o.refresh_o.reportMgt_f = locReportMgt_f;
+    locCtx_o.refresh_o.reportMgt_s = locReportMgt_s;
+    /*
+    --- Check if Report build object should be reset
+    */
+    if (locCtx_o.reportBuildReset) {
+        /*
+        --- Reset the report build object
+        */
+        oetrInitReportBuild_f(locCtx_o);
+        /*
+        --- Get the list of Year directories then list of month directories
+        */
+        oetrFileMgtListYears_f(locCtx_o).then(()=>oetrFileMgtListMonths_f(locCtx_o)).then(()=>{
+            /*
+            --- Report build object is updated
+            */
+            locCtx_o.reportBuildReset = false;
+            /*
+            --- Refresh the Report Modal
+            */
+            oetrReportMgtRefreshModal_f(locCtx_o);
+            console.log("Selected year ="+locCtx_o.reportBuild_o.selectedYear_s);
+        });
+    }
     /*
     --- Return the Dialog
     */
