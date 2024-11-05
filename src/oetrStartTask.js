@@ -131,7 +131,7 @@ export function OetrStartTask_jsx(paramProps_o) {
                     {locTrans_o.oeComTransGet_m("startTask", "labelSelectClient")}
                 </Grid>
                 <Grid size={8} sx={{textAlign: "left"}}>
-                    <FormControl variant="filled" fullWidth size="small"
+                    <FormControl variant="filled" size="small"
                                  sx={{
                                      width: "350px",
                                      backgroundColor: locColors_o.backgroundSelect
@@ -163,7 +163,7 @@ export function OetrStartTask_jsx(paramProps_o) {
                     {locTrans_o.oeComTransGet_m("startTask", "labelSelectTask")}
                 </Grid>
                 <Grid size={8} sx={{textAlign: "left"}}>
-                    <FormControl variant="filled" fullWidth size="small"
+                    <FormControl variant="filled" size="small"
                                  sx={{
                                      width: "350px",
                                      backgroundColor: locColors_o.backgroundSelect

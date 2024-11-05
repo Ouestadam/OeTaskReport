@@ -4,9 +4,11 @@ const {FuseV1Options, FuseVersion} = require('@electron/fuses');
 module.exports = {
     packagerConfig: {
         asar: true,
-        icon: "./src/assets/icons/png/32x32.png",
+        icon: "./src/assets/icons/png/256x256.png",
     },
-    rebuildConfig: {},
+    rebuildConfig: {
+        force: true
+    },
     makers: [
         {
             name: '@electron-forge/maker-squirrel',
@@ -21,7 +23,7 @@ module.exports = {
             name: '@electron-forge/maker-deb',
             config: {
                 options: {
-                    icon: './src/assets/icons/png/32x32.png'
+                    icon: './src/assets/icons/png/256x256.png'
                 }
             },
         },

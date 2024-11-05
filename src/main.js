@@ -22,8 +22,9 @@
 /*
 --- External products
 */
-import {app, BrowserWindow, ipcMain, dialog} from 'electron';
+import {app, BrowserWindow, nativeImage, ipcMain, dialog} from 'electron';
 import fs from "node:fs";
+import {join} from "path";
 
 /*=============== Global variables =============================*/
 /*
@@ -157,6 +158,7 @@ function locCreateWindow_f() {
         width: "800px",
         height: "600px",
         minHeight: "600px",
+        icon: nativeImage.createFromPath(join(__dirname, './assets/icons/png/256x256.png')),
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             nodeIntegration: true,

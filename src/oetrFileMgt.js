@@ -13,7 +13,7 @@
   !  Desc. : Files management for rendering of oetaskreport     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 04/10/2024                                         !
+  !  Modif.: 05/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -75,6 +75,171 @@ export async function oetrFileMgtReadJsonReportFile_f(paramCtx_o) {
         --- Not present then reset the report
         */
         paramCtx_o.monthReport_o = {};
+    }
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : oetrFileMgtComputeOneJsonReportFile_f          !
+  ! Description: Read and Compute one JSON Report File          !
+  !                                                             !
+  ! IN:  - Context                                              !
+  !      - Year                                                 !
+  !      - Month                                                !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+export async function oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o, paramYear_s, paramMonth_s) {
+    /*
+    --- Initialisation
+    */
+    const locTotalReport_o = paramCtx_o.reportBuild_o.report;
+    const locReportDir_s = paramCtx_o.workingDir_s + '/' + paramYear_s + '/' + paramMonth_s;
+    const locFileName_s = locReportDir_s + '/' + paramCtx_o.config_o.reportFileName;
+    /*
+    --- Check if the monthly report file exists
+    */
+    const locFileExists = await window.electronAPI.fileExists(locFileName_s);
+    if (!locFileExists) {
+        /*
+        --- File is not present then return without updating the report
+        */
+        return;
+    }
+    /*
+    --- Read the JSON File
+    */
+    const locData_s = await window.electronAPI.fileRead(locFileName_s);
+    if (locData_s.length < 5) {
+        /*
+        --- Data are not present then return without updating the report
+        */
+        return;
+    }
+    /*
+    --- Parse the Json
+    */
+    const locMonthReport_o = JSON.parse(locData_s);
+    /*
+    --- Get the list of clients
+    */
+    const locClients_a = Object.keys(locMonthReport_o);
+    /*
+    --- For each Client, get the list of associated tasks
+    */
+    for (let locI = 0; locI < locClients_a.length; locI++) {
+        /*
+        --- If the Client is not already in the report, then add it
+        */
+        const locClient_s = locClients_a[locI];
+        if (locTotalReport_o[locClient_s] === undefined) locTotalReport_o[locClient_s] = {};
+        /*
+        --- For each task, accumulate the daily values
+        */
+        const locTasks_a = Object.keys(locMonthReport_o[locClient_s]);
+        for (let locJ = 0; locJ < locTasks_a.length; locJ++) {
+            /*
+            --- If the Task is not already in the report, then add it
+            */
+            const locTask_s = locTasks_a[locJ];
+            if (locTotalReport_o[locClient_s][locTask_s] === undefined) locTotalReport_o[locClient_s][locTask_s] = 0;
+            /*
+            --- For each day, add the number of minutes
+            */
+            const locDays_a = Object.keys(locMonthReport_o[locClient_s][locTask_s]);
+            for (let locK = 0; locK < locDays_a.length; locK++) {
+                const locDay_s = locDays_a[locK];
+                locTotalReport_o[locClient_s][locTask_s] += locMonthReport_o[locClient_s][locTask_s][locDay_s];
+            }
+        }
+    }
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : oetrFileMgtComputeAllJsonReportFile_f          !
+  ! Description: Read and Compute all JSON Report Files         !
+  !                                                             !
+  ! IN:  - Context                                              !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+export async function oetrFileMgtComputeAllJsonReportFile_f(paramCtx_o) {
+    /*
+    --- Initialisation
+    */
+    const locReportBuild_o = paramCtx_o.reportBuild_o;
+    /*
+    --- Reset the current report and the selected client/task
+    */
+    locReportBuild_o.report = {};
+    locReportBuild_o.selectedClient_s = "";
+    locReportBuild_o.selectedTask_s = "";
+    /*
+    --- If the year or the month are not selected then return without any report built
+    */
+    if ((locReportBuild_o.selectedYear_s.length < 1) || (locReportBuild_o.selectedMonth_s.length < 1)) return;
+    /*
+    --- Check if single month selected or all the year
+    */
+    if (locReportBuild_o.selectedMonth_s === "00") {
+        /*
+        --- All the year: process each existing month
+        */
+        for (let locI = 1; locI < locReportBuild_o.listDirMonths_a.length; locI++) {
+            await oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o,locReportBuild_o.selectedYear_s,locReportBuild_o.listDirMonths_a[locI]);
+        }
+    } else {
+        /*
+        --- Just one month is selected
+        */
+        await oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o,locReportBuild_o.selectedYear_s,locReportBuild_o.selectedMonth_s);
+    }
+    /*
+    --- Check if the current client is defined in the report else take the first one
+    */
+    if (locReportBuild_o.report[paramCtx_o.currentClient_s] !== undefined) {
+        /*
+        --- Set the selected client as the current client
+        */
+        locReportBuild_o.selectedClient_s = paramCtx_o.currentClient_s;
+    } else {
+        /*
+        --- Get the list of clients in the report and get the first one as selected
+        */
+        const locClients_a = Object.keys(locReportBuild_o.report);
+        /*
+        --- If no client then return
+        */
+        if (locClients_a.length < 1) return;
+        /*
+        --- Get the first client
+        */
+        locReportBuild_o.selectedClient_s = locClients_a[0];
+    }
+    /*
+    --- Check if the current task is defined in the report else take the first one
+    */
+    const locReportClient_o = locReportBuild_o.report[locReportBuild_o.selectedClient_s];
+    if (locReportClient_o[paramCtx_o.currentTask_s] !== undefined) {
+        /*
+        --- Set the selected task as the current task
+        */
+        locReportBuild_o.selectedTask_s = paramCtx_o.currentTask_s;
+    } else {
+        /*
+        --- Get the list of tasks in the report and get the first one as selected
+        */
+        const locTasks_a = Object.keys(locReportClient_o);
+        /*
+        --- If no task then return
+        */
+        if (locTasks_a.length < 1) {
+            locReportBuild_o.selectedClient_s = "";
+            return;
+        }
+        /*
+        --- Get the first task
+        */
+        locReportBuild_o.selectedTask_s = locTasks_a[0];
     }
 }
 
@@ -257,10 +422,9 @@ export async function oetrFileMgtListYears_f(paramCtx_o) {
 
 /*+-------------------------------------------------------------+
   ! Routine    : oetrFileMgtListMonths_f                        !
-  ! Description: List all years in the working directory        !
+  ! Description: List all Months in the Year directory          !
   !                                                             !
   ! IN:  - Context                                              !
-  !      - Report Directory Name                                !
   ! OUT: - Nothing                                              !
   +-------------------------------------------------------------+
 */
@@ -269,16 +433,16 @@ export async function oetrFileMgtListMonths_f(paramCtx_o) {
     --- Initialisation
     */
     const locReportBuild_o = paramCtx_o.reportBuild_o;
-    locReportBuild_o.listDirMonths_a = [];
+    locReportBuild_o.listDirMonths_a = ["00"];
     locReportBuild_o.selectedMonth_s = "";
     /*
     --- If Working directory not defined or no selected year then return without any action
     */
-    if ((paramCtx_o.workingDir_s.length < 1) || (locReportBuild_o.selectedYear_s === ""))return;
+    if ((paramCtx_o.workingDir_s.length < 1) || (locReportBuild_o.selectedYear_s === "")) return;
     /*
     --- Read the selected year directory
     */
-    const locListUnsorted_a = await window.electronAPI.dirRead(paramCtx_o.workingDir_s+"/"+locReportBuild_o.selectedYear_s);
+    const locListUnsorted_a = await window.electronAPI.dirRead(paramCtx_o.workingDir_s + "/" + locReportBuild_o.selectedYear_s);
     const locListSorted_a = locListUnsorted_a.sort();
     /*
     --- For each element of the directory, keep only years
@@ -293,5 +457,5 @@ export async function oetrFileMgtListMonths_f(paramCtx_o) {
     --- Selected the most recent month
     */
     const locNbMonths = locReportBuild_o.listDirMonths_a.length;
-    locReportBuild_o.selectedMonth_s = (locNbMonths > 0) ? locReportBuild_o.listDirMonths_a[locNbMonths - 1] : "";
+    locReportBuild_o.selectedMonth_s = (locNbMonths > 1) ? locReportBuild_o.listDirMonths_a[locNbMonths - 1] : "";
 }

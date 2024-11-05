@@ -23,7 +23,16 @@
 --- External products
 */
 import React, {useState} from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton} from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    IconButton, MenuItem,
+    Select
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 /*
@@ -33,7 +42,8 @@ import {OetrError_jsx} from "./oetrError";
 import {oetrDefModal_e} from "./oetrDef";
 import {oetrMainRefreshPage_f} from "./oetrMain";
 import {oetrInitReportBuild_f} from "./oetrInit";
-import {oetrFileMgtListMonths_f, oetrFileMgtListYears_f} from "./oetrFileMgt";
+import {oetrFileMgtComputeAllJsonReportFile_f, oetrFileMgtListMonths_f, oetrFileMgtListYears_f} from "./oetrFileMgt";
+import Grid from "@mui/material/Grid2";
 
 /*=============== Local functions ==============================*/
 
@@ -86,6 +96,7 @@ function LocContent_jsx(paramProps_o) {
     */
     const locCtx_o = paramProps_o.ctx;
     const locTrans_o = locCtx_o.trans_o;
+    const locColors_o = locCtx_o.config_o.colors_o;
     const locReportBuild_o = locCtx_o.reportBuild_o;
     /*
     --- If no selected year, display a message only
@@ -97,12 +108,76 @@ function LocContent_jsx(paramProps_o) {
             </div>
         );
     }
-
+    /*
+    --- Build Month selection field
+    */
+    const locSelectMonth_jsx = (locReportBuild_o.selectedMonth_s.length < 1) ? (
+        <div>
+            {locTrans_o.oeComTransGet_m("report", "noMonth")}
+        </div>
+    ) : (
+        <FormControl variant="filled" size="small"
+                     sx={{
+                         width: "200px",
+                         backgroundColor: locColors_o.backgroundSelect
+                     }}>
+            <Select
+                id="oetrReportSelectMonth"
+                value={locReportBuild_o.selectedMonth_s}
+                defaultValue={locReportBuild_o.selectedMonth_s}
+                variant="standard"
+                sx={{pl: "14px", pt: "4px"}}
+                onChange={(paramEvent) => {
+                    locReportBuild_o.selectedMonth_s = paramEvent.target.value;
+                    oetrReportMgtRefreshModal_f(locCtx_o);
+                }}
+            >
+                {locReportBuild_o.listDirMonths_a.map((paramMonth) => (
+                    <MenuItem key={"itemMonth" + paramMonth}
+                              value={paramMonth}>
+                        {locTrans_o.oeComTransGet_m("months", paramMonth)}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+    );
     /*
     --- Return the Dialog Content to display
     */
     return (
         <div style={{height: "600px"}}>
+            <div>
+                {locTrans_o.oeComTransGet_m("report", "labelSelectDate")}
+            </div>
+            <Grid container spacing={1} sx={{mt: "8px"}}>
+                <Grid size={6}>
+                    <FormControl variant="filled" size="small"
+                                 sx={{
+                                     width: "100px",
+                                     backgroundColor: locColors_o.backgroundSelect
+                                 }}>
+                        <Select
+                            id="oetrReportSelectYear"
+                            value={locReportBuild_o.selectedYear_s}
+                            defaultValue={locReportBuild_o.selectedYear_s}
+                            variant="standard"
+                            sx={{pl: "14px", pt: "4px"}}
+                            onChange={(paramEvent) => {
+                                locReportBuild_o.selectedYear_s = paramEvent.target.value;
+                                oetrFileMgtListMonths_f(locCtx_o).then(() => oetrReportMgtRefreshModal_f(locCtx_o));
+                            }}
+                        >
+                            {locReportBuild_o.listDirYears_a.map((paramYear) => (
+                                <MenuItem key={"itemYear" + paramYear}
+                                          value={paramYear}>{paramYear}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid size={6}>
+                    {locSelectMonth_jsx}
+                </Grid>
+            </Grid>
         </div>);
 }
 
@@ -158,6 +233,7 @@ export function oetrReportMgtRefreshModal_f(paramCtx_o) {
     paramCtx_o.refresh_o.reportMgt_s = !paramCtx_o.refresh_o.reportMgt_s;
     paramCtx_o.refresh_o.reportMgt_f(paramCtx_o.refresh_o.reportMgt_s);
 }
+
 /*=============== Exported JSX components ======================*/
 
 /*+-------------------------------------------------------------+
@@ -192,17 +268,18 @@ export function OetrDialogReportMgt_jsx(paramProps_o) {
         /*
         --- Get the list of Year directories then list of month directories
         */
-        oetrFileMgtListYears_f(locCtx_o).then(()=>oetrFileMgtListMonths_f(locCtx_o)).then(()=>{
-            /*
-            --- Report build object is updated
-            */
-            locCtx_o.reportBuildReset = false;
-            /*
-            --- Refresh the Report Modal
-            */
-            oetrReportMgtRefreshModal_f(locCtx_o);
-            console.log("Selected year ="+locCtx_o.reportBuild_o.selectedYear_s);
-        });
+        oetrFileMgtListYears_f(locCtx_o).then(() =>
+            oetrFileMgtListMonths_f(locCtx_o).then(() =>
+                oetrFileMgtComputeAllJsonReportFile_f(locCtx_o).then(() => {
+                    /*
+                    --- Report build object is updated
+                    */
+                    locCtx_o.reportBuildReset = false;
+                    /*
+                    --- Refresh the Report Modal
+                    */
+                    oetrReportMgtRefreshModal_f(locCtx_o);
+                })));
     }
     /*
     --- Return the Dialog
@@ -228,7 +305,7 @@ export function OetrDialogReportMgt_jsx(paramProps_o) {
                     <CloseIcon fontSize="small"/>
                 </IconButton>
             </DialogTitle>
-            <DialogContent sx={{pb: 0, mb: 0, mt: '30px'}}>
+            <DialogContent sx={{pb: 0, mb: 0, mt: '10px'}}>
                 <LocContent_jsx ctx={locCtx_o}/>
             </DialogContent>
             <DialogActions sx={{mt: 0, mb: 0}}>

@@ -80,8 +80,11 @@ export function oetrInitReportBuild_f(paramCtx_o) {
     paramCtx_o.reportBuild_o = {
         selectedYear_s: "",
         selectedMonth_s: "",
+        selectedClient_s: "",
+        selectedTask_s: "",
         listDirYears_a: [],
-        listDirMonths_a: []
+        listDirMonths_a: [],
+        report: {}
     };
 }
 
