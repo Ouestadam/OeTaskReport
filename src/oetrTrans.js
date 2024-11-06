@@ -110,6 +110,12 @@ export const oetrTrans_o = {
                 fr: "Décembre"
             }
         },
+        "clients": {
+            "_All": {
+                en: "All clients",
+                fr: "Tous les clients"
+            },
+        },
         "parameters": {
             "title": {
                 en: "Parameters",
@@ -229,6 +235,15 @@ export const oetrTrans_o = {
                 en: "No monthly report found for this year",
                 fr: "Aucun rapport mensuel pour cette année"
             },
+            "labelSelectClient":                {
+                en: "Select client(s) for the report:",
+                fr: "Sélectionner le(s) client(s) pour le rapport :"
+            },
+            "noClient": {
+                en: "No client found",
+                fr: "Aucun client trouvé"
+            },
+
         }
     }
 ;

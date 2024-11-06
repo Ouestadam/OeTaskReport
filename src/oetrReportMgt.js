@@ -83,14 +83,59 @@ function locClose_f(paramCtx_o, paramEvent) {
 
 /*
 +-------------------------------------------------------------+
-! Routine    : LocContent_jsx                                 !
-! Description: JSX Report build Modal content                 !
+! Routine    : LocSelectYear_jsx                              !
+! Description: JSX Select Year field                          !
 !                                                             !
 ! IN:  - Properties including Context                         !
 ! OUT: - Page rendering                                       !
 +-------------------------------------------------------------+
 */
-function LocContent_jsx(paramProps_o) {
+function LocSelectYear_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locColors_o = locCtx_o.config_o.colors_o;
+    const locReportBuild_o = locCtx_o.reportBuild_o;
+    /*
+    --- Return the Select Year field
+    */
+    return (
+        <FormControl variant="filled" size="small"
+                     sx={{
+                         width: "100px",
+                         backgroundColor: locColors_o.backgroundSelect
+                     }}>
+            <Select
+                id="oetrReportSelectYear"
+                value={locReportBuild_o.selectedYear_s}
+                defaultValue={locReportBuild_o.selectedYear_s}
+                variant="standard"
+                sx={{pl: "14px", pt: "4px"}}
+                onChange={(paramEvent) => {
+                    locReportBuild_o.selectedYear_s = paramEvent.target.value;
+                    oetrFileMgtListMonths_f(locCtx_o).then(() => oetrReportMgtRefreshModal_f(locCtx_o));
+                }}
+            >
+                {locReportBuild_o.listDirYears_a.map((paramYear) => (
+                    <MenuItem key={"itemYear" + paramYear}
+                              value={paramYear}>{paramYear}</MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+    );
+}
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocSelectMonth_jsx                             !
+! Description: JSX Select Month field                         !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocSelectMonth_jsx(paramProps_o) {
     /*
     --- Initialisation
     */
@@ -99,23 +144,17 @@ function LocContent_jsx(paramProps_o) {
     const locColors_o = locCtx_o.config_o.colors_o;
     const locReportBuild_o = locCtx_o.reportBuild_o;
     /*
-    --- If no selected year, display a message only
+    --- If no selected month then return a simple text
     */
-    if (locReportBuild_o.selectedYear_s === "") {
-        return (
-            <div style={{height: "70px", marginTop: "30px", width: "100%", textAlign: "center"}}>
-                {locTrans_o.oeComTransGet_m("report", "noReport")}
-            </div>
-        );
-    }
-    /*
-    --- Build Month selection field
-    */
-    const locSelectMonth_jsx = (locReportBuild_o.selectedMonth_s.length < 1) ? (
+    if (locReportBuild_o.selectedMonth_s.length < 1) return (
         <div>
             {locTrans_o.oeComTransGet_m("report", "noMonth")}
         </div>
-    ) : (
+    )
+    /*
+    --- Return the Select Month field
+    */
+    return (
         <FormControl variant="filled" size="small"
                      sx={{
                          width: "200px",
@@ -129,7 +168,7 @@ function LocContent_jsx(paramProps_o) {
                 sx={{pl: "14px", pt: "4px"}}
                 onChange={(paramEvent) => {
                     locReportBuild_o.selectedMonth_s = paramEvent.target.value;
-                    oetrReportMgtRefreshModal_f(locCtx_o);
+                    oetrFileMgtComputeAllJsonReportFile_f(locCtx_o).then(() => oetrReportMgtRefreshModal_f(locCtx_o));
                 }}
             >
                 {locReportBuild_o.listDirMonths_a.map((paramMonth) => (
@@ -141,6 +180,92 @@ function LocContent_jsx(paramProps_o) {
             </Select>
         </FormControl>
     );
+}
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocSelectClient_jsx                            !
+! Description: JSX Select Client field                        !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocSelectClient_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
+    const locColors_o = locCtx_o.config_o.colors_o;
+    const locReportBuild_o = locCtx_o.reportBuild_o;
+    /*
+    --- If no selected client then return a simple text
+    */
+    if ((locReportBuild_o.selectedMonth_s.length < 1) || (locReportBuild_o.selectedClient_s.length < 1)) return (
+        <div>
+            {locTrans_o.oeComTransGet_m("report", "noClient")}
+        </div>
+    )
+    /*
+    --- Return the Select Client field
+    */
+    return (
+        <FormControl variant="filled" size="small"
+                     sx={{
+                         width: "350px",
+                         backgroundColor: locColors_o.backgroundSelect
+                     }}>
+            <Select
+                id="oetrReportSelectClient"
+                value={locReportBuild_o.selectedClient_s}
+                defaultValue={locReportBuild_o.selectedClient_s}
+                variant="standard"
+                sx={{pl: "14px", pt: "4px"}}
+                onChange={(paramEvent) => {
+                    locReportBuild_o.selectedClient_s = paramEvent.target.value;
+                    oetrReportMgtRefreshModal_f(locCtx_o);
+                }}
+            >
+                {locReportBuild_o.listClients_a.map((paramClient) => (
+                    <MenuItem key={"itemClient" + paramClient}
+                              value={paramClient}>
+                        {(paramClient === '_All') ?
+                            locTrans_o.oeComTransGet_m("clients", paramClient) : paramClient
+                        }
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+    );
+}
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocContent_jsx                                 !
+! Description: JSX Report build Modal content                 !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocContent_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
+    const locReportBuild_o = locCtx_o.reportBuild_o;
+    /*
+    --- If no selected year, display a message only
+    */
+    if (locReportBuild_o.selectedYear_s === "") {
+        return (
+            <div style={{height: "70px", marginTop: "30px", width: "100%", textAlign: "center"}}>
+                {locTrans_o.oeComTransGet_m("report", "noReport")}
+            </div>
+        );
+    }
     /*
     --- Return the Dialog Content to display
     */
@@ -151,31 +276,20 @@ function LocContent_jsx(paramProps_o) {
             </div>
             <Grid container spacing={1} sx={{mt: "8px"}}>
                 <Grid size={6}>
-                    <FormControl variant="filled" size="small"
-                                 sx={{
-                                     width: "100px",
-                                     backgroundColor: locColors_o.backgroundSelect
-                                 }}>
-                        <Select
-                            id="oetrReportSelectYear"
-                            value={locReportBuild_o.selectedYear_s}
-                            defaultValue={locReportBuild_o.selectedYear_s}
-                            variant="standard"
-                            sx={{pl: "14px", pt: "4px"}}
-                            onChange={(paramEvent) => {
-                                locReportBuild_o.selectedYear_s = paramEvent.target.value;
-                                oetrFileMgtListMonths_f(locCtx_o).then(() => oetrReportMgtRefreshModal_f(locCtx_o));
-                            }}
-                        >
-                            {locReportBuild_o.listDirYears_a.map((paramYear) => (
-                                <MenuItem key={"itemYear" + paramYear}
-                                          value={paramYear}>{paramYear}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <LocSelectYear_jsx ctx={locCtx_o}/>
                 </Grid>
                 <Grid size={6}>
-                    {locSelectMonth_jsx}
+                    <LocSelectMonth_jsx ctx={locCtx_o}/>
+                </Grid>
+            </Grid>
+            <div style={{marginTop: "20px"}}>
+                {locTrans_o.oeComTransGet_m("report", "labelSelectClient")}
+            </div>
+            <Grid container spacing={1} sx={{mt: "8px"}}>
+                <Grid size={6}>
+                    <LocSelectClient_jsx ctx={locCtx_o}/>
+                </Grid>
+                <Grid size={6}>
                 </Grid>
             </Grid>
         </div>);

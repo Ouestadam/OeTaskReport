@@ -172,7 +172,6 @@ export async function oetrFileMgtComputeAllJsonReportFile_f(paramCtx_o) {
     */
     locReportBuild_o.report = {};
     locReportBuild_o.selectedClient_s = "";
-    locReportBuild_o.selectedTask_s = "";
     /*
     --- If the year or the month are not selected then return without any report built
     */
@@ -185,14 +184,27 @@ export async function oetrFileMgtComputeAllJsonReportFile_f(paramCtx_o) {
         --- All the year: process each existing month
         */
         for (let locI = 1; locI < locReportBuild_o.listDirMonths_a.length; locI++) {
-            await oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o,locReportBuild_o.selectedYear_s,locReportBuild_o.listDirMonths_a[locI]);
+            await oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o, locReportBuild_o.selectedYear_s, locReportBuild_o.listDirMonths_a[locI]);
         }
     } else {
         /*
         --- Just one month is selected
         */
-        await oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o,locReportBuild_o.selectedYear_s,locReportBuild_o.selectedMonth_s);
+        await oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o, locReportBuild_o.selectedYear_s, locReportBuild_o.selectedMonth_s);
     }
+    /*
+    --- Extract the sorted list of Clients
+    */
+    const locListClientsUnsorted_a = Object.keys(locReportBuild_o.report);
+    locReportBuild_o.listClients_a = locListClientsUnsorted_a.sort();
+    /*
+    --- If no Client then return
+    */
+    if (locReportBuild_o.listClients_a.length < 1) return;
+    /*
+    --- Add '_All' as first client
+    */
+    locReportBuild_o.listClients_a.unshift('_All');
     /*
     --- Check if the current client is defined in the report else take the first one
     */
@@ -203,43 +215,9 @@ export async function oetrFileMgtComputeAllJsonReportFile_f(paramCtx_o) {
         locReportBuild_o.selectedClient_s = paramCtx_o.currentClient_s;
     } else {
         /*
-        --- Get the list of clients in the report and get the first one as selected
+        --- Get All the clients
         */
-        const locClients_a = Object.keys(locReportBuild_o.report);
-        /*
-        --- If no client then return
-        */
-        if (locClients_a.length < 1) return;
-        /*
-        --- Get the first client
-        */
-        locReportBuild_o.selectedClient_s = locClients_a[0];
-    }
-    /*
-    --- Check if the current task is defined in the report else take the first one
-    */
-    const locReportClient_o = locReportBuild_o.report[locReportBuild_o.selectedClient_s];
-    if (locReportClient_o[paramCtx_o.currentTask_s] !== undefined) {
-        /*
-        --- Set the selected task as the current task
-        */
-        locReportBuild_o.selectedTask_s = paramCtx_o.currentTask_s;
-    } else {
-        /*
-        --- Get the list of tasks in the report and get the first one as selected
-        */
-        const locTasks_a = Object.keys(locReportClient_o);
-        /*
-        --- If no task then return
-        */
-        if (locTasks_a.length < 1) {
-            locReportBuild_o.selectedClient_s = "";
-            return;
-        }
-        /*
-        --- Get the first task
-        */
-        locReportBuild_o.selectedTask_s = locTasks_a[0];
+        locReportBuild_o.selectedClient_s = locReportBuild_o.listClients_a[0];
     }
 }
 
