@@ -13,7 +13,7 @@
   !  Desc. : Files management for rendering of oetaskreport     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 05/11/2024                                         !
+  !  Modif.: 13/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -27,7 +27,7 @@
 --- Ouestadam products
 */
 import {oetrInitDefinitions_f} from "./oetrInit";
-import {oetrDefModal_e} from "./oetrDef";
+import {oetrDefModal_e, oetrDefSelectAll} from "./oetrDef";
 
 /*=============== Exported functions ===========================*/
 
@@ -202,9 +202,9 @@ export async function oetrFileMgtComputeAllJsonReportFile_f(paramCtx_o) {
     */
     if (locReportBuild_o.listClients_a.length < 1) return;
     /*
-    --- Add '_All' as first client
+    --- Add 'All selection' as first client
     */
-    locReportBuild_o.listClients_a.unshift('_All');
+    locReportBuild_o.listClients_a.unshift(oetrDefSelectAll);
     /*
     --- Check if the current client is defined in the report else take the first one
     */

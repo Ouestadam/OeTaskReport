@@ -30,20 +30,20 @@ import {
     DialogContent,
     DialogTitle, Divider,
     FormControl,
-    IconButton, MenuItem,
-    Select
+    IconButton, MenuItem, Paper,
+    Select, Switch, Table, TableCell, TableContainer, TableHead, TableRow
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import CloseIcon from "@mui/icons-material/Close";
 
 /*
 --- Ouestadam products
 */
 import {OetrError_jsx} from "./oetrError";
-import {oetrDefModal_e} from "./oetrDef";
+import {oetrDefModal_e, oetrDefSelectAll} from "./oetrDef";
 import {oetrMainRefreshPage_f} from "./oetrMain";
 import {oetrInitReportBuild_f} from "./oetrInit";
 import {oetrFileMgtComputeAllJsonReportFile_f, oetrFileMgtListMonths_f, oetrFileMgtListYears_f} from "./oetrFileMgt";
-import Grid from "@mui/material/Grid2";
 
 /*=============== Local functions ==============================*/
 
@@ -200,9 +200,13 @@ function LocSelectClient_jsx(paramProps_o) {
     const locColors_o = locCtx_o.config_o.colors_o;
     const locReportBuild_o = locCtx_o.reportBuild_o;
     /*
+    --- If no selected month then return nothing
+    */
+    if (locReportBuild_o.selectedMonth_s.length < 1) return (<div></div>)
+    /*
     --- If no selected client then return a simple text
     */
-    if ((locReportBuild_o.selectedMonth_s.length < 1) || (locReportBuild_o.selectedClient_s.length < 1)) return (
+    if (locReportBuild_o.selectedClient_s.length < 1) return (
         <div>
             {locTrans_o.oeComTransGet_m("report", "noClient")}
         </div>
@@ -211,32 +215,162 @@ function LocSelectClient_jsx(paramProps_o) {
     --- Return the Select Client field
     */
     return (
-        <FormControl variant="filled" size="small"
-                     sx={{
-                         width: "350px",
-                         backgroundColor: locColors_o.backgroundSelect
-                     }}>
-            <Select
-                id="oetrReportSelectClient"
-                value={locReportBuild_o.selectedClient_s}
-                defaultValue={locReportBuild_o.selectedClient_s}
-                variant="standard"
-                sx={{pl: "14px", pt: "4px"}}
-                onChange={(paramEvent) => {
-                    locReportBuild_o.selectedClient_s = paramEvent.target.value;
-                    oetrReportMgtRefreshModal_f(locCtx_o);
-                }}
-            >
-                {locReportBuild_o.listClients_a.map((paramClient) => (
-                    <MenuItem key={"itemClient" + paramClient}
-                              value={paramClient}>
-                        {(paramClient === '_All') ?
-                            locTrans_o.oeComTransGet_m("clients", paramClient) : paramClient
+        <div style={{marginTop: "20px"}}>
+            <div>
+                {locTrans_o.oeComTransGet_m("report", "labelSelectClient")}
+            </div>
+            <FormControl variant="filled" size="small"
+                         sx={{
+                             width: "350px",
+                             marginTop: "8px",
+                             backgroundColor: locColors_o.backgroundSelect
+                         }}>
+                <Select
+                    id="oetrReportSelectClient"
+                    value={locReportBuild_o.selectedClient_s}
+                    defaultValue={locReportBuild_o.selectedClient_s}
+                    variant="standard"
+                    sx={{pl: "14px", pt: "4px"}}
+                    onChange={(paramEvent) => {
+                        locReportBuild_o.selectedClient_s = paramEvent.target.value;
+                        oetrReportMgtRefreshModal_f(locCtx_o);
+                    }}
+                >
+                    {locReportBuild_o.listClients_a.map((paramClient) => (
+                        <MenuItem key={"itemClient" + paramClient}
+                                  value={paramClient}>
+                            {(paramClient === oetrDefSelectAll) ?
+                                locTrans_o.oeComTransGet_m("clients", paramClient) : paramClient
+                            }
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+        </div>
+    );
+}
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocTableHeader_jsx                             !
+! Description: JSX Report Table Header                        !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocTableHeader_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
+    const locReportBuild_o = locCtx_o.reportBuild_o;
+    /*
+    --- Build the header list
+    */
+    const locHeaders_a = [];
+    if (locReportBuild_o.selectedClient_s === oetrDefSelectAll)
+        locHeaders_a.push(locTrans_o.oeComTransGet_m("report", "headerClient"));
+    locHeaders_a.push(locTrans_o.oeComTransGet_m("report", "headerTask"));
+    if (locReportBuild_o.isDetailed)
+        locHeaders_a.push(locTrans_o.oeComTransGet_m("report", "headerDate"));
+    locHeaders_a.push(locTrans_o.oeComTransGet_m("report", "headerMinutes"));
+    locHeaders_a.push(locTrans_o.oeComTransGet_m("report", "headerHours"));
+    /*
+    --- Return the Table header
+    */
+    return (
+        <TableHead>
+            <TableRow>
+                {locHeaders_a.map((paramHeader) => {
+                    return (<TableCell>{paramHeader}</TableCell>)
+                })}
+            </TableRow>
+        </TableHead>
+    );
+}
+
+/*
++-------------------------------------------------------------+
+! Routine    : LocDisplayReport_jsx                           !
+! Description: JSX Display report                             !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocDisplayReport_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
+    const locReportBuild_o = locCtx_o.reportBuild_o;
+    /*
+    --- If no selected client then return a simple text
+    */
+    if ((locReportBuild_o.selectedMonth_s.length < 1) || (locReportBuild_o.selectedClient_s.length < 1))
+        return (<div></div>)
+    /*
+    --- Return the Report
+    */
+    return (
+        <div>
+            <Divider sx={{mt: "20px", mb: "0px"}}>
+                <Chip label={locTrans_o.oeComTransGet_m("report", "labelDivider")} size="small"/>
+            </Divider>
+            <div style={{
+                textAlign: "right",
+                display: ((locReportBuild_o.selectedMonth_s === "00") ? "none" : "block")
+            }}>
+                {locTrans_o.oeComTransGet_m("report", "labelSwitchDetail")}
+                <Switch defaultChecked={locReportBuild_o.isDetailed}
+                        onChange={() => {
+                            locReportBuild_o.isDetailed = !locReportBuild_o.isDetailed;
+                            oetrReportMgtRefreshModal_f(locCtx_o);
+                        }}/>
+            </div>
+            <Grid container spacing={1} columns={10} sx={{mt: "0"}}>
+                <Grid size={1} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("report", "labelReportClient")}
+                </Grid>
+                <Grid size="auto">
+                    <strong>
+                        {
+                            ((locReportBuild_o.selectedClient_s === oetrDefSelectAll) ?
+                                locTrans_o.oeComTransGet_m("clients", locReportBuild_o.selectedClient_s) :
+                                locReportBuild_o.selectedClient_s)
                         }
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+                    </strong>
+                </Grid>
+            </Grid>
+            <Grid container spacing={1} columns={10} sx={{mt: "8px"}}>
+                <Grid size={1} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("report", "labelReportYear")}
+                </Grid>
+                <Grid size={2}>
+                    <strong>
+                        {locReportBuild_o.selectedYear_s}
+                    </strong>
+                </Grid>
+                <Grid size={1} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("report", "labelReportMonth")}
+                </Grid>
+                <Grid size={2}>
+                    <strong>
+                        {locTrans_o.oeComTransGet_m("months", locReportBuild_o.selectedMonth_s)}
+                    </strong>
+                </Grid>
+                <Grid size="auto">
+                </Grid>
+            </Grid>
+            <TableContainer component={Paper}>
+                <Table sx={{width: "100%", marginTop: "10px"}} size="small">
+                    <LocTableHeader_jsx ctx={locCtx_o}/>
+                </Table>
+            </TableContainer>
+        </div>
     );
 }
 
@@ -282,47 +416,8 @@ function LocContent_jsx(paramProps_o) {
                     <LocSelectMonth_jsx ctx={locCtx_o}/>
                 </Grid>
             </Grid>
-            <div style={{marginTop: "20px"}}>
-                {locTrans_o.oeComTransGet_m("report", "labelSelectClient")}
-            </div>
-            <Grid container spacing={1} sx={{mt: "8px"}}>
-                <Grid size={6}>
-                    <LocSelectClient_jsx ctx={locCtx_o}/>
-                </Grid>
-                <Grid size={6}>
-                </Grid>
-            </Grid>
-            <Divider sx={{mt: "20px", mb: "20px"}}>
-                <Chip label={locTrans_o.oeComTransGet_m("report", "labelDivider")} size="small"/>
-            </Divider>
-            <Grid container spacing={1} columns={10} sx={{mt: "8px"}}>
-                <Grid size={1} sx={{textAlign: "right"}}>
-                    {locTrans_o.oeComTransGet_m("report", "labelReportClient")}
-                </Grid>
-                <Grid size="auto">
-                    {
-                        ((locReportBuild_o.selectedClient_s === '_All') ?
-                            locTrans_o.oeComTransGet_m("clients", locReportBuild_o.selectedClient_s) :
-                            locReportBuild_o.selectedClient_s)
-                    }
-                </Grid>
-            </Grid>
-            <Grid container spacing={1} columns={10} sx={{mt: "8px"}}>
-                <Grid size={1} sx={{textAlign: "right"}}>
-                    {locTrans_o.oeComTransGet_m("report", "labelReportYear")}
-                </Grid>
-                <Grid size={2}>
-                    {locReportBuild_o.selectedYear_s}
-                </Grid>
-                <Grid size={1} sx={{textAlign: "right"}}>
-                    {locTrans_o.oeComTransGet_m("report", "labelReportMonth")}
-                </Grid>
-                <Grid size={2}>
-                    {locTrans_o.oeComTransGet_m("months", locReportBuild_o.selectedMonth_s)}
-                </Grid>
-                <Grid size="auto">
-                </Grid>
-            </Grid>
+            <LocSelectClient_jsx ctx={locCtx_o}/>
+            <LocDisplayReport_jsx ctx={locCtx_o}/>
         </div>
     );
 }

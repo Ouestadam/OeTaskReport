@@ -13,12 +13,11 @@
   !  Desc. : Translation table for rendering of oetaskreport    !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 23/10/2024                                         !
+  !  Modif.: 13/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
 */
-
 /*=============== Exported constants ===========================*/
 /*
 --- oetr translation table
@@ -243,6 +242,10 @@ export const oetrTrans_o = {
                 en: "No client found",
                 fr: "Aucun client trouvé"
             },
+            "labelSwitchDetail": {
+                en: "Detailed report:",
+                fr: "Rapport détaillé :"
+            },
             "labelDivider": {
                 en: "Report",
                 fr: "Rapport"
@@ -259,6 +262,26 @@ export const oetrTrans_o = {
                 en: "Month: ",
                 fr: "Mois : "
             },
+            "headerClient": {
+                en: "Client",
+                fr: "Client"
+            },
+            "headerTask": {
+                en: "Task",
+                fr: "Tâche"
+            },
+            "headerDate": {
+                en: "Date",
+                fr: "Date"
+            },
+            "headerMinutes": {
+                en: "Nb.minutes",
+                fr: "Nb.minutes"
+            },
+            "headerHours": {
+                en: "Nb.hours",
+                fr: "Nb.heures"
+            }
         }
     }
 ;

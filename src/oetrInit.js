@@ -84,6 +84,7 @@ export function oetrInitReportBuild_f(paramCtx_o) {
         listDirYears_a: [],
         listDirMonths_a: [],
         listClients_a: [],
+        isDetailed: false,
         report: {}
     };
 }

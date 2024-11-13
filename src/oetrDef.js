@@ -13,7 +13,7 @@
   !  Desc. : Definition Enums for rendering of oetaskreport     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 10/10/2024                                         !
+  !  Modif.: 13/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -38,3 +38,7 @@ export const oetrDefFocus_e = {
     parametersEntryClient: 2,
     parametersEntryTask: 3
 }
+/*
+--- All selection
+*/
+export const oetrDefSelectAll = "_All";
