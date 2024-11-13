@@ -118,11 +118,11 @@ export async function oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o, paramYea
     /*
     --- Parse the Json
     */
-    const locMonthReport_o = JSON.parse(locData_s);
+    paramCtx_o.monthReport_o = JSON.parse(locData_s);
     /*
     --- Get the list of clients
     */
-    const locClients_a = Object.keys(locMonthReport_o);
+    const locClients_a = Object.keys(paramCtx_o.monthReport_o);
     /*
     --- For each Client, get the list of associated tasks
     */
@@ -135,7 +135,7 @@ export async function oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o, paramYea
         /*
         --- For each task, accumulate the daily values
         */
-        const locTasks_a = Object.keys(locMonthReport_o[locClient_s]);
+        const locTasks_a = Object.keys(paramCtx_o.monthReport_o[locClient_s]);
         for (let locJ = 0; locJ < locTasks_a.length; locJ++) {
             /*
             --- If the Task is not already in the report, then add it
@@ -145,10 +145,10 @@ export async function oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o, paramYea
             /*
             --- For each day, add the number of minutes
             */
-            const locDays_a = Object.keys(locMonthReport_o[locClient_s][locTask_s]);
+            const locDays_a = Object.keys(paramCtx_o.monthReport_o[locClient_s][locTask_s]);
             for (let locK = 0; locK < locDays_a.length; locK++) {
                 const locDay_s = locDays_a[locK];
-                locTotalReport_o[locClient_s][locTask_s] += locMonthReport_o[locClient_s][locTask_s][locDay_s];
+                locTotalReport_o[locClient_s][locTask_s] += paramCtx_o.monthReport_o[locClient_s][locTask_s][locDay_s];
             }
         }
     }

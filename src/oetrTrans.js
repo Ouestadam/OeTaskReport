@@ -227,15 +227,15 @@ export const oetrTrans_o = {
                 en: "No monthly report found in the data folder",
                 fr: "Aucun rapport mensuel trouvé dans le répertoire de données"
             },
-            "labelSelectDate":                {
-                    en: "Select the year and the month(s) for the report:",
-                    fr: "Sélectionner l'année et le(s) mois pour le rapport :"
-                },
+            "labelSelectDate": {
+                en: "Select the year and the month(s) for the report:",
+                fr: "Sélectionner l'année et le(s) mois pour le rapport :"
+            },
             "noMonth": {
                 en: "No monthly report found for this year",
                 fr: "Aucun rapport mensuel pour cette année"
             },
-            "labelSelectClient":                {
+            "labelSelectClient": {
                 en: "Select client(s) for the report:",
                 fr: "Sélectionner le(s) client(s) pour le rapport :"
             },
@@ -243,7 +243,22 @@ export const oetrTrans_o = {
                 en: "No client found",
                 fr: "Aucun client trouvé"
             },
-
+            "labelDivider": {
+                en: "Report",
+                fr: "Rapport"
+            },
+            "labelReportClient": {
+                en: "Client: ",
+                fr: "Client : "
+            },
+            "labelReportYear": {
+                en: "Year: ",
+                fr: "Année : "
+            },
+            "labelReportMonth": {
+                en: "Month: ",
+                fr: "Mois : "
+            },
         }
     }
 ;

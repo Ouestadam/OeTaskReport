@@ -24,11 +24,11 @@
 */
 import React, {useState} from 'react';
 import {
-    Button,
+    Button, Chip,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
+    DialogTitle, Divider,
     FormControl,
     IconButton, MenuItem,
     Select
@@ -292,7 +292,39 @@ function LocContent_jsx(paramProps_o) {
                 <Grid size={6}>
                 </Grid>
             </Grid>
-        </div>);
+            <Divider sx={{mt: "20px", mb: "20px"}}>
+                <Chip label={locTrans_o.oeComTransGet_m("report", "labelDivider")} size="small"/>
+            </Divider>
+            <Grid container spacing={1} columns={10} sx={{mt: "8px"}}>
+                <Grid size={1} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("report", "labelReportClient")}
+                </Grid>
+                <Grid size="auto">
+                    {
+                        ((locReportBuild_o.selectedClient_s === '_All') ?
+                            locTrans_o.oeComTransGet_m("clients", locReportBuild_o.selectedClient_s) :
+                            locReportBuild_o.selectedClient_s)
+                    }
+                </Grid>
+            </Grid>
+            <Grid container spacing={1} columns={10} sx={{mt: "8px"}}>
+                <Grid size={1} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("report", "labelReportYear")}
+                </Grid>
+                <Grid size={2}>
+                    {locReportBuild_o.selectedYear_s}
+                </Grid>
+                <Grid size={1} sx={{textAlign: "right"}}>
+                    {locTrans_o.oeComTransGet_m("report", "labelReportMonth")}
+                </Grid>
+                <Grid size={2}>
+                    {locTrans_o.oeComTransGet_m("months", locReportBuild_o.selectedMonth_s)}
+                </Grid>
+                <Grid size="auto">
+                </Grid>
+            </Grid>
+        </div>
+    );
 }
 
 /*=============== Exported functions ===========================*/
