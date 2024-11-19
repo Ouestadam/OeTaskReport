@@ -103,11 +103,7 @@ function locTableHeader_f(paramCtx_o) {
         locHeaders_a.push(
             {
                 field: "headerClient",
-                renderHeader: () => (
-                    <strong>
-                        {locTrans_o.oeComTransGet_m("report", "headerClient")}
-                    </strong>
-                ),
+                headerName: locTrans_o.oeComTransGet_m("report", "headerClient"),
                 minWidth: 100,
                 editable: false,
                 flex: 1,
@@ -117,11 +113,7 @@ function locTableHeader_f(paramCtx_o) {
     locHeaders_a.push(
         {
             field: "headerTask",
-            renderHeader: () => (
-                <strong>
-                    {locTrans_o.oeComTransGet_m("report", "headerTask")}
-                </strong>
-            ),
+            headerName: locTrans_o.oeComTransGet_m("report", "headerTask"),
             minWidth: 100,
             editable: false,
             flex: 1,
@@ -131,11 +123,7 @@ function locTableHeader_f(paramCtx_o) {
         locHeaders_a.push(
             {
                 field: "headerDate",
-                renderHeader: () => (
-                    <strong>
-                        {locTrans_o.oeComTransGet_m("report", "headerDate")}
-                    </strong>
-                ),
+                headerName: locTrans_o.oeComTransGet_m("report", "headerDate"),
                 minWidth: 20,
                 editable: false,
                 flex: 1,
@@ -144,11 +132,7 @@ function locTableHeader_f(paramCtx_o) {
     locHeaders_a.push(
         {
             field: "headerMinutes",
-            renderHeader: () => (
-                <strong>
-                    {locTrans_o.oeComTransGet_m("report", "headerMinutes")}
-                </strong>
-            ),
+            headerName: locTrans_o.oeComTransGet_m("report", "headerMinutes"),
             minWidth: 20,
             editable: false,
             flex: 1,
@@ -157,11 +141,7 @@ function locTableHeader_f(paramCtx_o) {
     locHeaders_a.push(
         {
             field: "headerHours",
-            renderHeader: () => (
-                <strong>
-                    {locTrans_o.oeComTransGet_m("report", "headerHours")}
-                </strong>
-            ),
+            headerName: locTrans_o.oeComTransGet_m("report", "headerHours"),
             minWidth: 20,
             editable: false,
             flex: 1,
@@ -171,6 +151,65 @@ function locTableHeader_f(paramCtx_o) {
     --- Return the Table header
     */
     return (locHeaders_a);
+}
+
+/*
++-------------------------------------------------------------+
+! Routine    : locTableOneTask_f                              !
+! Description: Report Table Rows for one task for one client  !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function locTableOneTask_f(paramCtx_o, paramClient_s, paramTask_s) {
+    /*
+    --- Initialisation
+    */
+    const locReportBuild_o = paramCtx_o.reportBuild_o;
+    const locTrans_o = paramCtx_o.trans_o;
+    /*
+    --- Compute Total task value
+    */
+    const locTaskTotalMinutes = locReportBuild_o.report_o[paramClient_s][paramTask_s];
+    const locTaskTotalHours = Math.floor(locTaskTotalMinutes / 60);
+    const locTaskTotalRest = locTaskTotalMinutes - (locTaskTotalHours * 60);
+    /*
+    --- Check if no detail is required
+    */
+    if (!locReportBuild_o.isDetailed) {
+        /*
+        --- Create one only row
+        */
+        locReportBuild_o.rows_a.push({
+            id: "rowNameTask" + paramTask_s,
+            headerClient: "",
+            headerTask: paramTask_s,
+            headerDate: "",
+            headerMinutes: locTaskTotalMinutes + " min",
+            headerHours: locTaskTotalHours + " h " + ((locTaskTotalRest > 0) ? (locTaskTotalRest + " min") : "")
+        });
+        return;
+    }
+    /*
+    --- Detail is required
+    */
+    locReportBuild_o.rows_a.push({
+        id: "rowNameTask" + paramTask_s,
+        headerClient: "",
+        headerTask: paramTask_s,
+        headerDate: "",
+        headerMinutes: "",
+        headerHours: ""
+    });
+    locReportBuild_o.rows_a.push({
+        id: "rowTotalTask" + paramTask_s,
+        headerClient: "",
+        headerTask: locTrans_o.oeComTransGet_m("report", "totalTask", paramTask_s),
+        headerDate: "",
+        headerMinutes: locTaskTotalMinutes + " min",
+        headerHours: locTaskTotalHours + " h " + ((locTaskTotalRest > 0) ? (locTaskTotalRest + " min") : "")
+    });
 }
 
 /*
@@ -206,21 +245,32 @@ function locTableRowsAllTasks_f(paramCtx_o, paramClient_s) {
         /*
         --- Process the task
         */
+        locTableOneTask_f(paramCtx_o, paramClient_s, locTask_s);
     }
     /*
-    --- Create row for the total of the client
+    --- Create row for the total of the client according if multiple client or not
     */
     const locClientTotalHours = Math.floor(locClientTotalMinutes / 60);
     const locClientTotalRest = locClientTotalMinutes - (locClientTotalHours * 60);
-
-    locReportBuild_o.rows_a.push({
-        id: "rowTotalClient" + paramClient_s,
-        headerClient: "",
-        headerTask: locTrans_o.oeComTransGet_m("report", "totalClient", paramClient_s),
-        headerDate: "",
-        headerMinutes: locClientTotalMinutes + " min",
-        headerHours: locClientTotalHours + " h  " + ((locClientTotalRest > 0) ? (locClientTotalRest + " min") : "")
-    });
+    if (locReportBuild_o.selectedClient_s === oetrDefSelectAll) {
+        locReportBuild_o.rows_a.push({
+            id: "rowTotalClient" + paramClient_s,
+            headerClient: locTrans_o.oeComTransGet_m("report", "totalClient", paramClient_s),
+            headerTask: "",
+            headerDate: "",
+            headerMinutes: locClientTotalMinutes + " min",
+            headerHours: locClientTotalHours + " h " + ((locClientTotalRest > 0) ? (locClientTotalRest + " min") : "")
+        });
+    } else {
+        locReportBuild_o.rows_a.push({
+            id: "rowTotalClient" + paramClient_s,
+            headerClient: "",
+            headerTask: locTrans_o.oeComTransGet_m("report", "totalClient", paramClient_s),
+            headerDate: "",
+            headerMinutes: locClientTotalMinutes + " min",
+            headerHours: locClientTotalHours + " h " + ((locClientTotalRest > 0) ? (locClientTotalRest + " min") : "")
+        });
+    }
 }
 
 /*
@@ -524,7 +574,7 @@ function LocDisplayReport_jsx(paramProps_o) {
                     :
                     <strong>
                         {
-                            " "+
+                            " " +
                             ((locReportBuild_o.selectedClient_s === oetrDefSelectAll) ?
                                 locTrans_o.oeComTransGet_m("clients", locReportBuild_o.selectedClient_s) :
                                 locReportBuild_o.selectedClient_s)
@@ -539,7 +589,7 @@ function LocDisplayReport_jsx(paramProps_o) {
                 <Grid size={2}>
                     :
                     <strong>
-                        {" "+locReportBuild_o.selectedYear_s}
+                        {" " + locReportBuild_o.selectedYear_s}
                     </strong>
                 </Grid>
                 <Grid size={1} sx={{textAlign: "right"}}>
@@ -548,7 +598,7 @@ function LocDisplayReport_jsx(paramProps_o) {
                 <Grid size={4}>
                     :
                     <strong>
-                        {" "+locTrans_o.oeComTransGet_m("months", locReportBuild_o.selectedMonth_s)}
+                        {" " + locTrans_o.oeComTransGet_m("months", locReportBuild_o.selectedMonth_s)}
                     </strong>
                 </Grid>
                 <Grid size="auto">
@@ -562,12 +612,31 @@ function LocDisplayReport_jsx(paramProps_o) {
                     sx={{
                         "& .MuiDataGrid-columnHeader": {
                             background: locColors_o.backgroundTableHeader,
-                            color: locColors_o.foregroundTableHeader
+                        },
+                        "& .MuiDataGrid-row.TotalClient": {
+                            background: locColors_o.backgroundTableTotalClient,
+                            "font-weight": "bold"
+                        },
+                        "& .MuiDataGrid-row.TotalTask": {
+                            background: locColors_o.backgroundTableTotalTask,
+                            "font-weight": "bold"
+                        },
+                        "& .MuiDataGrid-columnHeaderTitle": {
+                            "font-weight": "bold"
+                        },
+                    }}
+                    getRowClassName={(paramRow) => {
+                        if ((paramRow.id.includes("rowTotalClient")) ||
+                            ((paramRow.row.headerClient !== undefined) && (paramRow.row.headerClient.length > 0))) {
+                            return ("TotalClient");
+                        } else if ((paramRow.id.includes("rowTotalTask")) || (paramRow.row.headerMinutes.length < 1)) {
+                            return ("TotalTask");
                         }
                     }}
                     disableColumnSelector
                     disableColumnMenu
                     disableColumnSorting
+                    hideFooter
                     autoPageSize={false}
                 />
             </div>

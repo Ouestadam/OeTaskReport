@@ -283,8 +283,12 @@ export const oetrTrans_o = {
                 fr: "Nb.heures"
             },
             "totalClient": {
-                en: "Total for $$1$$",
-                fr: "Total pour $$1$$"
+                en: "Total client $$1$$",
+                fr: "Total client $$1$$"
+            },
+            "totalTask": {
+                en: "Total task $$1$$",
+                fr: "Total tâche $$1$$"
             }
         }
     }
