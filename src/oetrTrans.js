@@ -251,16 +251,16 @@ export const oetrTrans_o = {
                 fr: "Rapport"
             },
             "labelReportClient": {
-                en: "Client: ",
-                fr: "Client : "
+                en: "Client",
+                fr: "Client"
             },
             "labelReportYear": {
-                en: "Year: ",
-                fr: "Année : "
+                en: "Year",
+                fr: "Année"
             },
             "labelReportMonth": {
-                en: "Month: ",
-                fr: "Mois : "
+                en: "Month",
+                fr: "Mois"
             },
             "headerClient": {
                 en: "Client",
@@ -281,6 +281,10 @@ export const oetrTrans_o = {
             "headerHours": {
                 en: "Nb.hours",
                 fr: "Nb.heures"
+            },
+            "totalClient": {
+                en: "Total for $$1$$",
+                fr: "Total pour $$1$$"
             }
         }
     }

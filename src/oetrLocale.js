@@ -10,10 +10,10 @@
   +-------------------------------------------------------------+
   !                                                             !
   !  File  : oetrLocale.js                                      !
-  !  Desc. : Locale switcher for rendering of oetaskreport       !
+  !  Desc. : Locale switcher for rendering of oetaskreport      !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 04/10/2024                                         !
+  !  Modif.: 17/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -72,12 +72,18 @@ export function OetrLocaleSwitcher_jsx(paramProps_o) {
         >
             <Tooltip title="Français">
                 <ToggleButton value="fr-FR" aria-label="fr-FR" sx={{padding: 0, mr: "4px"}}>
-                    <img src={locCtx_o.config_o.locale === "fr-FR" ? flagOnFrench : flagOffFrench} alt="French"/>
+                    <img src={locCtx_o.config_o.locale === "fr-FR" ? flagOnFrench : flagOffFrench}
+                         alt="French"
+                         style={{userDrag: "none", WebkitUserDrag: "none"}}
+                    />
                 </ToggleButton>
             </Tooltip>
             <Tooltip title="English">
                 <ToggleButton value="en-GB" aria-label="en-GB" sx={{padding: 0}}>
-                    <img src={locCtx_o.config_o.locale === "en-GB" ? flagOnUK : flagOffUK} alt="English"/>
+                    <img src={locCtx_o.config_o.locale === "en-GB" ? flagOnUK : flagOffUK}
+                         alt="English"
+                         style={{userDrag: "none", WebkitUserDrag: "none"}}
+                    />
                 </ToggleButton>
             </Tooltip>
         </ToggleButtonGroup>

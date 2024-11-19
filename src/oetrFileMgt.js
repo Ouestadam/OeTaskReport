@@ -92,7 +92,7 @@ export async function oetrFileMgtComputeOneJsonReportFile_f(paramCtx_o, paramYea
     /*
     --- Initialisation
     */
-    const locTotalReport_o = paramCtx_o.reportBuild_o.report;
+    const locTotalReport_o = paramCtx_o.reportBuild_o.report_o;
     const locReportDir_s = paramCtx_o.workingDir_s + '/' + paramYear_s + '/' + paramMonth_s;
     const locFileName_s = locReportDir_s + '/' + paramCtx_o.config_o.reportFileName;
     /*
@@ -170,7 +170,7 @@ export async function oetrFileMgtComputeAllJsonReportFile_f(paramCtx_o) {
     /*
     --- Reset the current report and the selected client/task
     */
-    locReportBuild_o.report = {};
+    locReportBuild_o.report_o = {};
     locReportBuild_o.selectedClient_s = "";
     /*
     --- If the year or the month are not selected then return without any report built
@@ -195,7 +195,7 @@ export async function oetrFileMgtComputeAllJsonReportFile_f(paramCtx_o) {
     /*
     --- Extract the sorted list of Clients
     */
-    const locListClientsUnsorted_a = Object.keys(locReportBuild_o.report);
+    const locListClientsUnsorted_a = Object.keys(locReportBuild_o.report_o);
     locReportBuild_o.listClients_a = locListClientsUnsorted_a.sort();
     /*
     --- If no Client then return
@@ -208,7 +208,7 @@ export async function oetrFileMgtComputeAllJsonReportFile_f(paramCtx_o) {
     /*
     --- Check if the current client is defined in the report else take the first one
     */
-    if (locReportBuild_o.report[paramCtx_o.currentClient_s] !== undefined) {
+    if (locReportBuild_o.report_o[paramCtx_o.currentClient_s] !== undefined) {
         /*
         --- Set the selected client as the current client
         */
