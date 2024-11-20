@@ -167,6 +167,7 @@ function locTableOneTask_f(paramCtx_o, paramClient_s, paramTask_s) {
     --- Initialisation
     */
     const locReportBuild_o = paramCtx_o.reportBuild_o;
+    const locReportMonth_o = paramCtx_o.monthReport_o;
     const locTrans_o = paramCtx_o.trans_o;
     /*
     --- Compute Total task value
@@ -192,7 +193,7 @@ function locTableOneTask_f(paramCtx_o, paramClient_s, paramTask_s) {
         return;
     }
     /*
-    --- Detail is required
+    --- Detail is required:  Add the name of the task
     */
     locReportBuild_o.rows_a.push({
         id: "rowNameTask" + paramTask_s,
@@ -202,6 +203,30 @@ function locTableOneTask_f(paramCtx_o, paramClient_s, paramTask_s) {
         headerMinutes: "",
         headerHours: ""
     });
+    /*
+    --- Get the sorted list of days
+    */
+    const locDaysUnsorted_a = Object.keys(locReportMonth_o[paramClient_s][paramTask_s]);
+    const locDays_a = locDaysUnsorted_a.sort();
+    /*
+    --- For each Day, create a row
+    */
+    for (let locI = 0; locI < locDays_a.length; locI++) {
+        const locDay_s = locDays_a[locI];
+        let locDate_s = (paramCtx_o.config_o.locale === "en-GB") ?
+            locReportBuild_o.selectedMonth_s + "/" + locDay_s : locDay_s + "/" + locReportBuild_o.selectedMonth_s;
+        locReportBuild_o.rows_a.push({
+            id: "rowDetailedTask" + paramTask_s + "_" + locI,
+            headerClient: "",
+            headerTask: "",
+            headerDate: locDate_s,
+            headerMinutes: locReportMonth_o[paramClient_s][paramTask_s][locDay_s] + " min",
+            headerHours: ""
+        });
+    }
+    /*
+    --- Add the total for this task
+    */
     locReportBuild_o.rows_a.push({
         id: "rowTotalTask" + paramTask_s,
         headerClient: "",
@@ -604,7 +629,7 @@ function LocDisplayReport_jsx(paramProps_o) {
                 <Grid size="auto">
                 </Grid>
             </Grid>
-            <div style={{height: "500px", width: "100%", marginTop: "20px"}}>
+            <div style={{width: "100%", marginTop: "20px"}}>
                 <DataGrid
                     rows={locReportBuild_o.rows_a}
                     columns={locHeaders_a}
@@ -674,7 +699,7 @@ function LocContent_jsx(paramProps_o) {
     --- Return the Dialog Content to display
     */
     return (
-        <div style={{height: "600px"}}>
+        <div>
             <div>
                 {locTrans_o.oeComTransGet_m("report", "labelSelectDate")}
             </div>
@@ -819,7 +844,21 @@ export function OetrDialogReportMgt_jsx(paramProps_o) {
             <DialogContent sx={{pb: 0, mb: 0, mt: '10px'}}>
                 <LocContent_jsx ctx={locCtx_o}/>
             </DialogContent>
-            <DialogActions sx={{mt: 0, mb: 0}}>
+            <DialogActions sx={{mt: "10px", mb: 0}}>
+                <Button
+                    variant="contained"
+                    onClick={(paramEvent) => {
+                    }}
+                >
+                    {locTrans_o.oeComTransGet_m("report", "buttonCopyPaste")}
+                </Button>
+                <Button
+                    variant="contained"
+                    onClick={(paramEvent) => {
+                    }}
+                >
+                    {locTrans_o.oeComTransGet_m("report", "buttonCSV")}
+                </Button>
                 <Button
                     onClick={(paramEvent) => locClose_f(locCtx_o, paramEvent)}
                 >

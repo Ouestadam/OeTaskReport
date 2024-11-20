@@ -26,7 +26,7 @@
 */
 export const oetrConfig_o = {
     version: "1.0",
-    modification: "19/11/2024",
+    modification: "20/11/2024",
     locale: "fr-FR",
     colors_o: {
         backgroundDialogTitle: "#d6d4d4",

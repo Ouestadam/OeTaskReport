@@ -155,9 +155,9 @@ function locCreateWindow_f() {
     --- Create the browser window
     */
     mainWindow_o = new BrowserWindow({
-        width: "800px",
-        height: "600px",
-        minHeight: "600px",
+        width: "1024px",
+        height: "800px",
+        minHeight: "800px",
         icon: nativeImage.createFromPath(join(__dirname, './assets/icons/png/256x256.png')),
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,

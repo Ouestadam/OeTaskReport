@@ -226,6 +226,14 @@ export const oetrTrans_o = {
                 en: "No monthly report found in the data folder",
                 fr: "Aucun rapport mensuel trouvé dans le répertoire de données"
             },
+            "buttonCopyPaste": {
+              en: "Copy/Paste",
+              fr: "Copier/Coller"
+            },
+            "buttonCSV": {
+                en: "CSV file",
+                fr: "Fichier CSV"
+            },
             "labelSelectDate": {
                 en: "Select the year and the month(s) for the report:",
                 fr: "Sélectionner l'année et le(s) mois pour le rapport :"
