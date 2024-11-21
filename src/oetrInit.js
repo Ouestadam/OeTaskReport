@@ -199,4 +199,8 @@ export function oetrInit_f(paramCtx_o) {
     --- Set if report consolidation should be reset
     */
     paramCtx_o.reportBuildReset = true;
+    /*
+    --- Text for Message dialog
+    */
+    paramCtx_o.message_s = "";
 }

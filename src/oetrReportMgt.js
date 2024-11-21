@@ -24,6 +24,7 @@
 */
 import React, {useState} from 'react';
 import {
+    Box,
     Button, Chip,
     Dialog,
     DialogActions,
@@ -78,6 +79,101 @@ function locClose_f(paramCtx_o, paramEvent) {
     --- Refresh the main page
     */
     oetrMainRefreshPage_f(paramCtx_o);
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : locReportToText_f                              !
+  ! Description: Convert the report to text                     !
+  !                                                             !
+  ! IN:  - Context                                              !
+  !      - Characters for End of Cell                           !
+  !      - Characters for End of Line                           !
+  ! OUT: - Report in a String                                   !
+  +-------------------------------------------------------------+
+*/
+function locReportToText_f(paramCtx_o, paramEndCell_s, paramEndLine_s) {
+    /*
+    --- Initialisation
+    */
+    const locTrans_o = paramCtx_o.trans_o;
+    const locReportBuild_o = paramCtx_o.reportBuild_o;
+    const locRows_a = locReportBuild_o.rows_a;
+    let locText_s = "";
+    /*
+    --- Add the Client
+    */
+    locText_s += locTrans_o.oeComTransGet_m("report", "labelReportClient") + ":" + paramEndCell_s;
+    locText_s += ((locReportBuild_o.selectedClient_s === oetrDefSelectAll) ?
+        locTrans_o.oeComTransGet_m("clients", locReportBuild_o.selectedClient_s) :
+        locReportBuild_o.selectedClient_s) + paramEndLine_s;
+    /*
+    --- Add the Year and the Month
+    */
+    locText_s += locTrans_o.oeComTransGet_m("report", "labelReportYear") + ":" + paramEndCell_s;
+    locText_s += locReportBuild_o.selectedYear_s + paramEndLine_s;
+    locText_s += locTrans_o.oeComTransGet_m("report", "labelReportMonth") + ":" + paramEndCell_s;
+    locText_s += locTrans_o.oeComTransGet_m("months", locReportBuild_o.selectedMonth_s) + paramEndLine_s;
+    /*
+    --- Add the header of the table
+    */
+    locText_s += paramEndLine_s;
+    if (locReportBuild_o.selectedClient_s === oetrDefSelectAll)
+        locText_s += locTrans_o.oeComTransGet_m("report", "headerClient") + paramEndCell_s;
+    locText_s += locTrans_o.oeComTransGet_m("report", "headerTask") + paramEndCell_s;
+    if (locReportBuild_o.isDetailed)
+        locText_s += locTrans_o.oeComTransGet_m("report", "headerDate") + paramEndCell_s;
+    locText_s += locTrans_o.oeComTransGet_m("report", "headerMinutes") + paramEndCell_s;
+    locText_s += locTrans_o.oeComTransGet_m("report", "headerHours") + paramEndLine_s;
+    /*
+    --- Add each row
+    */
+    for (let locI = 0; locI < locRows_a.length; locI++) {
+        const locRow_o = locRows_a[locI];
+        if (locReportBuild_o.selectedClient_s === oetrDefSelectAll)
+            locText_s += locRow_o.headerClient + paramEndCell_s;
+        locText_s += locRow_o.headerTask + paramEndCell_s;
+        if (locReportBuild_o.isDetailed)
+            locText_s += locRow_o.headerDate + paramEndCell_s;
+        locText_s += locRow_o.headerMinutes + paramEndCell_s;
+        locText_s += locRow_o.headerHours + paramEndLine_s;
+    }
+    /*
+    --- Return the Report in Text
+    */
+    return (locText_s);
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : locCopyClipboard_f                             !
+  ! Description: Copy the report to the Clipboard               !
+  !                                                             !
+  ! IN:  - Context                                              !
+  !      - Event                                                !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+function locCopyClipboard_f(paramCtx_o, paramEvent) {
+    /*
+    --- Initialisation
+    */
+    const locTrans_o = paramCtx_o.trans_o;/*
+    --- Stop Event
+    */
+    paramEvent.preventDefault();
+    /*
+    --- Get the report in Text
+    */
+    const locText_s = locReportToText_f(paramCtx_o, "\t", "\r\n");
+    /*
+    --- Copy the text in Clipboard
+    */
+    navigator.clipboard.writeText(locText_s).then(() => {
+        /*
+        --- Create the confirmation message and refresh the Dialog
+        */
+        paramCtx_o.message_s = locTrans_o.oeComTransGet_m("report", "copied");
+        oetrReportMgtRefreshModal_f(paramCtx_o);
+    });
 }
 
 /*
@@ -187,7 +283,7 @@ function locTableOneTask_f(paramCtx_o, paramClient_s, paramTask_s) {
             headerClient: "",
             headerTask: paramTask_s,
             headerDate: "",
-            headerMinutes: locTaskTotalMinutes + " min",
+            headerMinutes: "" + locTaskTotalMinutes,
             headerHours: locTaskTotalHours + " h " + ((locTaskTotalRest > 0) ? (locTaskTotalRest + " min") : "")
         });
         return;
@@ -220,7 +316,7 @@ function locTableOneTask_f(paramCtx_o, paramClient_s, paramTask_s) {
             headerClient: "",
             headerTask: "",
             headerDate: locDate_s,
-            headerMinutes: locReportMonth_o[paramClient_s][paramTask_s][locDay_s] + " min",
+            headerMinutes: "" + locReportMonth_o[paramClient_s][paramTask_s][locDay_s],
             headerHours: ""
         });
     }
@@ -232,7 +328,7 @@ function locTableOneTask_f(paramCtx_o, paramClient_s, paramTask_s) {
         headerClient: "",
         headerTask: locTrans_o.oeComTransGet_m("report", "totalTask", paramTask_s),
         headerDate: "",
-        headerMinutes: locTaskTotalMinutes + " min",
+        headerMinutes: "" + locTaskTotalMinutes,
         headerHours: locTaskTotalHours + " h " + ((locTaskTotalRest > 0) ? (locTaskTotalRest + " min") : "")
     });
 }
@@ -283,7 +379,7 @@ function locTableRowsAllTasks_f(paramCtx_o, paramClient_s) {
             headerClient: locTrans_o.oeComTransGet_m("report", "totalClient", paramClient_s),
             headerTask: "",
             headerDate: "",
-            headerMinutes: locClientTotalMinutes + " min",
+            headerMinutes: "" + locClientTotalMinutes,
             headerHours: locClientTotalHours + " h " + ((locClientTotalRest > 0) ? (locClientTotalRest + " min") : "")
         });
     } else {
@@ -292,7 +388,7 @@ function locTableRowsAllTasks_f(paramCtx_o, paramClient_s) {
             headerClient: "",
             headerTask: locTrans_o.oeComTransGet_m("report", "totalClient", paramClient_s),
             headerDate: "",
-            headerMinutes: locClientTotalMinutes + " min",
+            headerMinutes: "" + locClientTotalMinutes,
             headerHours: locClientTotalHours + " h " + ((locClientTotalRest > 0) ? (locClientTotalRest + " min") : "")
         });
     }
@@ -717,6 +813,48 @@ function LocContent_jsx(paramProps_o) {
     );
 }
 
+/*
++-------------------------------------------------------------+
+! Routine    : LocDialogMessage_jsx                           !
+! Description: JSX Display a message dialog                   !
+!                                                             !
+! IN:  - Properties including Context                         !
+! OUT: - Page rendering                                       !
++-------------------------------------------------------------+
+*/
+function LocDialogMessage_jsx(paramProps_o) {
+    /*
+    --- Initialisation
+    */
+    const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
+    /*
+    --- Return the Dialog Content to display
+    */
+    return (
+        <div>
+            <DialogContent sx={{mt: "10px"}}>
+                {locCtx_o.message_s}
+            </DialogContent>
+            <DialogActions>
+                <Box sx={{width: "100%", textAlign: "center"}}>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => {
+                            locCtx_o.message_s = "";
+                            oetrReportMgtRefreshModal_f(locCtx_o);
+                        }}
+                    >
+                        {locTrans_o.oeComTransGet_m("common", "return")}
+                    </Button>
+                </Box>
+            </DialogActions>
+        </div>
+    )
+        ;
+}
+
 /*=============== Exported functions ===========================*/
 
 /*+--------------------------------------------- ---------------+
@@ -821,50 +959,61 @@ export function OetrDialogReportMgt_jsx(paramProps_o) {
     --- Return the Dialog
     */
     return (
-        <Dialog open={true} fullWidth maxWidth="xl">
-            <OetrError_jsx ctx={locCtx_o}/>
-            <DialogTitle sx={{
-                height: "40px",
-                pt: "6px",
-                pb: "10px",
-                mb: "14px",
-                textAlign: "center",
-                backgroundColor: locColors_o.backgroundDialogTitle
-            }}>
-                {locTrans_o.oeComTransGet_m("report", "title")}
-                <IconButton
-                    aria-label="Close"
-                    size="small"
-                    sx={{position: "absolute", right: "8px"}}
-                    onClick={(paramEvent) => locClose_f(locCtx_o, paramEvent)}
-                >
-                    <CloseIcon fontSize="small"/>
-                </IconButton>
-            </DialogTitle>
-            <DialogContent sx={{pb: 0, mb: 0, mt: '10px'}}>
-                <LocContent_jsx ctx={locCtx_o}/>
-            </DialogContent>
-            <DialogActions sx={{mt: "10px", mb: 0}}>
-                <Button
-                    variant="contained"
-                    onClick={(paramEvent) => {
-                    }}
-                >
-                    {locTrans_o.oeComTransGet_m("report", "buttonCopyPaste")}
-                </Button>
-                <Button
-                    variant="contained"
-                    onClick={(paramEvent) => {
-                    }}
-                >
-                    {locTrans_o.oeComTransGet_m("report", "buttonCSV")}
-                </Button>
-                <Button
-                    onClick={(paramEvent) => locClose_f(locCtx_o, paramEvent)}
-                >
-                    {locTrans_o.oeComTransGet_m("common", "return")}
-                </Button>
-            </DialogActions>
-        </Dialog>
+        <div>
+            <Dialog open={true} fullWidth maxWidth="xl">
+                <OetrError_jsx ctx={locCtx_o}/>
+                <DialogTitle sx={{
+                    height: "40px",
+                    pt: "6px",
+                    pb: "10px",
+                    mb: "14px",
+                    textAlign: "center",
+                    backgroundColor: locColors_o.backgroundDialogTitle
+                }}>
+                    {locTrans_o.oeComTransGet_m("report", "title")}
+                    <IconButton
+                        aria-label="Close"
+                        size="small"
+                        sx={{position: "absolute", right: "8px"}}
+                        onClick={(paramEvent) => locClose_f(locCtx_o, paramEvent)}
+                    >
+                        <CloseIcon fontSize="small"/>
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent sx={{pb: 0, mb: 0, mt: '10px'}}>
+                    <LocContent_jsx ctx={locCtx_o}/>
+                </DialogContent>
+                <DialogActions sx={{mt: "10px", mb: 0}}>
+                    <Button
+                        key={"buttonCopyPaste" + Math.random()}
+                        disabled={((locCtx_o.reportBuild_o.selectedYear_s.length < 1) ||
+                            (locCtx_o.reportBuild_o.selectedMonth_s.length < 1))}
+                        variant="contained"
+                        onClick={(paramEvent) => locCopyClipboard_f(locCtx_o, paramEvent)}
+                    >
+                        {locTrans_o.oeComTransGet_m("report", "buttonCopyPaste")}
+                    </Button>
+                    <Button
+                        key={"buttonCSV" + Math.random()}
+                        disabled={((locCtx_o.reportBuild_o.selectedYear_s.length < 1) ||
+                            (locCtx_o.reportBuild_o.selectedMonth_s.length < 1))}
+                        variant="contained"
+                        onClick={() => {
+                            oetrReportMgtRefreshModal_f(locCtx_o);
+                        }}
+                    >
+                        {locTrans_o.oeComTransGet_m("report", "buttonCSV")}
+                    </Button>
+                    <Button
+                        onClick={(paramEvent) => locClose_f(locCtx_o, paramEvent)}
+                    >
+                        {locTrans_o.oeComTransGet_m("common", "return")}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={locCtx_o.message_s.length > 0}>
+                <LocDialogMessage_jsx ctx={locCtx_o}/>
+            </Dialog>
+        </div>
     );
 }

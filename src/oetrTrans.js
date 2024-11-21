@@ -297,6 +297,10 @@ export const oetrTrans_o = {
             "totalTask": {
                 en: "Total task $$1$$",
                 fr: "Total tâche $$1$$"
+            },
+            "copied": {
+                en: "Report copied in the Clipboard.",
+                fr: "Rapport copié dans le Clipboard."
             }
         }
     }
