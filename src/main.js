@@ -13,7 +13,7 @@
   !  Desc. : Electron main for oetaskreport                     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 11/10/2024                                         !
+  !  Modif.: 21/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -79,6 +79,21 @@ function locIpcReceiving_f() {
         }
     });
     /*
+    --- Process File path dialog
+    */
+    ipcMain.handle('oetrDialogFilePath', async (paramFilters) => {
+        const locDialogResult =
+            await dialog.showSaveDialog(mainWindow_o, {
+                properties: ['createDirectory'],
+                filters: paramFilters
+            });
+        if (locDialogResult.canceled) {
+            return ("");
+        } else {
+            return (locDialogResult.filePath);
+        }
+    });
+    /*
     --- Process Check if a File is present
     */
     ipcMain.handle('oetrFileExists', async (paramEvent, paramFileName) => {
@@ -89,7 +104,7 @@ function locIpcReceiving_f() {
     */
     ipcMain.handle('oetrCreateDir', async (paramEvent, paramDirName) => {
         if (fs.existsSync(paramDirName)) return true;
-        return fs.mkdirSync(paramDirName,{recursive: true});
+        return fs.mkdirSync(paramDirName, {recursive: true});
     });
     /*
     --- Process Listing of a directory

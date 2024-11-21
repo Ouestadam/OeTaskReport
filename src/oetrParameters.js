@@ -155,18 +155,18 @@ async function locGetFolderPath_f(paramCtx_o, paramEvent) {
     /*
     --- Request Path selection
     */
-    const locworkingDir_s = await window.electronAPI.dialogFolderPath();
+    const locWorkingDir_s = await window.electronAPI.dialogFolderPath();
     /*
     --- If cancel the return with refresh
     */
-    if (locworkingDir_s.length < 1) {
+    if (locWorkingDir_s.length < 1) {
         oetrParametersRefreshModal_f(paramCtx_o);
         return;
     }
     /*
     --- Update the Working dir in the context
     */
-    paramCtx_o.workingDir_s = locworkingDir_s;
+    paramCtx_o.workingDir_s = locWorkingDir_s;
     /*
     --- Reset default Client and task
     */

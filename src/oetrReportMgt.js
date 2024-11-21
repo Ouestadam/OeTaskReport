@@ -13,7 +13,7 @@
   !  Desc. : Reports management for rendering of oetaskreport   !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 10/10/2024                                         !
+  !  Modif.: 21/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -154,12 +154,13 @@ function locReportToText_f(paramCtx_o, paramEndCell_s, paramEndLine_s) {
 */
 function locCopyClipboard_f(paramCtx_o, paramEvent) {
     /*
-    --- Initialisation
-    */
-    const locTrans_o = paramCtx_o.trans_o;/*
     --- Stop Event
     */
     paramEvent.preventDefault();
+    /*
+    --- Initialisation
+    */
+    const locTrans_o = paramCtx_o.trans_o;
     /*
     --- Get the report in Text
     */
@@ -174,6 +175,42 @@ function locCopyClipboard_f(paramCtx_o, paramEvent) {
         paramCtx_o.message_s = locTrans_o.oeComTransGet_m("report", "copied");
         oetrReportMgtRefreshModal_f(paramCtx_o);
     });
+}
+
+/*+-------------------------------------------------------------+
+  ! Routine    : locCreateCSV_f                                 !
+  ! Description: Create a CSV file with the report              !
+  !                                                             !
+  ! IN:  - Context                                              !
+  !      - Event                                                !
+  ! OUT: - Nothing                                              !
+  +-------------------------------------------------------------+
+*/
+async function locCreateCSV_f(paramCtx_o, paramEvent) {
+    /*
+    --- Stop Event
+    */
+    paramEvent.preventDefault();
+    /*
+    --- Initialisation
+    */
+    const locTrans_o = paramCtx_o.trans_o;
+    /*
+    --- Get the report in Text
+    */
+    const locText_s = locReportToText_f(paramCtx_o, ";", "\r\n");
+    /*
+    --- Request File Path selection
+    */
+    const locFilters_a = [{name: 'CSV', extensions: ['csv']}];
+    const locFilePath_s = await window.electronAPI.dialogFilePath(locFilters_a);
+    /*
+    --- If cancel the return with refresh
+    */
+    if (locFilePath_s.length < 1) {
+        oetrReportMgtRefreshModal_f(paramCtx_o);
+        return;
+    }
 }
 
 /*
@@ -852,7 +889,6 @@ function LocDialogMessage_jsx(paramProps_o) {
             </DialogActions>
         </div>
     )
-        ;
 }
 
 /*=============== Exported functions ===========================*/
@@ -998,9 +1034,7 @@ export function OetrDialogReportMgt_jsx(paramProps_o) {
                         disabled={((locCtx_o.reportBuild_o.selectedYear_s.length < 1) ||
                             (locCtx_o.reportBuild_o.selectedMonth_s.length < 1))}
                         variant="contained"
-                        onClick={() => {
-                            oetrReportMgtRefreshModal_f(locCtx_o);
-                        }}
+                        onClick={(paramEvent) => locCreateCSV_f(locCtx_o, paramEvent)}
                     >
                         {locTrans_o.oeComTransGet_m("report", "buttonCSV")}
                     </Button>

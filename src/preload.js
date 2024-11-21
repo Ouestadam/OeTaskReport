@@ -13,7 +13,7 @@
   !  Desc. : Electron preload for oetaskreport                  !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 09/10/2024                                         !
+  !  Modif.: 21/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -38,16 +38,18 @@ contextBridge.exposeInMainWorld('electronAPI', {
     setResized: (paramSize) => ipcRenderer.send('oetrSetResized', paramSize),
     //--- Declare oetrDialogFolderPath for getting Folder path
     dialogFolderPath: () => ipcRenderer.invoke('oetrDialogFolderPath'),
+    //--- Declare oetrDialogFolderPath for getting File path
+    dialogFilePath: (paramFilters) => ipcRenderer.invoke('oetrDialogFilePath', paramFilters),
     //--- Declare oetrFileExists for checking if a File exists
-    fileExists: (paramFileName) => ipcRenderer.invoke('oetrFileExists',paramFileName),
+    fileExists: (paramFileName) => ipcRenderer.invoke('oetrFileExists', paramFileName),
     //--- Declare oetrCreateDir for creating a directory if not exists
-    createDir: (paramDirName) => ipcRenderer.invoke('oetrCreateDir',paramDirName),
+    createDir: (paramDirName) => ipcRenderer.invoke('oetrCreateDir', paramDirName),
     //--- Declare oetrDirRead for listing a directory
-    dirRead: (paramDirName) => ipcRenderer.invoke('oetrDirRead',paramDirName),
+    dirRead: (paramDirName) => ipcRenderer.invoke('oetrDirRead', paramDirName),
     //--- Declare oetrFileRead for reading a File
-    fileRead: (paramFileName) => ipcRenderer.invoke('oetrFileRead',paramFileName),
+    fileRead: (paramFileName) => ipcRenderer.invoke('oetrFileRead', paramFileName),
     //--- Declare oetrFileWrite for writing in a File
-    fileWrite: (paramFileName,paramData) => ipcRenderer.invoke('oetrFileWrite',paramFileName, paramData),
+    fileWrite: (paramFileName, paramData) => ipcRenderer.invoke('oetrFileWrite', paramFileName, paramData),
     //--- From Main to Rendering ---
     onUpdateMaximizing: (paramCallback_f) => ipcRenderer.on('oetrOnUpdateMaximizing',
         (paramEvent, paramValue) => paramCallback_f(paramValue)),
