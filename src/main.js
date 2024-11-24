@@ -13,7 +13,7 @@
   !  Desc. : Electron main for oetaskreport                     !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 21/11/2024                                         !
+  !  Modif.: 24/11/2024                                         !
   !                                                             !
   !  0.1: Creation                                              !
   +-------------------------------------------------------------+
@@ -79,13 +79,14 @@ function locIpcReceiving_f() {
         }
     });
     /*
-    --- Process File path dialog
+    --- Process Save File dialog
     */
-    ipcMain.handle('oetrDialogFilePath', async (paramFilters) => {
+    ipcMain.handle('oetrDialogSaveFile', async (paramEvent, paramFilters_a, paramDefaultPath_s) => {
         const locDialogResult =
             await dialog.showSaveDialog(mainWindow_o, {
-                properties: ['createDirectory'],
-                filters: paramFilters
+                defaultPath: paramDefaultPath_s,
+                filters: paramFilters_a,
+                properties: ['createDirectory']
             });
         if (locDialogResult.canceled) {
             return ("");

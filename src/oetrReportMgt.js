@@ -203,7 +203,7 @@ async function locCreateCSV_f(paramCtx_o, paramEvent) {
     --- Request File Path selection
     */
     const locFilters_a = [{name: 'CSV', extensions: ['csv']}];
-    const locFilePath_s = await window.electronAPI.dialogFilePath(locFilters_a);
+    const locFilePath_s = await window.electronAPI.dialogSaveFile(locFilters_a, paramCtx_o.lastPathCSV_s);
     /*
     --- If cancel the return with refresh
     */
@@ -211,6 +211,22 @@ async function locCreateCSV_f(paramCtx_o, paramEvent) {
         oetrReportMgtRefreshModal_f(paramCtx_o);
         return;
     }
+    /*
+    --- Update the current CSV Path
+    */
+    paramCtx_o.lastPathCSV_s = locFilePath_s.substring(0, locFilePath_s.lastIndexOf("/"));
+    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrPathCSV",
+        paramCtx_o.lastPathCSV_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    /*
+    --- Save the file
+    */
+    const locFileName_s = (locFilePath_s.indexOf(".") > 0) ? locFilePath_s : (locFilePath_s + ".csv");
+    await window.electronAPI.fileWrite(locFileName_s, locText_s);
+    /*
+    --- Create the message for return
+    */
+    paramCtx_o.message_s = locTrans_o.oeComTransGet_m("report", "csvCreated") + "\n" + locFileName_s;
+    oetrReportMgtRefreshModal_f(paramCtx_o);
 }
 
 /*
@@ -865,16 +881,17 @@ function LocDialogMessage_jsx(paramProps_o) {
     */
     const locCtx_o = paramProps_o.ctx;
     const locTrans_o = locCtx_o.trans_o;
+    const locLines_a = locCtx_o.message_s.split("\n");
     /*
     --- Return the Dialog Content to display
     */
     return (
         <div>
-            <DialogContent sx={{mt: "10px"}}>
-                {locCtx_o.message_s}
+            <DialogContent sx={{mt: "10px", textAlign: "center"}}>
+                {locLines_a.map((paramLine) => (<div>{paramLine}</div>))}
             </DialogContent>
             <DialogActions>
-                <Box sx={{width: "100%", textAlign: "center"}}>
+                <Box sx={{width: "100%", textAlign: "center", mb: "10px"}}>
                     <Button
                         size="small"
                         variant="contained"

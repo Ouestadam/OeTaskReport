@@ -301,6 +301,10 @@ export const oetrTrans_o = {
             "copied": {
                 en: "Report copied in the Clipboard.",
                 fr: "Rapport copié dans le Clipboard."
+            },
+            "csvCreated": {
+                en: "The following CSV file has been created: ",
+                fr: "Le fichier CSV suivant a été créé : "
             }
         }
     }

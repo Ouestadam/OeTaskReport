@@ -39,7 +39,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     //--- Declare oetrDialogFolderPath for getting Folder path
     dialogFolderPath: () => ipcRenderer.invoke('oetrDialogFolderPath'),
     //--- Declare oetrDialogFolderPath for getting File path
-    dialogFilePath: (paramFilters) => ipcRenderer.invoke('oetrDialogFilePath', paramFilters),
+    dialogSaveFile: (paramFilters_a, paramDefaultPath_s) =>
+        ipcRenderer.invoke('oetrDialogSaveFile', paramFilters_a, paramDefaultPath_s),
     //--- Declare oetrFileExists for checking if a File exists
     fileExists: (paramFileName) => ipcRenderer.invoke('oetrFileExists', paramFileName),
     //--- Declare oetrCreateDir for creating a directory if not exists

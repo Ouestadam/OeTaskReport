@@ -203,4 +203,9 @@ export function oetrInit_f(paramCtx_o) {
     --- Text for Message dialog
     */
     paramCtx_o.message_s = "";
+    /*
+    --- Get the current path for .csv in cookies
+    */
+    paramCtx_o.lastPathCSV_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrPathCSV");
+    if (paramCtx_o.lastPathCSV_s.length < 1) paramCtx_o.lastPathCSV_s = "/";
 }
