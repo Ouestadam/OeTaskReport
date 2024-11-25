@@ -31,6 +31,7 @@
 */
 import React from 'react';
 import {
+    Avatar, Box,
     Button,
     Dialog,
     DialogActions,
@@ -46,6 +47,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import {OetrError_jsx} from "./oetrError";
 import {oetrDefModal_e} from "./oetrDef";
 import {oetrMainRefreshPage_f} from "./oetrMain";
+
+/*
+--- Ouestadam resources
+*/
+import oetrImgDenis from "./assets/Denis_Esteve_Janvier_2024_Medium.jpg";
+import oetrGPLIcon from "./assets/gplv3-or-later.png";
+
 
 /*=============== Local functions ==============================*/
 
@@ -92,6 +100,17 @@ function LocContent_jsx(paramProps_o) {
     */
     return (
         <div>
+            <Avatar
+                alt="Denis Esteve picture"
+                src={oetrImgDenis}
+                sx={{position: "absolute", top: "48px", left: "8px", width: "100px", height: "100px"}}
+            />
+            <Avatar
+                alt="GNU GPL Icon"
+                variant="square"
+                src={oetrGPLIcon}
+                sx={{position: "absolute", top: "48px", right: "8px", width: "75px", height: "32px"}}
+            />
         </div>
     );
 }
@@ -138,7 +157,7 @@ export function OetrDialogInformation_jsx(paramProps_o) {
                         <CloseIcon fontSize="small"/>
                     </IconButton>
                 </DialogTitle>
-                <DialogContent sx={{pb: 0, mb: 0, mt: '10px'}}>
+                <DialogContent sx={{pb: 0, mb: 0, mt: '10px', minHeight: "300px"}}>
                     <LocContent_jsx ctx={locCtx_o}/>
                 </DialogContent>
                 <DialogActions sx={{mt: "10px", mb: 0}}>
