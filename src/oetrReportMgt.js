@@ -1,21 +1,28 @@
 /*
   +-------------------------------------------------------------+
-  !     CODE SOURCE MATERIALS                                   !
-  !     OUESTADAM CONFIDENTIAL                                  !
+  ! CODE SOURCE MATERIALS                                       !
+  ! Copyright (C) 2024 Ouestadam-Esteve                         !
   !                                                             !
-  !     OUESTADAM CONFIDENTIAL                                  !
-  !     (C) COPYRIGHT OUESTADAM 2024                            !
-  !     Licensed Internal Code - Property of OUESTADAM          !
+  ! This file is part of oeTaskReport.                          !
+  ! oeTaskReport is free software: you can redistribute it      !
+  ! and/or modify it under the terms of the GNU General Public  !
+  ! License as published by the Free Software Foundation,       !
+  ! either version 3 of the License, or any later version.      !
+  ! oeTaskReport is distributed in the hope that it will be     !
+  ! useful, but WITHOUT ANY WARRANTY; without even the implied  !
+  ! warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR     !
+  ! PURPOSE.                                                    !
+  ! See the GNU General Public License for more details.        !
+  ! You should have received a copy of the GNU General Public   !
+  ! License along with oeTaskReport.                            !
+  ! If not, see <https://www.gnu.org/licenses/>.                !
   +-------------------------------------------------------------+
   +-------------------------------------------------------------+
-  !                                                             !
   !  File  : oetrReportMgt.js                                   !
   !  Desc. : Reports management for rendering of oetaskreport   !
   !                                                             !
   !  Author: D.ESTEVE                                           !
   !  Modif.: 21/11/2024                                         !
-  !                                                             !
-  !  0.1: Creation                                              !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -880,6 +887,7 @@ function LocDialogMessage_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
+    const locColors_o = locCtx_o.config_o.colors_o;
     const locTrans_o = locCtx_o.trans_o;
     const locLines_a = locCtx_o.message_s.split("\n");
     /*
@@ -887,7 +895,26 @@ function LocDialogMessage_jsx(paramProps_o) {
     */
     return (
         <div>
-            <DialogContent sx={{mt: "10px", textAlign: "center"}}>
+            <DialogTitle sx={{
+                height: "32px",
+                pt: "2px",
+                pb: "2px",
+                textAlign: "center",
+                backgroundColor: locColors_o.backgroundDialogTitle
+            }}>
+                <IconButton
+                    aria-label="Close"
+                    size="small"
+                    sx={{position: "absolute", right: "8px"}}
+                    onClick={() => {
+                        locCtx_o.message_s = "";
+                        oetrReportMgtRefreshModal_f(locCtx_o);
+                    }}
+                >
+                    <CloseIcon fontSize="small"/>
+                </IconButton>
+            </DialogTitle>
+            <DialogContent sx={{mt: "30px", textAlign: "center"}}>
                 {locLines_a.map((paramLine) => (<div>{paramLine}</div>))}
             </DialogContent>
             <DialogActions>

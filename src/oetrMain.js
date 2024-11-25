@@ -1,21 +1,28 @@
 /*
   +-------------------------------------------------------------+
-  !     CODE SOURCE MATERIALS                                   !
-  !     OUESTADAM CONFIDENTIAL                                  !
+  ! CODE SOURCE MATERIALS                                       !
+  ! Copyright (C) 2024 Ouestadam-Esteve                         !
   !                                                             !
-  !     OUESTADAM CONFIDENTIAL                                  !
-  !     (C) COPYRIGHT OUESTADAM 2024                            !
-  !     Licensed Internal Code - Property of OUESTADAM          !
+  ! This file is part of oeTaskReport.                          !
+  ! oeTaskReport is free software: you can redistribute it      !
+  ! and/or modify it under the terms of the GNU General Public  !
+  ! License as published by the Free Software Foundation,       !
+  ! either version 3 of the License, or any later version.      !
+  ! oeTaskReport is distributed in the hope that it will be     !
+  ! useful, but WITHOUT ANY WARRANTY; without even the implied  !
+  ! warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR     !
+  ! PURPOSE.                                                    !
+  ! See the GNU General Public License for more details.        !
+  ! You should have received a copy of the GNU General Public   !
+  ! License along with oeTaskReport.                            !
+  ! If not, see <https://www.gnu.org/licenses/>.                !
   +-------------------------------------------------------------+
   +-------------------------------------------------------------+
-  !                                                             !
   !  File  : oetrMain.js                                        !
   !  Desc. : Main Entry for rendering of oetaskreport           !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 11/10/2024                                         !
-  !                                                             !
-  !  0.1: Creation                                              !
+  !  Modif.: 25/11/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -29,6 +36,7 @@ import {
 import {enUS, frFR} from "@mui/material/locale";
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalculateIcon from '@mui/icons-material/Calculate';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 /*
 --- Ouestadam products
@@ -40,6 +48,7 @@ import {OetrStartTask_jsx} from "./oetrStartTask";
 import {OetrDialogEndTask_jsx, OetrEndTask_jsx} from "./oetrEndTask";
 import {oetrDefModal_e} from "./oetrDef";
 import {OetrDialogReportMgt_jsx} from "./oetrReportMgt";
+import {OetrDialogInformation_jsx} from "./oetrInformation";
 
 /*=============== Local functions ==============================*/
 
@@ -129,6 +138,8 @@ function LocStartModal_jsx(paramProps_o) {
             return (<OetrDialogEndTask_jsx ctx={locCtx_o}/>);
         case oetrDefModal_e.reportModal:
             return (<OetrDialogReportMgt_jsx ctx={locCtx_o}/>);
+        case oetrDefModal_e.infoModal:
+            return (<OetrDialogInformation_jsx ctx={locCtx_o}/>)
         default:
             return (<></>);
     }
@@ -181,6 +192,19 @@ function LocHeader_jsx(paramProps_o) {
                             oetrMainRefreshPage_f(locCtx_o);
                         }}>
                         <CalculateIcon fontSize="large"/>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title={locTrans_o.oeComTransGet_m("main", "toolTipInfo")}>
+                    <IconButton
+                        aria-label="Information"
+                        size="large"
+                        color="primary"
+                        sx={{backgroundColor: locColors_o.backgroundIcon, ml: "10px"}}
+                        onClick={() => {
+                            locCtx_o.currentModal = oetrDefModal_e.infoModal;
+                            oetrMainRefreshPage_f(locCtx_o);
+                        }}>
+                        <HelpOutlineIcon fontSize="large"/>
                     </IconButton>
                 </Tooltip>
             </Box>
