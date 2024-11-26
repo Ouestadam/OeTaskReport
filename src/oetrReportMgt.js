@@ -209,7 +209,10 @@ async function locCreateCSV_f(paramCtx_o, paramEvent) {
     /*
     --- Request File Path selection
     */
-    const locFilters_a = [{name: 'CSV', extensions: ['csv']}];
+    const locFilters_a = [
+        {name: 'CSV', extensions: ['csv']},
+        {name: '*.*', extensions: ['*']}
+    ];
     const locFilePath_s = await window.electronAPI.dialogSaveFile(locFilters_a, paramCtx_o.lastPathCSV_s);
     /*
     --- If cancel the return with refresh

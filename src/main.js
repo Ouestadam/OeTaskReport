@@ -184,7 +184,8 @@ function locCreateWindow_f() {
         icon: nativeImage.createFromPath(join(__dirname, './assets/icons/png/256x256.png')),
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-            nodeIntegration: true,
+            nodeIntegration: false,
+            contextIsolation: true
         }
     });
 
@@ -196,10 +197,6 @@ function locCreateWindow_f() {
     --- Hide the Menu bar
     */
     mainWindow_o.menuBarVisible = false;
-    /*
-    --- For debugging: Open the DevTools
-    */
-    // mainWindow_o.webContents.openDevTools();
     /*
     --- Process receiving IPC messages
     */

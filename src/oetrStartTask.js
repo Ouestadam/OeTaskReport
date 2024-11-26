@@ -144,6 +144,7 @@ export function OetrStartTask_jsx(paramProps_o) {
                                      backgroundColor: locColors_o.backgroundSelect
                                  }}>
                         <Select
+                            aria-label="Select client"
                             id="oetrParamSelectClient"
                             value={locCtx_o.currentClient_s}
                             defaultValue={locCtx_o.currentClient_s}
@@ -176,6 +177,7 @@ export function OetrStartTask_jsx(paramProps_o) {
                                      backgroundColor: locColors_o.backgroundSelect
                                  }}>
                         <Select
+                            aria-label="Select task"
                             id="oetrParamSelectTask"
                             value={locCtx_o.currentTask_s}
                             defaultValue={locCtx_o.currentTask_s}
@@ -198,6 +200,7 @@ export function OetrStartTask_jsx(paramProps_o) {
             </Grid>
             <Box sx={{mt: '50px', width: '100%', textAlign: 'center'}}>
                 <Button
+                    aria-label="Start the task"
                     variant="contained"
                     color="primary"
                     onClick={(paramEvent) => locStart_f(locCtx_o, paramEvent)}

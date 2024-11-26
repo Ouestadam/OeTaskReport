@@ -323,5 +323,29 @@ export const oetrTrans_o = {
             en: "Information",
             fr: "Information"
         },
+        "toolTipDenis": {
+            en: "Denis ESTEVE (OUESTADAM freelance company)",
+            fr: "Denis ESTEVE (Micro-entreprise OUESTADAM)"
+        },
+        "toolTipGPL": {
+            en: "GNU GPL V3 license description",
+            fr: "Description de la licence GNU GPL V3"
+        },
+        "overviewStart": {
+            en: " is a free program that allows you to easily build " +
+                "activities reports. It has been developed by ",
+            fr: " est un programme gratuit qui permet de construire simplement " +
+                "des rapports d'activités. Il a été développé par ",
+        },
+        "overviewEnd": {
+            en: "This program comes with ABSOLUTELY NO WARRANTY. " +
+                "This is free software, and you are welcome to redistribute it " +
+                "under certain conditions following the GNU General Public License "+
+                "version 3 (or later) available on following Web site: ",
+            fr: "Ce programme ne vient avec ABSOLUMENT AUCUNE GARANTIE. " +
+                "C'est un logiciel libre, et vous êtes bienvenu de le redistribuer " +
+                "sous certaines conditions définie par la licence GNU GPL version 3 "+
+                "(ou ultérieure) disponible sur le site Web suivant : ",
+        },
     }
 }

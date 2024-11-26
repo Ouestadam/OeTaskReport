@@ -312,6 +312,7 @@ export function OetrEndTask_jsx(paramProps_o) {
             <LocTaskInfo_jsx ctx={locCtx_o}/>
             <Box sx={{mt: '50px', width: '100%', textAlign: 'center'}}>
                 <Button
+                    aria-label="End Task"
                     variant="contained"
                     color="error"
                     onClick={(paramEvent) => locEnd_f(locCtx_o, paramEvent)}

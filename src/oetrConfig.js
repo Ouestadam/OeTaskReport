@@ -22,7 +22,7 @@
   !  Desc. : Configuration for rendering of oetaskreport        !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 21/11/2024                                         !
+  !  Modif.: 26/11/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -33,7 +33,8 @@
 */
 export const oetrConfig_o = {
     version: "1.0",
-    modification: "21/11/2024",
+    modification: "26/11/2024",
+    name: "oeTaskReport",
     locale: "fr-FR",
     colors_o: {
         backgroundDialogTitle: "#d6d4d4",
@@ -48,5 +49,6 @@ export const oetrConfig_o = {
     },
     definitionsFileName: "oeTaskReport.json",
     reportFileName: "oetrMonth.json",
-    urlOuestadam: "https://ouestadam.com"
+    urlOuestadam: "https://ouestadam.com",
+    urlLicenses: "https://www.gnu.org/licenses/"
 }

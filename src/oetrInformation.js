@@ -37,7 +37,7 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    IconButton
+    IconButton, Tooltip, Typography
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -53,6 +53,7 @@ import {oetrMainRefreshPage_f} from "./oetrMain";
 */
 import oetrImgDenis from "./assets/Denis_Esteve_Janvier_2024_Medium.jpg";
 import oetrGPLIcon from "./assets/gplv3-or-later.png";
+import Grid from "@mui/material/Grid2";
 
 
 /*=============== Local functions ==============================*/
@@ -95,22 +96,59 @@ function LocContent_jsx(paramProps_o) {
     --- Initialisation
     */
     const locCtx_o = paramProps_o.ctx;
+    const locTrans_o = locCtx_o.trans_o;
     /*
     --- Return the Dialog Content to display
     */
     return (
         <div>
-            <Avatar
-                alt="Denis Esteve picture"
-                src={oetrImgDenis}
-                sx={{position: "absolute", top: "48px", left: "8px", width: "100px", height: "100px"}}
-            />
-            <Avatar
-                alt="GNU GPL Icon"
-                variant="square"
-                src={oetrGPLIcon}
-                sx={{position: "absolute", top: "48px", right: "8px", width: "75px", height: "32px"}}
-            />
+            <Grid container sx={{width: "100%"}}>
+                <Grid size={2} sx={{textAlign: "left"}}>
+                    <Tooltip title={locTrans_o.oeComTransGet_m("info", "toolTipDenis")}>
+                        <IconButton
+                            color="info"
+                            onClick={() => window.open(locCtx_o.config_o.urlOuestadam, "_blank")}
+                        >
+                            <Avatar
+                                alt="Denis Esteve picture"
+                                src={oetrImgDenis}
+                                sx={{width: "90px", height: "90px"}}
+                            />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+                <Grid size={8}>
+                    <Box sx={{ml: "10px"}}>
+                        <Typography variant="body2">
+                            <strong>{locCtx_o.config_o.name}</strong>
+                            {locTrans_o.oeComTransGet_m("info", "overviewStart")}
+                            <a href={locCtx_o.config_o.urlOuestadam} target="_blank">
+                                Denis ESTEVE
+                            </a>
+                            .<br/><br/>
+                            {locTrans_o.oeComTransGet_m("info", "overviewEnd")}
+                            <a href={locCtx_o.config_o.urlLicenses} target="_blank">
+                                {locCtx_o.config_o.urlLicenses}
+                            </a>
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid size={2} sx={{textAlign: "right"}}>
+                    <Tooltip title={locTrans_o.oeComTransGet_m("info", "toolTipGPL")}>
+                        <IconButton
+                            color="info"
+                            onClick={() => window.open(locCtx_o.config_o.urlLicenses, "_blank")}
+                        >
+                            <Avatar
+                                alt="GNU GPL Icon"
+                                variant="square"
+                                src={oetrGPLIcon}
+                                sx={{width: "75px", height: "32px"}}
+                            />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+            </Grid>
         </div>
     );
 }
@@ -157,7 +195,7 @@ export function OetrDialogInformation_jsx(paramProps_o) {
                         <CloseIcon fontSize="small"/>
                     </IconButton>
                 </DialogTitle>
-                <DialogContent sx={{pb: 0, mb: 0, mt: '10px', minHeight: "300px"}}>
+                <DialogContent sx={{pb: 0, mb: 0, mt: 0}}>
                     <LocContent_jsx ctx={locCtx_o}/>
                 </DialogContent>
                 <DialogActions sx={{mt: "10px", mb: 0}}>
