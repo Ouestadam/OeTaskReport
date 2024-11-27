@@ -4,7 +4,7 @@ const {FuseV1Options, FuseVersion} = require('@electron/fuses');
 module.exports = {
     packagerConfig: {
         asar: true,
-        icon: "./src/assets/icons/png/256x256.png",
+        icon: "./src/assets/icons/win/icon",
     },
     rebuildConfig: {
         force: true
@@ -12,7 +12,12 @@ module.exports = {
     makers: [
         {
             name: '@electron-forge/maker-squirrel',
-            config: {},
+            config: {
+                authors: 'Denis Esteve (OUESTADAM Freelance company)',
+                description: 'Ouestadam Tasks Reporting Tool',
+                conUrl: 'https://raw.githubusercontent.com/Ouestadam/OeTaskReport/refs/heads/master/src/assets/icons/win/icon.ico?token=GHSAT0AAAAAAC3DP4YIN5XKWILHCMAYI5UMZ2HIMWA',
+                setupIcon: './src/assets/icons/win/icon.ico'
+            },
         },
         {
             name: '@electron-forge/maker-zip',
@@ -29,7 +34,11 @@ module.exports = {
         },
         {
             name: '@electron-forge/maker-rpm',
-            config: {},
+            config: {
+                options: {
+                    icon: './src/assets/icons/png/256x256.png'
+                }
+            },
         },
     ],
     plugins: [

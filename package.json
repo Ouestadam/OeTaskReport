@@ -1,8 +1,13 @@
 {
   "name": "oetaskreport",
-  "productName": "oetaskreport",
+  "productName": "OeTaskReport",
   "version": "1.0.0",
   "description": "Ouestadam Tasks Reporting Tool",
+  "author": {
+    "name": "Denis Esteve (OUESTADAM Freelance company)",
+    "email": "denis@ouestadam.com"
+  },
+  "license": "GPL-3.0-or-later",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -35,11 +40,6 @@
     "url-loader": "^4.1.1"
   },
   "keywords": [],
-  "author": {
-    "name": "Denis Esteve",
-    "email": "denis@ouestadam.com"
-  },
-  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
