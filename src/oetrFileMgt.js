@@ -320,9 +320,61 @@ export async function oetrFileMgtReadJsonDefinitionFile_f(paramCtx_o, paramRefre
         */
         paramCtx_o.definitions_o = JSON.parse(locData_s);
         /*
-        --- Set parameters as completed
+        --- Check that Clients object is present
         */
-        paramCtx_o.parametersCompleted = true;
+        if (paramCtx_o.definitions_o.clients_o === undefined) {
+            /*
+            --- No Clients object: reset the current Client and Task
+            */
+            paramCtx_o.currentClient_s = "";
+            paramCtx_o.currentTask_s = "";
+            paramCtx_o.currentModal = oetrDefModal_e.parametersModal
+            oetrInitDefinitions_f(paramCtx_o);
+        } else {
+            /*
+            --- Clients object is present in the definition
+            */
+            const locClients_o = paramCtx_o.definitions_o.clients_o;
+            /*
+            --- If current client doesn't exist then reset it
+            */
+            if ((paramCtx_o.currentClient_s.length > 0) &&
+                (locClients_o[paramCtx_o.currentClient_s] === undefined)) paramCtx_o.currentClient_s = "";
+            /*
+            --- If current client is not defined then get the first of list
+            */
+            if (paramCtx_o.currentClient_s.length < 1) {
+                const locClients_a = Object.keys(locClients_o);
+                if (locClients_a.length > 0) paramCtx_o.currentClient_s = locClients_a[0];
+            }
+            /*
+            --- If current client is now defined
+            */
+            if (paramCtx_o.currentClient_s.length > 0) {
+                /*
+                --- If current task doesn't exist for this client then reset it
+                */
+                if ((paramCtx_o.currentTask_s.length > 0) &&
+                    (locClients_o[paramCtx_o.currentClient_s][paramCtx_o.currentTask_s] === undefined))
+                    paramCtx_o.currentTask_s = "";
+                /*
+                --- If current task is not defined then get the first of list
+                */
+                if (paramCtx_o.currentTask_s.length < 1) {
+                    const locTasks_a = Object.keys(locClients_o[paramCtx_o.currentClient_s]);
+                    if (locTasks_a.length > 0) paramCtx_o.currentTask_s = locTasks_a[0];
+                }
+            } else {
+                /*
+                --- No current client : Reset the current task
+                */
+                paramCtx_o.currentTask_s = "";
+            }
+            /*
+            --- Set parameters as completed
+            */
+            paramCtx_o.parametersCompleted = true;
+        }
     } else {
         paramCtx_o.currentModal = oetrDefModal_e.parametersModal
         oetrInitDefinitions_f(paramCtx_o);
