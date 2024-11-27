@@ -181,7 +181,7 @@ function locCreateWindow_f() {
         width: "1024px",
         height: "800px",
         minHeight: "800px",
-        icon: nativeImage.createFromPath(join(__dirname, './assets/icons/png/256x256.png')),
+        icon: nativeImage.createFromPath(join(__dirname, 'assets/icons/png/256x256.png')),
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             nodeIntegration: false,

@@ -39,7 +39,7 @@
     "name": "Denis Esteve",
     "email": "denis@ouestadam.com"
   },
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
