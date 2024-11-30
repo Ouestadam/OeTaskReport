@@ -15,7 +15,7 @@ module.exports = {
             config: {
                 authors: 'Denis Esteve (OUESTADAM Freelance company)',
                 description: 'Ouestadam Tasks Reporting Tool',
-                conUrl: 'https://raw.githubusercontent.com/Ouestadam/OeTaskReport/refs/heads/master/src/assets/icons/win/icon.ico?token=GHSAT0AAAAAAC3DP4YIN5XKWILHCMAYI5UMZ2HIMWA',
+                iconUrl: 'https://ouestadam.com/iconOeTaskReport.ico',
                 setupIcon: './src/assets/icons/win/icon.ico'
             },
         },

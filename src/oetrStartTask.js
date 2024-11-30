@@ -22,7 +22,7 @@
   !  Desc. : Start Task for rendering of oetaskreport           !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 08/10/2024                                         !
+  !  Modif.: 30/11/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -72,11 +72,9 @@ function locStart_f(paramCtx_o, paramEvent) {
     --- Save the current client and task
     */
     locStartedTask_o.client_s = paramCtx_o.currentClient_s;
-    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentClient",
-        paramCtx_o.currentClient_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    localStorage.setItem("oetrCurrentClient", paramCtx_o.currentClient_s);
     locStartedTask_o.task_s = paramCtx_o.currentTask_s;
-    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentTask",
-        paramCtx_o.currentTask_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    localStorage.setItem("oetrCurrentTask", paramCtx_o.currentTask_s);
     /*
     --- Save the current date in milliseconds
     */

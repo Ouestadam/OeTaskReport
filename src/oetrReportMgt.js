@@ -225,8 +225,7 @@ async function locCreateCSV_f(paramCtx_o, paramEvent) {
     --- Update the current CSV Path
     */
     paramCtx_o.lastPathCSV_s = locFilePath_s.substring(0, locFilePath_s.lastIndexOf("/"));
-    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrPathCSV",
-        paramCtx_o.lastPathCSV_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    localStorage.setItem("oetrPathCSV", paramCtx_o.lastPathCSV_s);
     /*
     --- Save the file
     */

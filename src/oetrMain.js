@@ -22,7 +22,7 @@
   !  Desc. : Main Entry for rendering of oetaskreport           !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 25/11/2024                                         !
+  !  Modif.: 30/11/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -66,9 +66,9 @@ function locIpcExchanges_f(paramCtx_o) {
     */
     const locTrans_o = paramCtx_o.trans_o;
     /*
-    --- Check if Window is maximized in Cookies
+    --- Check if Window is maximized in local Storage
     */
-    if (paramCtx_o.cookiesManagement_o.oeComCookiesGet_m('oetrMaximized') === 'true') {
+    if (localStorage.getItem('oetrMaximized') && (localStorage.getItem('oetrMaximized') === 'true')) {
         /*
         --- Request the window maximizing
         */
@@ -80,10 +80,10 @@ function locIpcExchanges_f(paramCtx_o) {
         window.electronAPI.setMaximized('false');
     }
     /*
-    --- Check if Window size is in Cookies
+    --- Check if Window size is in local storage
     */
-    const locWindowSize_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m('oetrWindowSize');
-    if (locWindowSize_s.length > 0) {
+    if (localStorage.getItem('oetrWindowSize')) {
+        const locWindowSize_s = localStorage.getItem('oetrWindowSize');
         /*
         --- Request the window resizing
         */
@@ -94,21 +94,18 @@ function locIpcExchanges_f(paramCtx_o) {
     */
     window.electronAPI.setTitle(locTrans_o.oeComTransGet_m("main", "title"));
     /*
-    --- Update the cookie Maximize/Unmaximize if the main process detects the change
+    --- Update the local storage Maximize/Unmaximize if the main process detects the change
     */
     window.electronAPI.onUpdateMaximizing((paramValue) => {
-        paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrMaximized", paramValue,
-            paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+        localStorage.setItem("oetrMaximized", paramValue);
     });
     /*
-    --- Update the cookie Window size if the main process detects the change
+    --- Update the local storage Window size if the main process detects the change
     */
     window.electronAPI.onUpdateResizing((paramValue) => {
-        paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrWindowSize", paramValue,
-            paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+        localStorage.setItem("oetrWindowSize", paramValue);
     });
 }
-
 
 /*=============== Local JSX components =========================*/
 

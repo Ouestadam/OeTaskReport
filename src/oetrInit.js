@@ -22,7 +22,7 @@
   !  Desc. : Initialisation for rendering of oetaskreport       !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 10/10/2024                                         !
+  !  Modif.: 30/11/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -32,7 +32,6 @@
 import {OeComTrans_c} from "./oecommon/oeComTrans";
 import {oetrConfig_o} from "./oetrConfig";
 import {oetrTrans_o} from "./oetrTrans";
-import {OeComCookies_c} from "./oecommon/oeComCookies";
 import {oetrDefFocus_e, oetrDefModal_e} from "./oetrDef";
 import {OeComDate_c} from "./oecommon/oeComDate";
 
@@ -122,17 +121,14 @@ export function oetrInit_f(paramCtx_o) {
         height: 0
     }
     /*
-    --- Create Cookies management object
+    --- Get the Local in Local Storage if present
     */
-    paramCtx_o.cookiesManagement_o = new OeComCookies_c();
-    /*
-    --- Get the Local in cookies
-    */
-    paramCtx_o.config_o.locale = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrLocale");
-    /*
-    --- If no cookie then use this one define for the Navigator
-    */
-    if (paramCtx_o.config_o.locale === "") {
+    if (localStorage.getItem("oetrLocale")) {
+        paramCtx_o.config_o.locale = localStorage.getItem("oetrLocale");
+    } else {
+        /*
+        --- If not in local storage then use this one define for the Navigator
+        */
         const locLocale = navigator.language;
         if (locLocale !== undefined) {
             paramCtx_o.config_o.locale = (locLocale.substring(0, 2).toLowerCase() === 'fr') ? 'fr-FR' : 'en-GB';
@@ -167,9 +163,9 @@ export function oetrInit_f(paramCtx_o) {
     */
     paramCtx_o.parametersCompleted = false;
     /*
-    --- Working directory
+    --- Get Working directory from local storage if present
     */
-    paramCtx_o.workingDir_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrWorkingDir");
+    paramCtx_o.workingDir_s = localStorage.getItem("oetrWorkingDir") ? localStorage.getItem("oetrWorkingDir") : "";
     /*
     --- Initialise the Definitions object
     */
@@ -181,11 +177,11 @@ export function oetrInit_f(paramCtx_o) {
     /*
     --- Current Client
     */
-    paramCtx_o.currentClient_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrCurrentClient");
+    paramCtx_o.currentClient_s = localStorage.getItem("oetrCurrentClient") ? localStorage.getItem("oetrCurrentClient") : "";
     /*
     --- Current Task Name
     */
-    paramCtx_o.currentTask_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrCurrentTask");
+    paramCtx_o.currentTask_s = localStorage.getItem("oetrCurrentTask") ? localStorage.getItem("oetrCurrentTask") : "";
     /*
     --- Task started flag
     */
@@ -213,6 +209,5 @@ export function oetrInit_f(paramCtx_o) {
     /*
     --- Get the current path for .csv in cookies
     */
-    paramCtx_o.lastPathCSV_s = paramCtx_o.cookiesManagement_o.oeComCookiesGet_m("oetrPathCSV");
-    if (paramCtx_o.lastPathCSV_s.length < 1) paramCtx_o.lastPathCSV_s = "/";
+    paramCtx_o.lastPathCSV_s = localStorage.getItem("oetrPathCSV") ? localStorage.getItem("oetrPathCSV") : "/";
 }

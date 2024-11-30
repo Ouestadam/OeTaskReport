@@ -22,7 +22,7 @@
   !  Desc. : Locale switcher for rendering of oetaskreport      !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 17/11/2024                                         !
+  !  Modif.: 30/11/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -71,8 +71,7 @@ export function OetrLocaleSwitcher_jsx(paramProps_o) {
                     locCtx_o.config_o.locale = paramLocale;
                     locCtx_o.trans_o.oeComTransChangeLocale_m(paramLocale);
                     locCtx_o.date_o.oeComDateChangeLocale_m(paramLocale);
-                    locCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrLocale",
-                        paramLocale, locCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+                    localStorage.setItem("oetrLocale", paramLocale);
                     oetrMainRefreshPage_f(locCtx_o);
                 }
             }}

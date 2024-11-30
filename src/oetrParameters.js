@@ -22,7 +22,7 @@
   !  Desc. : Parameters dialog for rendering of oetaskreport    !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 11/10/2024                                         !
+  !  Modif.: 30/11/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -127,14 +127,11 @@ async function locValid_f(paramCtx_o, paramEvent) {
         return;
     }
     /*
-    --- Save the Working Dir and current Client and Task in the Cookies
+    --- Save the Working Dir and current Client and Task in the local storage
     */
-    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrworkingDir",
-        paramCtx_o.workingDir_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
-    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentClient",
-        paramCtx_o.currentClient_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
-    paramCtx_o.cookiesManagement_o.oeComCookiesSet_m("oetrCurrentTask",
-        paramCtx_o.currentTask_s, paramCtx_o.cookiesManagement_o.oeComCookiesDuration_e.unlimited);
+    localStorage.setItem("oetrWorkingDir", paramCtx_o.workingDir_s);
+    localStorage.setItem("oetrCurrentClient", paramCtx_o.currentClient_s);
+    localStorage.setItem("oetrCurrentTask", paramCtx_o.currentTask_s);
     /*
     --- Save the definitions in file
     */
