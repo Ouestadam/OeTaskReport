@@ -86,7 +86,7 @@ This application has been developed for **Windows 10/11**, for **Linux Debian/Ub
 ### Configure the application
 At the first use, the application starts directly by opening the configuration window.
 <br />
-You could modify, at any time, the configuration by clicking on :
+You could modify, at any time, the configuration by clicking on:
 <img src="images/buttonParameters.png" alt="Configuration button" width="32" height="32"/>
 <br /><br />
 The configuration window allows :
@@ -104,12 +104,25 @@ then to click on **'START THE TASK'**.
 <img src="images/screenStartTask.png" alt="Start task window"/>
 
 ### End a task
-When you have ended working on a task, you have just to click on **'STOP THE TASK'**
+When you have ended working on a task, you have just to click on **'END THE TASK'**
 <br />
 then you could choose if you record or not the time passed on this task.
 <img src="images/screenEndTask.png" alt="End task window"/>
 
 ### Build a report
+For building a report, you have to click on:
+<img src="images/buttonReport.png" alt="Build report button" width="32" height="32"/>
+<br />
+You could build a report for one specific month or for the complete year.
+<br />
+You could build a report for all the clients or just for one client.
+<br />
+For a monthly, you could request a detailed report which all worked days listed.
+<br /><br >
+Then you could **'COPY'** in the Clipboard for pasting it in another application like EXCEL.
+<br />
+You could, also, generate a **.CSV** file for importing it on a spreadsheet application.
+<img src="images/screenReport.png" alt="Report window"/>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
