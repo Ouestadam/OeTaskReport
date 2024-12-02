@@ -87,8 +87,8 @@ This application has been developed for **Windows 10/11**, for **Linux Debian/Ub
 At the first use, the application starts directly by opening the configuration window.
 <br />
 You could modify at any time the configuration by clicking on :
-<img src="images/buttonParameters.png" alt="Configuration button"/>
-<br />
+<img src="images/buttonParameters.png" alt="Configuration button" width="32" height="32"/>
+<br /><br />
 The configuration window allows :
 <ol>
 <li>To define the folder where the data will be stored.</li>
