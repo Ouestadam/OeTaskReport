@@ -124,7 +124,8 @@ See `LICENSE.txt` for more information.
     <img src="images/Denis_Esteve_2024_256x256.png" alt="Logo" width="128" height="128" style="border-radius: 50%;">
   </a>
 </div>
-All this application has been developed by **Denis ESTEVE** (OUESTADAM-ESTEVE Freelance company).
+
+This application has been developed by **Denis ESTEVE** (OUESTADAM-ESTEVE Freelance company).
 <br />
 Feel free to consult his dedicated Website :
 <a href="https://ouestadam.com" target="_blank">https://ouestadam.com</a>
