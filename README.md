@@ -76,7 +76,7 @@ This application is built with
 
 This application has been developed for **Windows 10/11**, for **Linux Debian/Ubuntu** and for **Linux Redhat/Centos**.
 <br />
-**You will find installers on the <a href="https://ouestadam.com/freeware/" target="_blank">Denis ESTEVE's Freeware Web page</a>.**
+**You will find installers on the <a href="https://ouestadam.com/freeware" target="_blank">Denis ESTEVE's Freeware Web page</a>.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
