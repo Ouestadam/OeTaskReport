@@ -98,7 +98,11 @@ The configuration window allows :
 <img src="images/screenParameters.png" alt="Configuration window"/>
 
 ### Start a task
+When you start a task, you have just to select the client and the associated task, then to click on **'Start task'**.
+<img src="images/screenStartTask.png" alt="Configuration window"/>
+
 ### End a task
+
 ### Build a report
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -124,7 +128,7 @@ See `LICENSE.txt` for more information.
     <img src="images/Denis_Esteve_2024_256x256.png" alt="Logo" width="128" height="128" style="border-radius: 50%;">
   </a>
 </div>
-
+<br />
 This application has been developed by **Denis ESTEVE** (OUESTADAM-ESTEVE Freelance company).
 <br />
 Feel free to consult his dedicated Website :
