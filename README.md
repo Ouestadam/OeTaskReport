@@ -51,6 +51,8 @@ It has been developed by
 <br/>
 It's a **standalone software** which doesn't require any additional product and any Internet connection.
 <br/>
+This application supports, today, two languages selectable interactively: English and French.
+<br/>
 This program comes with **ABSOLUTELY NO WARRANTY**. This is free software, and you are welcome to redistribute it
 under certain conditions following the **GNU General Public License version 3 (or later)** available on following Website:
 <a href="https://www.gnu.org/licenses/" target="_blank">GNU GPL License</a>
@@ -81,7 +83,24 @@ This application has been developed for **Windows 10/11**, for **Linux Debian/Ub
 <!-- USAGE EXAMPLES -->
 
 ## Usage
+### Configure the application
+At the first use, the application starts directly by opening the configuration window.
+<br />
+You could modify at any time the configuration by clicking on :
+<img src="images/buttonParameters.png" alt="Configuration button"/>
+<br />
+The configuration window allows :
+<ol>
+<li>To define the folder where the data will be stored.</li>
+<li>To enter the list of clients.</li>
+<li>To enter for each client the list of associated tasks.</li>
+</ol>
+<br />
+<img src="images/screenParameters.png" alt="Configuration window"/>
 
+### Start a task
+### End a task
+### Build a report
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -106,7 +125,7 @@ See `LICENSE.txt` for more information.
     <img src="images/Denis_Esteve.jpg" alt="Logo" width="128" height="128" style="border-radius: 50%;">
   </a>
 </div>
-All this application has been developed by Denis ESTEVE (OUESTADAM-ESTEVE Freelance company).
+All this application has been developed by **Denis ESTEVE** (OUESTADAM-ESTEVE Freelance company).
 <br />
 Feel free to consult his dedicated Website :
 <a href="https://ouestadam.com" target="_blank">https://ouestadam.com</a>
