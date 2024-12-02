@@ -25,10 +25,8 @@
   <a href="https://github.com/Ouestadam/OeTaskReport">
     <img src="src/assets/icons/png/128x128.png" alt="Logo" width="80" height="80">
   </a>
-
-<h3 style="text-align:center;">OeTaskReport</h3>
-
-  <p style="text-align:center;">
+  <h3>OeTaskReport</h3>
+  <p>
     A standalone and freeware application which allows to report activities
   </p>
 </div>
