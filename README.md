@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Ouestadam/OeTaskReport">
-    <img src="images/oeTaskReport.png" alt="Logo" width="80" height="80">
+    <img src="images/oeTaskReport.png" alt="Logo" width="128" height="128">
   </a>
   <h3>OeTaskReport</h3>
   <p>
