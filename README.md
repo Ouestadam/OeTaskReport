@@ -117,7 +117,7 @@ You could build a report for one specific month or for the complete year.
 <br />
 You could build a report for all the clients or just for one client.
 <br />
-For a monthly, you could request a detailed report which all worked days listed.
+For a monthly report, you could request a detailed report which all worked days listed.
 <br /><br >
 Then you could **'COPY'** in the Clipboard for pasting it in another application like EXCEL.
 <br />
