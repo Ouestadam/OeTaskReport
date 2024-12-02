@@ -44,13 +44,15 @@
 
 ## About The Project
 
-OeTaskReport is a free program that allows you to easily build activities reports. It has been developed by
+**OeTaskReport** is a free program that allows you to easily build activities reports.
+<br />
+It has been developed by
 <a href="https://ouestadam.com" target="_blank">Denis ESTEVE</a> (OUESTADAM-ESTEVE Freelance company).
 <br/>
-It's a standalone software which doesn't require any additional product and any Internet connection.
+It's a **standalone software** which doesn't require any additional product and any Internet connection.
 <br/>
-This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it
-under certain conditions following the GNU General Public License version 3 (or later) available on following Web site:
+This program comes with **ABSOLUTELY NO WARRANTY**. This is free software, and you are welcome to redistribute it
+under certain conditions following the **GNU General Public License version 3 (or later)** available on following Web site:
 <a href="https://www.gnu.org/licenses/" target="_blank">GNU GPL License</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -70,22 +72,16 @@ This application is built with
 
 ## Getting Started
 
-This application has been developed for Windows 10 and 11, for Linux Debian and Ubuntu and for Linux Redhat and Centos.
+This application has been developed for **Windows 10/11**, for **Linux Debian/Ubuntu** and for **Linux Redhat/Centos**.
 <br />
-You will find installers on the <a href="https://ouestadam.com/freeware/" target="_blank">Denis ESTEVE's </a>Freeware Web page.
+**You will find installers on the <a href="https://ouestadam.com/freeware/" target="_blank">Denis ESTEVE's Freeware Web page</a>.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos
-work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -94,7 +90,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ## License
 
-Distributed under the GNU General Public License version 3 (or later). See `LICENSE.txt` for more information.
+Distributed under the GNU General Public License version 3 (or later).
+<br />
+See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
