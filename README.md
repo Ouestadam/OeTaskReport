@@ -101,7 +101,15 @@ See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 
 ## Contact
-
+<div align="center">
+  <a href="https://ouestadam.com" target="_blank">
+    <img src="images/Denis_Esteve.png" alt="Logo" width="128" height="128">
+  </a>
+</div>
+All this application has been developed by Denis ESTEVE (OUESTADAM-ESTEVE Freelance company).
+<br />
+Feel free to consult his dedicated Website :
+<a href="https://ouestadam.com" target="_blank">https://ouestadam.com</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
