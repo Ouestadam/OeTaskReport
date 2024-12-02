@@ -30,6 +30,7 @@
     A standalone and freeware application which allows to report activities
   </p>
 </div>
+<br /><br />
 
 
 <!-- TABLE OF CONTENTS -->
