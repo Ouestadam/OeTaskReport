@@ -52,7 +52,7 @@ It has been developed by
 It's a **standalone software** which doesn't require any additional product and any Internet connection.
 <br/>
 This program comes with **ABSOLUTELY NO WARRANTY**. This is free software, and you are welcome to redistribute it
-under certain conditions following the **GNU General Public License version 3 (or later)** available on following Web site:
+under certain conditions following the **GNU General Public License version 3 (or later)** available on following Website:
 <a href="https://www.gnu.org/licenses/" target="_blank">GNU GPL License</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -103,7 +103,7 @@ See `LICENSE.txt` for more information.
 ## Contact
 <div align="center">
   <a href="https://ouestadam.com" target="_blank">
-    <img src="images/Denis_Esteve.png" alt="Logo" width="128" height="128">
+    <img src="images/Denis_Esteve.jpg" alt="Logo" width="128" height="128">
   </a>
 </div>
 All this application has been developed by Denis ESTEVE (OUESTADAM-ESTEVE Freelance company).
