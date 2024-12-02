@@ -121,7 +121,7 @@ See `LICENSE.txt` for more information.
 ## Contact
 <div align="center">
   <a href="https://ouestadam.com" target="_blank">
-    <img src="images/Denis_Esteve_2024_256x256" alt="Logo" width="128" height="128" style="border-radius: 50%;">
+    <img src="images/Denis_Esteve_2024_256x256.png" alt="Logo" width="128" height="128" style="border-radius: 50%;">
   </a>
 </div>
 All this application has been developed by **Denis ESTEVE** (OUESTADAM-ESTEVE Freelance company).
