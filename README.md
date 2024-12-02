@@ -88,14 +88,13 @@ At the first use, the application starts directly by opening the configuration w
 <br />
 You could modify at any time the configuration by clicking on :
 <img src="images/buttonParameters.png" alt="Configuration button" width="32" height="32"/>
-<br /><br />
+<br />
 The configuration window allows :
 <ol>
 <li>To define the folder where the data will be stored.</li>
 <li>To enter the list of clients.</li>
 <li>To enter for each client the list of associated tasks.</li>
 </ol>
-<br />
 <img src="images/screenParameters.png" alt="Configuration window"/>
 
 ### Start a task
