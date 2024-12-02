@@ -98,10 +98,16 @@ The configuration window allows :
 <img src="images/screenParameters.png" alt="Configuration window"/>
 
 ### Start a task
-When you start a task, you have just to select the client and the associated task, then to click on **'Start task'**.
-<img src="images/screenStartTask.png" alt="Configuration window"/>
+When you start working on a task, you have just to select the client and the associated task,
+<br />
+then to click on **'START THE TASK'**.
+<img src="images/screenStartTask.png" alt="Start task window"/>
 
 ### End a task
+When you have ended working on a task, you have just to click on **'STOP THE TASK'**
+<br />
+then you could choose if you record or not the time passed on this task.
+<img src="images/screenEndTask.png" alt="End task window"/>
 
 ### Build a report
 
