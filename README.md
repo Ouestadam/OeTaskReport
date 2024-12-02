@@ -14,7 +14,7 @@
   </a>
   <h3>OeTaskReport</h3>
   <p>
-    A standalone and freeware application which allows to report activities
+    A standalone and freeware application which allows to **report activities**.
   </p>
 </div>
 <br /><br />
