@@ -86,9 +86,9 @@ This application has been developed for **Windows 10/11**, for **Linux Debian/Ub
 ### Configure the application
 At the first use, the application starts directly by opening the configuration window.
 <br />
-You could modify at any time the configuration by clicking on :
+You could modify, at any time, the configuration by clicking on :
 <img src="images/buttonParameters.png" alt="Configuration button" width="32" height="32"/>
-<br />
+<br /><br />
 The configuration window allows :
 <ol>
 <li>To define the folder where the data will be stored.</li>
@@ -121,7 +121,7 @@ See `LICENSE.txt` for more information.
 ## Contact
 <div align="center">
   <a href="https://ouestadam.com" target="_blank">
-    <img src="images/Denis_Esteve.jpg" alt="Logo" width="128" height="128" style="border-radius: 50%;">
+    <img src="images/Denis_Esteve_2024_256x256" alt="Logo" width="128" height="128" style="border-radius: 50%;">
   </a>
 </div>
 All this application has been developed by **Denis ESTEVE** (OUESTADAM-ESTEVE Freelance company).
