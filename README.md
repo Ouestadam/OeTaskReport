@@ -14,7 +14,7 @@
   </a>
   <h3>OeTaskReport
   <br />
-  Version 1.0.0</h3> 
+  V 1.0.0</h3> 
   <p>
     A standalone and freeware application which allows to **report activities**.
   </p>
