@@ -22,7 +22,7 @@
   !  Desc. : Reports management for rendering of oetaskreport   !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 21/11/2024                                         !
+  !  Modif.: 03/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -129,6 +129,16 @@ function LocContent_jsx(paramProps_o) {
                             {locTrans_o.oeComTransGet_m("info", "overviewEnd")}
                             <a href={locCtx_o.config_o.urlLicenses} target="_blank">
                                 {locCtx_o.config_o.urlLicenses}
+                            </a>
+                            <br/><br/>
+                            {locTrans_o.oeComTransGet_m("info", "linkFreeware")}
+                            <a href={locCtx_o.config_o.urlFreeware} target="_blank">
+                                {locCtx_o.config_o.urlFreeware}
+                            </a>
+                            <br/>
+                            {locTrans_o.oeComTransGet_m("info", "linkGithub")}
+                            <a href={locCtx_o.config_o.urlGithub} target="_blank">
+                                {locCtx_o.config_o.urlGithub}
                             </a>
                         </Typography>
                     </Box>

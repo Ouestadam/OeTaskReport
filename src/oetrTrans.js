@@ -347,5 +347,13 @@ export const oetrTrans_o = {
                 "sous certaines conditions définie par la licence GNU GPL version 3 "+
                 "(ou ultérieure) disponible sur le site Web suivant : ",
         },
+        "linkFreeware": {
+            en: "The last version of this application is available on the site: ",
+            fr: "La dernière version de cette application est disponible sur le site : "
+        },
+        "linkGithub": {
+            en: "The user documentation and the source code are available on Github: ",
+            fr: "La documentation d'utilisation, ainsi que le code source, sont disponibles sur Github : "
+        },
     }
 }
