@@ -16,7 +16,7 @@
   <br />
   V 1.0.0</h3> 
   <p>
-    A standalone and freeware application which allows to **report activities**.
+  A standalone and freeware application which allows to <strong>report activities</strong>.
   </p>
 </div>
 <br /><br />
