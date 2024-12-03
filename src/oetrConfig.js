@@ -32,7 +32,7 @@
 --- oetaskreport configuration parameters
 */
 export const oetrConfig_o = {
-    version: "1.1",
+    version: "1.1.0",
     modification: "03/12/2024",
     name: "oeTaskReport",
     locale: "fr-FR",
