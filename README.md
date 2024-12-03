@@ -150,7 +150,7 @@ See `LICENSE.txt` for more information.
   </a>
 </div>
 <br />
-This application has been developed by **Denis ESTEVE** (OUESTADAM-ESTEVE Freelance company).
+This application has been developed by <strong>Denis ESTEVE</strong> (OUESTADAM-ESTEVE Freelance company).
 <br />
 Feel free to consult his dedicated Website :
 <a href="https://ouestadam.com" target="_blank">https://ouestadam.com</a>
