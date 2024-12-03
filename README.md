@@ -13,6 +13,7 @@
     <img src="images/oeTaskReport.png" alt="Logo" width="128" height="128">
   </a>
   <h3>OeTaskReport</h3>
+  <h3>Version 1.0.0</h3> 
   <p>
     A standalone and freeware application which allows to **report activities**.
   </p>
