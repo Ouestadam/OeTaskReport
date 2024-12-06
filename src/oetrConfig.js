@@ -22,7 +22,7 @@
   !  Desc. : Configuration for rendering of oetaskreport        !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 03/12/2024                                         !
+  !  Modif.: 06/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -32,8 +32,8 @@
 --- oetaskreport configuration parameters
 */
 export const oetrConfig_o = {
-    version: "1.1.0",
-    modification: "03/12/2024",
+    version: "1.2.0",
+    modification: "06/12/2024",
     name: "oeTaskReport",
     locale: "fr-FR",
     colors_o: {
@@ -43,6 +43,7 @@ export const oetrConfig_o = {
         backgroundIcon : "#efefef",
         backgroundSelect : "#efefef",
         backgroundTableHeader : "#faf9dd",
+        backgroundTableTotalAllClients : "#f3fffe",
         backgroundTableTotalClient : "#fff7f3",
         backgroundTableTotalTask : "#f4ffef",
         foregroundFooter : "#efefef",

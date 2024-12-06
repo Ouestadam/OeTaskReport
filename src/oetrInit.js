@@ -22,7 +22,7 @@
   !  Desc. : Initialisation for rendering of oetaskreport       !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 30/11/2024                                         !
+  !  Modif.: 06/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -87,6 +87,7 @@ export function oetrInitReportBuild_f(paramCtx_o) {
         selectedYear_s: "",
         selectedMonth_s: "",
         selectedClient_s: "",
+        totalMinutes: 0,
         listDirYears_a: [],
         listDirMonths_a: [],
         listClients_a: [],

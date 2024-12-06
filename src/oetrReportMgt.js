@@ -22,7 +22,7 @@
   !  Desc. : Reports management for rendering of oetaskreport   !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 21/11/2024                                         !
+  !  Modif.: 06/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -431,6 +431,10 @@ function locTableRowsAllTasks_f(paramCtx_o, paramClient_s) {
         locTableOneTask_f(paramCtx_o, paramClient_s, locTask_s);
     }
     /*
+    --- Add the total of minutes
+    */
+    locReportBuild_o.totalMinutes += locClientTotalMinutes;
+    /*
     --- Create row for the total of the client according if multiple client or not
     */
     const locClientTotalHours = Math.floor(locClientTotalMinutes / 60);
@@ -510,6 +514,8 @@ function locTableRowsAllClients_f(paramCtx_o) {
     --- Initialisation
     */
     const locReportBuild_o = paramCtx_o.reportBuild_o;
+    const locTrans_o = paramCtx_o.trans_o;
+    locReportBuild_o.totalMinutes = 0;
     /*
     --- Check if all clients should be reported
     */
@@ -520,6 +526,19 @@ function locTableRowsAllClients_f(paramCtx_o) {
         for (let locI = 0; locI < locReportBuild_o.listClients_a.length; locI++) {
             locTableRowsOneClient_f(paramCtx_o, locReportBuild_o.listClients_a[locI]);
         }
+        /*
+        --- Add the total of minutes for all clients
+        */
+        const locTotalHours = Math.floor(locReportBuild_o.totalMinutes / 60);
+        const locTotalRest = locReportBuild_o.totalMinutes - (locTotalHours * 60);
+        locReportBuild_o.rows_a.push({
+            id: "rowTotalAllClients",
+            headerClient: locTrans_o.oeComTransGet_m("report", "totalAllClients"),
+            headerTask: "",
+            headerDate: "",
+            headerMinutes: "" + locReportBuild_o.totalMinutes,
+            headerHours: locTotalHours + " h " + ((locTotalRest > 0) ? (locTotalRest + " min") : "")
+        });
     } else {
         /*
         --- Process the selected client alone
@@ -796,6 +815,10 @@ function LocDisplayReport_jsx(paramProps_o) {
                         "& .MuiDataGrid-columnHeader": {
                             background: locColors_o.backgroundTableHeader,
                         },
+                        "& .MuiDataGrid-row.TotalAllClients": {
+                            background: locColors_o.backgroundTableTotalAllClients,
+                            "font-weight": "bold"
+                        },
                         "& .MuiDataGrid-row.TotalClient": {
                             background: locColors_o.backgroundTableTotalClient,
                             "font-weight": "bold"
@@ -804,16 +827,22 @@ function LocDisplayReport_jsx(paramProps_o) {
                             background: locColors_o.backgroundTableTotalTask,
                             "font-weight": "bold"
                         },
-                        "& .MuiDataGrid-columnHeaderTitle": {
+                        "& .MuiDataGrid-row.ClientName": {
                             "font-weight": "bold"
                         },
+                        "& .MuiDataGrid-columnHeaderTitle": {
+                            "font-weight": "bold"
+                        }
                     }}
                     getRowClassName={(paramRow) => {
-                        if ((paramRow.id.includes("rowTotalClient")) ||
-                            ((paramRow.row.headerClient !== undefined) && (paramRow.row.headerClient.length > 0))) {
+                        if (paramRow.id.includes("rowTotalAllClients")) {
+                            return ("TotalAllClients");
+                        } else if (paramRow.id.includes("rowTotalClient")) {
                             return ("TotalClient");
-                        } else if ((paramRow.id.includes("rowTotalTask")) || (paramRow.row.headerMinutes.length < 1)) {
+                        } else if (paramRow.id.includes("rowTotalTask")) {
                             return ("TotalTask");
+                        } else if (paramRow.id.includes("rowNameClient")) {
+                            return ("ClientName");
                         }
                     }}
                     disableColumnSelector

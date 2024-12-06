@@ -22,7 +22,7 @@
   !  Desc. : Translation table for rendering of oetaskreport    !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 25/11/2024                                         !
+  !  Modif.: 06/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Exported constants ===========================*/
@@ -316,6 +316,10 @@ export const oetrTrans_o = {
         "csvCreated": {
             en: "The following CSV file has been created: ",
             fr: "Le fichier CSV suivant a été créé : "
+        },
+        "totalAllClients": {
+            en: "Total for all clients",
+            fr: "Total pour tous les clients"
         }
     },
     "info": {
