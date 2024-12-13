@@ -180,6 +180,12 @@ export const oetrTrans_o = {
         "labelSelectTask": {
             en: "Select a task:",
             fr: "Sélectionner une tâche :"
+        },
+        "toolTipButtonStart": {
+            en: "Once the task is started, you could close the application, or power off the computer." +
+                " There is no impact on the task duration which is calculated with the system clock.",
+            fr: "Une fois la tâche démarrée, vous pouvez sortir de l'application, et même éteindre l'ordinateur." +
+                " Cela n'impacte pas la durée de la tâche qui est calculée à partir de l'horloge système."
         }
     },
     "endTask": {
@@ -344,11 +350,11 @@ export const oetrTrans_o = {
         "overviewEnd": {
             en: "This program comes with ABSOLUTELY NO WARRANTY. " +
                 "This is free software, and you are welcome to redistribute it " +
-                "under certain conditions following the GNU General Public License "+
+                "under certain conditions following the GNU General Public License " +
                 "version 3 (or later) available on following Web site: ",
             fr: "Ce programme ne vient avec ABSOLUMENT AUCUNE GARANTIE. " +
                 "C'est un logiciel libre, et vous êtes bienvenu de le redistribuer " +
-                "sous certaines conditions définie par la licence GNU GPL version 3 "+
+                "sous certaines conditions définie par la licence GNU GPL version 3 " +
                 "(ou ultérieure) disponible sur le site Web suivant : ",
         },
         "linkFreeware": {

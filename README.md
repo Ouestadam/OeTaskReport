@@ -14,7 +14,7 @@
   </a>
   <h3>OeTaskReport
   <br />
-  V 1.2.0</h3> 
+  V 1.2.1</h3> 
   <p>
   A standalone and freeware application which allows to <strong>report activities</strong>.
   </p>
@@ -103,6 +103,11 @@ The configuration window allows :
 When you start working on a task, you have just to select the client and the associated task,
 <br />
 then to click on **'START THE TASK'**.
+<br />
+Once the task is started, you could close the application, or power off the computer.
+<br />
+There is no impact on the task duration which is calculated with the system clock.
+<br />
 <img src="images/screenStartTask.png" alt="Start task window"/>
 
 ### End a task
