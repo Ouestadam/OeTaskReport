@@ -233,6 +233,10 @@ export const oetrTrans_o = {
             en: " ($$1$$h $$2$$m)",
             fr: " ($$1$$h $$2$$m)"
         },
+        "labelSwitchRound": {
+            en: "Round the duration to the nearest hour:",
+            fr: "Arrondir la durée à l'heure la plus proche :"
+        }
     },
     "report": {
         "title": {

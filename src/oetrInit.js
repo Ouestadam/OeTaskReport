@@ -22,7 +22,7 @@
   !  Desc. : Initialisation for rendering of oetaskreport       !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 06/12/2024                                         !
+  !  Modif.: 16/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -211,4 +211,9 @@ export function oetrInit_f(paramCtx_o) {
     --- Get the current path for .csv in cookies
     */
     paramCtx_o.lastPathCSV_s = localStorage.getItem("oetrPathCSV") ? localStorage.getItem("oetrPathCSV") : "/";
+    /*
+    --- Rounding or not rounding to the nearest hour
+    */
+    const locIsRounding_s = localStorage.getItem("oetrIsRounding") ? localStorage.getItem("oetrIsRounding") : "false";
+    paramCtx_o.isRounding = (locIsRounding_s === "true");
 }

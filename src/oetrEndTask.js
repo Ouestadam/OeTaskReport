@@ -22,7 +22,7 @@
   !  Desc. : End task for rendering of oetaskreport             !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 08/10/2024                                         !
+  !  Modif.: 17/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -32,7 +32,7 @@
 import React from 'react';
 import {
     Box,
-    Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton
+    Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Switch
 } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import CloseIcon from "@mui/icons-material/Close";
@@ -48,7 +48,7 @@ import {
 } from "./oetrFileMgt";
 import {oetrDefModal_e} from "./oetrDef";
 import {OetrError_jsx} from "./oetrError";
-import {oetrReportMgtAddDuration_f} from "./oetrReportMgt";
+import {oetrReportMgtAddDuration_f, oetrReportMgtRefreshModal_f} from "./oetrReportMgt";
 
 /*=============== Local functions ==============================*/
 
@@ -94,6 +94,13 @@ function locEnd_f(paramCtx_o, paramEvent) {
     */
     locStartedTask_o.duration = (locStartedTask_o.dateEnd > locStartedTask_o.dateStart) ?
         Math.round((locStartedTask_o.dateEnd - locStartedTask_o.dateStart) / 60000) : 0;
+    /*
+    --- Check if Rounding is required
+    */
+    if (paramCtx_o.isRounding) {
+        const locNbHours = Math.round(locStartedTask_o.duration / 60);
+        locStartedTask_o.duration = locNbHours * 60;
+    }
     /*
     --- Save the Definition file
     */
@@ -250,6 +257,19 @@ function LocTaskInfo_jsx(paramProps_o) {
                     </Grid>
                     <Grid size={6} sx={{textAlign: "left"}}>
                         {locDateEnd_s}
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} sx={{mt: "8px"}}>
+                    <Grid size={6} sx={{textAlign: "right"}}>
+                        {locTrans_o.oeComTransGet_m("endTask", "labelSwitchRound")}
+                    </Grid>
+                    <Grid size={6} sx={{textAlign: "left"}}>
+                        <Switch defaultChecked={locCtx_o.isRounding}
+                                onChange={(paramEvent) => {
+                                    locCtx_o.isRounding = !locCtx_o.isRounding;
+                                    localStorage.setItem("oetrIsRounding", locCtx_o.isRounding);
+                                    locEnd_f(locCtx_o, paramEvent);
+                                }}/>
                     </Grid>
                 </Grid>
                 <Grid container spacing={2} sx={{mt: "8px"}}>
