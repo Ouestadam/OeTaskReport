@@ -48,7 +48,7 @@ import {
 } from "./oetrFileMgt";
 import {oetrDefModal_e} from "./oetrDef";
 import {OetrError_jsx} from "./oetrError";
-import {oetrReportMgtAddDuration_f, oetrReportMgtRefreshModal_f} from "./oetrReportMgt";
+import {oetrReportMgtAddDuration_f} from "./oetrReportMgt";
 
 /*=============== Local functions ==============================*/
 
