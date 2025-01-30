@@ -756,7 +756,7 @@ function LocMainContent_jsx(paramProps_o) {
                 </Grid>
             </Grid>
             <Grid container spacing={1} sx={{mt: "30px", display: locDisplayAddTask}}>
-                <Grid size={6}>
+                <Grid size={12}>
                     <div>
                         {locTrans_o.oeComTransGet_m("parameters", "labelCreateTask")}
                         <strong>{locCtx_o.currentClient_s}</strong>

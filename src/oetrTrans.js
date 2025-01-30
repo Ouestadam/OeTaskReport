@@ -167,7 +167,7 @@ export const oetrTrans_o = {
         },
         "labelCreateTask": {
             en: "Add a new task name: ",
-            fr: "Ajouter le nom d'une nouvelle tâche : "
+            fr: "Ajouter une nouvelle tâche : "
         },
         "entryNewTask": {
             en: "New task",
