@@ -22,7 +22,7 @@
   !  Desc. : Initialisation for rendering of oetaskreport       !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 16/12/2024                                         !
+  !  Modif.: 17/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -163,6 +163,14 @@ export function oetrInit_f(paramCtx_o) {
     --- Parameters are completed
     */
     paramCtx_o.parametersCompleted = false;
+    /*
+    --- List of tasks requested
+    */
+    paramCtx_o.isTasksList = false;
+    /*
+    --- List of All tasks
+    */
+    paramCtx_o.allTasksList_o = {}
     /*
     --- Get Working directory from local storage if present
     */

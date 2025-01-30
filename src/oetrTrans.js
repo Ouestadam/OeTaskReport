@@ -22,7 +22,7 @@
   !  Desc. : Translation table for rendering of oetaskreport    !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 06/12/2024                                         !
+  !  Modif.: 17/12/2024                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Exported constants ===========================*/
@@ -152,21 +152,27 @@ export const oetrTrans_o = {
             fr: "Enlève le client sélectionné"
         },
         "labelCreateTask": {
-            en: "Add a new task in the list:",
-            fr: "Ajouter une nouvelle tâche dans la liste :"
+            en: "Update the tasks list for the client: ",
+            fr: "Mettre à jour la liste des tâches pour le client : "
+        },
+        "buttonCreateTask": {
+            en: "Tasks list",
+            fr: "Liste des tâches"
+        }
+    },
+    "tasksList": {
+        "title": {
+            en: "Tasks list for the client: ",
+            fr: "Liste des tâches pour le client : "
+        },
+        "labelCreateTask": {
+            en: "Add a new task name: ",
+            fr: "Ajouter le nom d'une nouvelle tâche : "
         },
         "entryNewTask": {
             en: "New task",
             fr: "Nouvelle tâche"
         },
-        "labelSelectTask": {
-            en: "List of tasks:",
-            fr: "Liste des tâches :"
-        },
-        "toolTipDeleteTask": {
-            en: "Suppress the selected task",
-            fr: "Enlève la tâche sélectionnée"
-        }
     },
     "startTask": {
         "buttonStart": {
@@ -334,8 +340,8 @@ export const oetrTrans_o = {
     },
     "info": {
         "title": {
-            en: "Information",
-            fr: "Information"
+            en: "oeTaskReport - version ",
+            fr: "oeTaskReport - version "
         },
         "toolTipDenis": {
             en: "Denis ESTEVE (OUESTADAM freelance company)",

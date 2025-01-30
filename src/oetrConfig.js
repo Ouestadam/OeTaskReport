@@ -1,7 +1,7 @@
 /*
   +-------------------------------------------------------------+
   ! CODE SOURCE MATERIALS                                       !
-  ! Copyright (C) 2024 Ouestadam-Esteve                         !
+  ! Copyright (C) 2024-2025 Ouestadam-Esteve                    !
   !                                                             !
   ! This file is part of oeTaskReport.                          !
   ! oeTaskReport is free software: you can redistribute it      !
@@ -22,7 +22,7 @@
   !  Desc. : Configuration for rendering of oetaskreport        !
   !                                                             !
   !  Author: D.ESTEVE                                           !
-  !  Modif.: 16/12/2024                                         !
+  !  Modif.: 30/01/2025                                         !
   +-------------------------------------------------------------+
 */
 /*=============== Imports ======================================*/
@@ -32,8 +32,8 @@
 --- oetaskreport configuration parameters
 */
 export const oetrConfig_o = {
-    version: "1.2.2",
-    modification: "17/12/2024",
+    version: "1.2.4",
+    modification: "30/01/2025",
     name: "oeTaskReport",
     locale: "fr-FR",
     colors_o: {

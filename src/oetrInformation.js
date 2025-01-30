@@ -195,7 +195,7 @@ export function OetrDialogInformation_jsx(paramProps_o) {
                     textAlign: "center",
                     backgroundColor: locColors_o.backgroundDialogTitle
                 }}>
-                    {locTrans_o.oeComTransGet_m("info", "title")}
+                    {locTrans_o.oeComTransGet_m("info", "title") + locCtx_o.config_o.version}
                     <IconButton
                         aria-label="Close"
                         size="small"
